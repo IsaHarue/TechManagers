@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 
 @app.route('/login')
-def hello_world():  # put application's code here socorro meu deus alguem me ajuda
+def hello_world():  # put application's code here socorro meu deus alguem me ajuda a
     return 'Hello World!'
 
 @app.route('/funcionario/add', methods=['POST'])
