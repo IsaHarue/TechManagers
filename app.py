@@ -11,6 +11,26 @@ app = Flask(__name__)
 def hello_world():  # put application's code here socorro meu deus alguem me ajuda
     return 'Hello World!'
 
+@app.route('/funcionario/add', methods=['POST'])
+def add_funcionario():
+    """Pagina para adicionar Funcionarios
+    Para adiciona-la o admin deve listar o nome da pessoa junto com o email dela e o CPF e sua senha pessoal
+    """
+    pessoa = Pessoa(nome=request.form['nome'],
+                    cpf=request.form['cpf'],
+                    email=request.form['email'],
+                    senha=request.form['senha'])
+
+    db.session.add(pessoa)
+    pessoa.save()
+    final = {
+        'status': 'ok',
+        'nome': pessoa.nome,
+        'cpf': pessoa.cpf,
+        'email': pessoa.email,
+        'senha': pessoa.senha
+    }
+    return app.response_class()
 
 @app.route('/item/add', methods=['POST'])
 def add_item():
