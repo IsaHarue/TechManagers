@@ -1,0 +1,94 @@
+ * {
+        font-family: "Koulen", sans-serif;
+    }
+
+    .koulen-regular {
+        font-family: "Koulen", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    header {
+        height: 50px;
+        position: absolute;
+        top: 0%;
+        width: 100%;
+        background-color: white;
+    }
+
+    body {
+        background-color: #d9d9d9; /* cinza */
+        color: #ffffff; /* branco */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: start;
+
+    }
+
+    main {
+        height: auto;
+        width: 80%;
+        color: #111111;
+    }
+
+    footer {
+        height: 50px;
+        position: absolute;
+        bottom: 0%;
+        width: 100%;
+        background-color: white;
+    }
+
+
+    #logo {
+        margin-right: auto;
+    }
+
+    .sidebar hr {
+        color: white;
+    }
+
+    .sidebar {
+        height: 100vh;
+        width: 250px;
+        float: left;
+        left: 0%;
+        background-color: #6D6D6D;
+        color: #000000;
+        padding-top: 100px;
+    }
+
+    .sidebar #func {
+        background-color: #cccccc;
+        font-size: larger;
+        color: #6D6D6D;
+    }
+
+    .sidebar #itens {
+        font-size: larger;
+    }
+
+    .sidebar #person{
+        font-size: xxx-large;
+    }
+
+    .sidebar a {
+        display: block;
+        color: #d9d9d9;
+        padding: 10px 15px;
+        text-decoration: none;
+    }
+
+
+    .sidebar a:hover {
+        background-color: #575757;
+    }
+
+    .sidebar i {
+        font-size: x-large;
+    }
+
+    .sidebar b {
+        font-size: large;
+    }
