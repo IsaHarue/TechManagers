@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Koulen&display=swap');
 
-*{
+* {
     margin: 0;
     padding: 0;
+    font-family: "Koulen", sans-serif;
 }
 
 .koulen-regular {
@@ -14,9 +15,8 @@
 body {
     background-color: #d9d9d9; /* cinza */
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
-    align-items: center;
 }
 
 header {
@@ -26,60 +26,151 @@ header {
     height: 80px;
     background-color: #ffffff;
     display: flex;
-    flex-direction: row;
     align-items: center;
     padding-left: 20px;
     text-align: center;
-}
-
-main {
-    height: auto;
-
-}
-
-footer {
-    height: 50px;
     position: absolute;
-    bottom: 0%;
-    width: 100%;
-    background-color: white;
+    top: 0%;
 }
 
-#barraDePesquisa {
-    background-color: #f5f5f5f5;
-    border: solid 1px black;
-    border-radius: 15px;
-    width: 400px;
-    padding-left: 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 30px;
-}
 
-#barra {
-    float: left;
-    background-color: transparent;
-    padding-left: 5px;
-    color: gray;
-    font-size: 18px;
-    border: none;
-    height: 32px;
-    width: 400px;
-    outline: none;
-}
+
 
 #logo {
     margin-right: auto;
     display: flex;
-    flex-direction: row;
     text-align: center;
     align-items: center;
     gap: 5px;
     width: auto;
 }
 
-#invisivel {
+.container {
+    display: flex;
+    flex-direction: column;
+    color: black;
+    padding: 20px;
+    width: 300px;
+    margin-top: 70px;
+    align-items: center;
+    padding-left: 500px;
+}
+
+#numero {
+    display: flex;
+    flex-direction: row;
+    width: 1000px;
+    height: auto;
+    background-color: white;
+    margin-right: 90px;
+    margin-bottom: 20px;
+    justify-content: center;
+    color: #068A23;
+
+}
+
+#camponumero {
+    height: 50px;
+    width: 75px;
+    background-color: #d9d9d9;
+    color: #068A23;
+    font-size: 40px;
+    align-self: center;
+    margin-right: -300px;
+
+}
+
+#textonumero {
+    height: 50px;
     width: 100px;
-    margin-left: auto;
+    background-color: #d9d9d9;
+    color: black;
+    font-size: 30px;
+    align-self: center;
+    text-align: center;
+    margin-left: 200px;
+}
+
+h2 {
+    color: black;
+    justify-content: center;
+    text-align: center;
+    font-size: 40px;
+
+}
+
+.input-group {
+
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    margin-bottom: 15px;
+    width: 200px;
+    justify-content: center;
+}
+
+.input-group input {
+    background-color: #d9d9d9;
+    width: 90%;
+    padding: 10px;
+    border: 10px solid #ffffff;
+    border-radius: 4px;
+
+}
+
+.sidebar hr {
+        color: white;
+    }
+.sidebar #perfil {
+    flex-direction: row;
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+.sidebar {
+        height: auto;
+        width: 250px;
+        float: left;
+        left: 0%;
+        background-color: #6D6D6D;
+        color: #000000;
+        padding-top: 100px;
+        padding-bottom: 170px;
+    }
+.sidebar #func {
+        background-color: #cccccc;
+        font-size: larger;
+        color: #6D6D6D;
+    }
+.sidebar #itens {
+        font-size: larger;
+    }
+.sidebar #person{
+        font-size: xxx-large;
+    }
+.sidebar a {
+        display: block;
+        color: #d9d9d9;
+        padding: 10px 15px;
+        text-decoration: none;
+    }
+.sidebar a:hover {
+        background-color: #575757;
+    }
+.sidebar i {
+        font-size: x-large;
+    }
+.sidebar b {
+        font-size: large;
+    }
+
+
+/* Estilização do footer */
+.footer {
+    width: 100%;
+    height: 50px;
+    background-color: #ffffff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
 }
