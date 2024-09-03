@@ -39,19 +39,21 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        align-items: start;
 
     }
 
     main {
         height: auto;
-        width: 80%;
+        width: 100%;
         color: #111111;
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+
     }
 
     footer {
         height: 50px;
-        position: absolute;
         bottom: 0%;
         width: 100%;
         background-color: white;
@@ -74,6 +76,7 @@
         background-color: #6D6D6D;
         color: #000000;
         padding-top: 100px;
+        align-items: start;
     }
 
     .sidebar #func {
@@ -86,7 +89,7 @@
         font-size: larger;
     }
 
-    .sidebar #person{
+    .sidebar #person {
         font-size: xxx-large;
     }
 
@@ -110,6 +113,70 @@
         font-size: large;
     }
 
+    .meio {
+        margin-bottom: 0px;
+    }
+
+    .title {
+        background-color: white;
+        color: black;
+        width: 1300px;
+        text-align: center;
+        margin-top: 10px;
+
+    }
+
+    .formcadastro {
+        display: flex;
+        align-items: center;
+        align-content: start;
+        flex-direction: column;
+        padding: 50px;
+    }
+
+    .formcadastro input {
+        padding: 15px;
+        width: 773px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        margin-bottom: 20px;
+        margin-top: 5px;
+        transition: all linear 160ms;
+        outline: none;
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    .formcadastro input:focus {
+        border: 2px solid #000000;
+    }
+
+    .formcadastro label {
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .btn {
+        background-color: #ff0000;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        border: none !important;
+        transition: all linear 160ms;
+        cursor: pointer;
+        margin: 0 !important;
+        align-content: start;
+        align-items: start;
+
+    }
+
+    .btn:hover {
+        transform: scale(1.05);
+        background-color: #30ff02;
+
+    }
+
 </style>
 <body>
 <header>
@@ -124,20 +191,36 @@
     </div>
 </header>
 
-<div class="sidebar">
-    <i class="bi bi-person-circle" id="person"></i>  Olá, Nome Admin!
-    <hr>
-    <a href="#" id="func">Funcionarios</a>
-    <a href="#" id="itens">Itensㅤㅤㅤㅤㅤㅤㅤㅤ<i class="bi bi-arrow-down-short"></i></a>
-    <a href="#">ㅤTodos os itens</a>
-    <a href="#">ㅤRoupas</a>
-    <a href="#">ㅤFerramentas</a>
-    <a href="#">ㅤMatérias Primas</a>
-    <hr>
-    <a href="#"><b class="bi bi-box-arrow-left"> Logout</b></a>
-</div>
 
 <main>
+    <div class="sidebar">
+        <i class="bi bi-person-circle" id="person"></i> Olá, Nome Admin!
+        <hr>
+        <a href="#" id="func">Funcionarios</a>
+        <a href="#" id="itens">Itensㅤㅤㅤㅤㅤㅤ<i class="bi bi-arrow-down-short"></i></a>
+        <a href="#">ㅤTodos os itens</a>
+        <a href="#">ㅤRoupas</a>
+        <a href="#">ㅤFerramentas</a>
+        <a href="#">ㅤMatérias Primas</a>
+        <hr>
+        <a href="#"><b class="bi bi-box-arrow-left"> Logout</b></a>
+    </div>
+    <div class="meio">
+        <div class="title">
+            <h1>Cadastro de Itens</h1>
+
+        </div>
+        <div class="formcadastro">
+            <form>
+                <label for="name">Nome: </label>
+                <input type="name" autofocus="true"/>
+                <label for="password"></label>
+                <input type="password" autofocus="true"/>
+                <input type="submit" value="Cadastrar" class="btn"/>
+            </form>
+        </div>
+
+    </div>
 
 </main>
 
