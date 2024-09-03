@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Cadastro Funcionario</title>
+    <link rel="stylesheet" href="TelaCadastroFuncionario.css">
+
+</head>
+<body>
+<header>
+<div class="navbar navbar-expand-sm navbar-light bg-light" >
+    <div class="container-fluid">
+        <a class="navbar-brand" id="logo">
+            <img src="imagens/logo.png" width="60" height="60">
+            <strong class="koulen-regular">Tech Managers</strong>
+        </a>
+    </div>
+    </div>
+</header>
+<div class="container">
+        <h2>CADASTRE SEU FUNCIONÁRIO</h2>
+        <form>
+            <div class="input-group">
+                <label for="nome"><i class="fas fa-user"></i> NOME</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+            <div class="input-group">
+                <label for="email"><i class="fas fa-envelope"></i> EMAIL</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="cpf"><i class="fas fa-id-card"></i> CPF</label>
+                <input type="text" id="cpf" name="cpf" required>
+            </div>
+            <div class="input-group">
+                <label for="senha"><i class="fas fa-lock"></i> SENHA</label>
+                <input type="password" id="senha" name="senha" required>
+            </div>
+            <button type="submit" class="btn">CADASTRAR</button>
+        </form>
+    </div>
+<footer class="footer"></footer>
+
+</body>
+</html>
