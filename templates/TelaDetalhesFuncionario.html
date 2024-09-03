@@ -3,8 +3,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
-    <title>Cadastro Funcionario</title>
-    <link rel="stylesheet" href="TelaCadastroFuncionario.css">
+    <title>Detalhes Funcionario</title>
+    <link rel="stylesheet" href="TelaDetalhesFuncionario.css">
 
 </head>
 <body>
@@ -24,18 +24,17 @@
     <img src="imagens/icone_perfil.png" width="60" height="60">
     <i class="bi bi-person-circle" id="person"></i>Ola , Nome Admin!</p>
     <hr>
-    <hr>
     <a href="#" id="func">Funcionarios</a>
     <a href="#" id="itens">Itensㅤㅤㅤㅤㅤㅤㅤㅤ<i class="bi bi-arrow-down-short"></i></a>
     <a href="#">ㅤTodos os itens</a>
     <a href="#">ㅤRoupas</a>
     <a href="#">ㅤFerramentas</a>
     <a href="#">ㅤMatérias Primas</a>
-    <hr>
+    </hr>
     <a href="#"><b class="bi bi-box-arrow-left"> Logout</b></a>
 </div>
 <div class="container">
-        <h2>CADASTRE SEU FUNCIONÁRIO</h2>
+        <h2>DETALHES FUNCIONARIO</h2>
         <form>
             <div class="input-group">
                 <label for="nome"><i class="fas fa-user"></i> NOME</label>
@@ -53,7 +52,10 @@
                 <label for="senha"><i class="fas fa-lock"></i> SENHA</label>
                 <input type="password" id="senha" name="senha" required>
             </div>
-            <button type="submit" class="btn">CADASTRAR</button>
+            <div class="input-group">
+                <label for="ID"><i class="fas fas-card"></i> ID</label>
+                <input type="number" id="ID" name="ID" required>
+            </div>
         </form>
     </div>
 </main>
