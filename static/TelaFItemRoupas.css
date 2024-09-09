@@ -177,17 +177,6 @@ h2 {
         font-size: large;
     }
 
-thead {
-    background-color: #d9d9d9;
-    height: auto;
-    width: auto;
-    font-size: xx-large;
-
-}
-th > p {
-    border: 1px solid black;
-    margin-bottom: 20px;
-}
 
 th {
     padding:5px;
