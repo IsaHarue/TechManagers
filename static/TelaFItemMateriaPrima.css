@@ -77,7 +77,19 @@ header {
     font-size: 40px;
     align-self: center;
     margin-right: -300px;
+}
 
+#nome {
+    height: 20px;
+    width: 75px;
+    color: black;
+    font-size: 15px;
+}
+#nomenumero {
+    height: 20px;
+    width: 60px;
+    color: red;
+    font-size: 30px;
 }
 
 #textonumero {
@@ -91,6 +103,8 @@ header {
     margin-left: 200px;
 }
 
+
+
 h2 {
     color: black;
     justify-content: center;
@@ -100,22 +114,21 @@ h2 {
 }
 
 .input-group {
+    border: 10px solid #ffffff;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     text-align: start;
     margin-bottom: 15px;
-    width: 150px;
-
+    width: 175px;
     justify-content: center;
 }
 
 .input-group input {
     background-color: #d9d9d9;
     width: 90%;
+    padding: 10px;
+    border: none;
 
-    border: 10px solid #ffffff;
-    border-radius: 4px;
-    font-size: 20px;
 }
 
 .sidebar hr {
@@ -164,6 +177,12 @@ h2 {
         font-size: large;
     }
 
+
+th {
+    padding:5px;
+    padding-right: 100px;
+    padding-left: 100px;
+}
 
 /* Estilização do footer */
 .footer {
