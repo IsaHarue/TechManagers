@@ -16,9 +16,13 @@ spec = FlaskPydanticSpec('flask',
                          version='1.0')
 spec.register(app)
 
-@app.route('/')
+@app.route('/teste')
 def inicial():
     return render_template("teste.html")
+
+@app.route('/TelaF')
+def TelaF():
+    return render_template("TelaFuncionario.html")
 
 # ___________________________FUNCIONARIO____________________________
 @app.route('/add_funcionario', methods=['POST'])
