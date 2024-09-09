@@ -3,18 +3,10 @@ import email
 from flask import Flask, request, Response, render_template
 import json
 import sqlalchemy
-from flask_restful import Api, Resource
 from sqlalchemy import select
 from models import Funcionario, db_session, ITEM, MOVIMENTACAO
-from flask_pydantic_spec import FlaskPydanticSpec
 
 app = Flask(__name__)
-api = Api(app)
-
-spec = FlaskPydanticSpec('flask',
-                         title='TechManagers API - SENAI',
-                         version='1.0')
-spec.register(app)
 
 @app.route('/teste')
 def inicial():
@@ -23,6 +15,30 @@ def inicial():
 @app.route('/TelaF')
 def TelaF():
     return render_template("TelaFuncionario.html")
+
+@app.route('/TelaCF')
+def TelaCF():
+    return render_template("TelaCadastroFuncionario.html")
+
+@app.route('/TelaCItem')
+def TelaCItem():
+    return render_template("TelaCadastroItem.html")
+
+@app.route('/TelaDF')
+def TelaDF():
+    return render_template("TelaDetalhesFuncionario.html")
+
+@app.route('/TelaDItem')
+def TelaDItem():
+    return render_template("TelaDetalhesItem.html")
+
+@app.route('/TelaEF')
+def TelaEF():
+    return render_template("TelaEdicaoFuncionario.html")
+
+@app.route('/TelaEItem')
+def TelaEItem():
+    return render_template("TelaEdicaoItem.html")
 
 # ___________________________FUNCIONARIO____________________________
 @app.route('/add_funcionario', methods=['POST'])
