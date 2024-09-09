@@ -92,16 +92,18 @@ class ITEM(Base):
 class MOVIMENTACAO(Base):
     __tablename__ = 'movimentacao'
     id = Column(Integer, primary_key=True, unique=True, nullable=False, index=True)
-    movimentacao_item = Column(Integer, nullable=False)
+    item_quantidade = Column(Integer, ForeignKey('item.id'))
     item_id = Column(Integer, ForeignKey('item.id'), nullable=False)
     item = relationship('item', backref='item')
+    tipo_movimentacao = Column(Integer, nullable=False)
     funcionario_id = Column(Integer, ForeignKey('funcionario.id'), nullable=False)
     funcionario = relationship('FUNCIONARIO', backref='funcionarios')
-    data_estoque = Column(String(255), nullable=False, index=True)
-    estoque_quantidade = Column(Integer, ForeignKey('item.id'))
+    movimentacao_item = Column(Integer, nullable=False)
+    data_movimentacao = Column(String(255), nullable=False, index=True)
+
 
     def __repr__(self):
-        return '<Entrega: {}>'.format(self.movimentacao_item, self.item_id, self.funcionario_id, self.data_estoque, self.estoque_quantidade)
+        return '<Entrega: {}>'.format(self.item_quantidade, self.item_id, self.funcionario_id, self.tipo_movimentacao, self.movimentacao_item, self.data_movimentacao)
 
     def save(self):
         db_session.add(self)
@@ -113,12 +115,13 @@ class MOVIMENTACAO(Base):
 
     def serialize_entrega(self):
         dados_entrega = {
-            'estoque_id': self.id,
-            'estoque_quantidade': self.estoque_quantidade,
+            'movimentacao_id': self.id,
+            'item_quantidade': self.item_quantidade,
             'item_id': self.item_id,
             'funcionario_id': self.funcionario_id,
+            'tipo_movimentacao': self.tipo_movimentacao,
             'movimentacao_item': self.movimentacao_item,
-            'data_estoque': self.data_estoque
+            'data_movimentacao': self.data_movimentacao
         }
         return dados_entrega
 

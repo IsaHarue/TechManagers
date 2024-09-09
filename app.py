@@ -366,17 +366,19 @@ def ad():
     try:
         movimentacao = MOVIMENTACAO(funcionario_id=int(request.form['funcionario_id']),
                             item_id=int(request.form['item_id']),
-                            estoque_quantidade=request.form['estoque_quantidade'],
-                            movimentacao_item=request.form['movimentacao_item'],
-                            data_estoque=request.form['data_estoque'])
+                            item_quantidade=request.form['item_quantidade'],
+                            tipo_movimentacao=request.form['tipo_movimentacao'],
+                            data_movimentacao=request.form['data_movimentacao'],
+                            movimentacao_item=request.form['movimentacao_item'])
         db_session.add(movimentacao)
         movimentacao.save()
         final = {
             'status': 'ok',
             'funcionario_id': movimentacao.funcionario_id,
             'item_id': movimentacao.item_id,
-            'estoque_quantidade': movimentacao.estoque_quantidade,
-            'data_estoque': movimentacao.data_estoque,
+            'item_quantidade': movimentacao.item_quantidade,
+            'tipo_movimentacao': movimentacao.tipo_movimentacao,
+            'data_movimentacao': movimentacao.data_movimentacao,
             'movimentacao_item': movimentacao.movimentacao_item
         }
         return app.response_class(response=json.dumps(final),
@@ -404,17 +406,19 @@ def update_movimentacao(id):
         movimentacao = db_session.execute(movimentacao).scalar()
         movimentacao.funcionario_id = request.form['funcionario_id']
         movimentacao.item_id = request.form['item_id']
-        movimentacao.estoque_quantidade = request.form['estoque_quantidade']
+        movimentacao.item_quantidade = request.form['item_quantidade']
+        movimentacao.tipo_movimentacao = request.form['tipo_movimentacao']
         movimentacao.movimentacao_item = request.form['movimentacao_item']
-        movimentacao.data_estoque = request.form['data_Estoque']
+        movimentacao.data_movimentacao = request.form['data_movimentacao']
         db_session.commit()
         final = {
             'status': 'ok',
             'funcionario_id': movimentacao.funcionario_id,
             'item_id': movimentacao.item_id,
-            'estoque_quantidade': movimentacao.estoque_quantidade,
+            'item_quantidade': movimentacao.item_quantidade,
+            'tipo_movimentacao': movimentacao.tipo_movimentacao,
             'movimentacao_item': movimentacao.movimentacao_item,
-            'data_estoque': movimentacao.data_estoque
+            'data_movimentacao': movimentacao.data_movimentacao
         }
 
         return app.response_class(response=json.dumps(final), status=201, mimetype='application/json')
@@ -457,9 +461,10 @@ def delete_movimentacao(id):
             'status': 'removido',
             'funcionario_id': movimentacao.funcionario_id,
             'item_id': movimentacao.item_id,
-            'data_estoque': movimentacao.data_estoque,
+            'tipo_movimentacao': movimentacao.tipo_movimentacao,
             'movimetacao_item': movimentacao.movimentacao_item,
-            'estoque_quantidade': movimentacao.estoque_quantidade}
+            'item_quantidade': movimentacao.item_quantidade,
+            'data_movimentacao': movimentacao.data_movimentacao}
         db_session.delete(movimentacao)
         db_session.commit()
         return Response(response=json.dumps(final),
