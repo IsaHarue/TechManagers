@@ -20,11 +20,8 @@
 
 body {
     background-color: #d9d9d9; /* cinza */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: auto;
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
 }
 
 header {
@@ -37,6 +34,7 @@ header {
     justify-items: center;
     text-align: center;
     justify-content: flex-start;
+    grid-column: span 3;
 }
 
 #logo {
@@ -51,17 +49,18 @@ header {
 main {
     height: 100%;
     width: 100%;
+    min-height:100vh;
     display: flex;
     flex-direction: row;
     align-items: start;
-    background-color: #C2C2C2;
+    grid-column: span 2;
 }
 
 footer {
     height: 50px;
     width: 100%;
     background-color: white;
-
+    grid-column: span 3;
 }
 
 
@@ -70,14 +69,14 @@ footer {
     margin-left: auto;
 }
 
-.sidebar hr {
+aside hr {
     border: 1px solid #d9d9d9;
     margin-top: 10px;
     margin-bottom: 20px;
     margin-left: 10px;
 }
 
-.sidebar {
+aside {
     height: inherit;
     width: 300px;
     background-color: #C2C2C2;
@@ -87,6 +86,7 @@ footer {
     font-size: 18px;
     display: flex;
     flex-direction: column;
+    grid-column: span 1;
 }
 
 #person {

@@ -12,16 +12,13 @@
 <body>
 <header>
     <a class="navbar-brand" id="logo">
-        <img src="logo.png" width="60" height="60">
+        <img src="imagens/logo.png" width="60" height="60">
         <strong class="koulen-regular" id="txt_logo">Tech Managers</strong>
     </a>
 
 </header>
-
-
-<main>
-    <div class="sidebar">
-        <div class="pessoa"><i class="bi bi-person-circle" id="person"></i>
+<aside class="sidebar">
+     <div class="pessoa"><i class="bi bi-person-circle" id="person"></i>
             <p>Olá, Nome</p></div>
         <hr>
         <dl class="lista">
@@ -35,7 +32,9 @@
         <hr>
         <div class="deslogar"><i class="bi bi-box-arrow-left" id="logout"></i>
             <p>Logout</p></div>
-    </div>
+</aside>
+
+<main>
     <div class="meio">
         {% block conteudo %} {% endblock %}
     </div>
