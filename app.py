@@ -1,6 +1,6 @@
 import email
 
-from flask import Flask, request, Response
+from flask import Flask, request, Response, render_template
 import json
 import sqlalchemy
 from flask_restful import Api, Resource
@@ -17,8 +17,8 @@ spec = FlaskPydanticSpec('flask',
 spec.register(app)
 
 @app.route('/')
-def Hello_Word():
-    return 'Hello World!'
+def inicial():
+    return render_template("teste.html")
 
 # ___________________________FUNCIONARIO____________________________
 @app.route('/add_funcionario', methods=['POST'])
