@@ -92,7 +92,7 @@ class ITEM(Base):
 class MOVIMENTACAO(Base):
     __tablename__ = 'movimentacao'
     id = Column(Integer, primary_key=True, unique=True, nullable=False, index=True)
-    movimentacao_item = Column(String(40), nullable=False)
+    movimentacao_item = Column(Integer, nullable=False)
     item_id = Column(Integer, ForeignKey('item.id'), nullable=False)
     item = relationship('item', backref='item')
     funcionario_id = Column(Integer, ForeignKey('funcionario.id'), nullable=False)
