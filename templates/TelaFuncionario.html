@@ -2,20 +2,25 @@
 
 
 {% block conteudo %}
-<body>
-<main>
-<div class="container">
+    <link rel="stylesheet" href="/static/TelaFuncionario.css">
+
+    <div class="container">
         <div id="numero">
-            <h2>FUNCIONARIOS</h2>
-            <p for="numero" id="textonumero"> TOTAL</p>
-            <input type="number" id="camponumero" name="numero" required>
-        </div>
-        <form>
-            <div class="input-group">
-                <input type="text" id="nome" name="nome" required>
+            <div class="titulo"><p>FUNCIONARIOS</p></div>
+            <div class="campoTotal">
+                <p for="numero" id="textonumero"> TOTAL:</p>
+                <input type="number" id="camponumero" name="numero" required>
             </div>
-        </form>
+
+        </div>
+        <div class="cards">
+            <form class="input-group">
+                <input type="text" id="nome" name="nome" required>
+            </form>
+            <form class="input-group">
+                <input type="text" id="nome" name="nome" required>
+            </form>
+        </div>
     </div>
-</main>
-</body>
+
 {% endblock %}
