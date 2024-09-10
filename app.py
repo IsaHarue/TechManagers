@@ -16,6 +16,22 @@ def inicial():
 def TelaF():
     return render_template("TelaFuncionario.html")
 
+@app.route('/TelaFI')
+def TelaFI():
+    return render_template("TelaFItem.html")
+
+@app.route('/TelaFM')
+def TelaFM():
+    return render_template("TelaFItemMateriaPrima.html")
+
+@app.route('/TelaFR')
+def TelaFR():
+    return render_template("TelaFItemRoupas.html")
+
+@app.route('/TelaFF')
+def TelaFF():
+    return render_template("TelaFItemFerramentas.html")
+
 @app.route('/TelaCF')
 def TelaCF():
     return render_template("TelaCadastroFuncionario.html")
