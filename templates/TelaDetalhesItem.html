@@ -1,11 +1,38 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Detalhes Item</title>
+    <link rel="stylesheet" href="../static/TelaDetalhesItem.css">
 
-
-{% block conteudo %}
-
+</head>
 <body>
-<link rel="stylesheet" href="../static/TelaDetalhesItem.css">
+<header>
+<div class="navbar navbar-expand-sm navbar-light bg-light" >
+    <div class="container-fluid">
+        <a class="navbar-brand" id="logo">
+            <img src="imagens/logo.png" width="60" height="60">
+            <strong class="koulen-regular">Tech Managers</strong>
+        </a>
+    </div>
+    </div>
+</header>
 <main>
+<div class="sidebar">
+    <p href="#" id="perfil">
+    <img src="imagens/icone_perfil.png" width="60" height="60">
+    <i class="bi bi-person-circle" id="person"></i>Ola , Nome Admin!</p>
+    <hr>
+    <a href="#" id="func">Funcionarios</a>
+    <a href="#" id="itens">Itensㅤㅤㅤㅤㅤㅤㅤㅤ<i class="bi bi-arrow-down-short"></i></a>
+    <a href="#">ㅤTodos os itens</a>
+    <a href="#">ㅤRoupas</a>
+    <a href="#">ㅤFerramentas</a>
+    <a href="#">ㅤMatérias Primas</a>
+    <hr>
+    <a href="#"><b class="bi bi-box-arrow-left"> Logout</b></a>
+</div>
 <div class="container">
         <h2>DETALHES DE ITENS</h2>
         <form>
@@ -28,5 +55,7 @@
         </form>
     </div>
 </main>
+<footer class="footer"></footer>
+
 </body>
-{% endblock %}
+</html>
