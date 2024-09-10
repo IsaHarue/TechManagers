@@ -95,6 +95,10 @@ def telamateriaprima():
 def telafuncionarios():
     return render_template("TelaAFuncionarios.html")
 
+@app.route('/TelaAItens')
+def telaitens():
+    return render_template("TelaAItens.html")
+
 
 # ___________________________FUNCIONARIO____________________________
 @app.route('/add_funcionario', methods=['POST'])
