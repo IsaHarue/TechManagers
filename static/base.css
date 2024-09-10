@@ -124,6 +124,7 @@ aside {
 
 .deslogar:hover {
     font-weight: bold;
+    cursor: pointer;
 }
 
 .deslogar p {
@@ -143,6 +144,7 @@ dt {
     margin-bottom: 10px;
 }
 
+
 .dt2{
     margin-bottom: 15px;
 }
@@ -154,6 +156,7 @@ dd {
 
 dl #txt:hover {
     color: black;
+    cursor: pointer;
 }
 
 

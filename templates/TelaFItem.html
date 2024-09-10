@@ -1,148 +1,50 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Tela F-Item</title>
-    <link rel="stylesheet" href="../static/TelaFItem.css">
-</head>
-<body>
-    <header>
-<div class="navbar navbar-expand-sm navbar-light bg-light" >
-    <div class="container-fluid">
-        <a class="navbar-brand" id="logo">
-            <img src="../static/imagens/logo.png" width="60" height="60">
-            <strong class="koulen-regular">Tech Managers</strong>
-        </a>
-    </div>
-    </div>
-</header>
-<main>
-<div class="sidebar">
-    <p href="#" id="perfil">
-    <img src="../static/imagens/icone_perfil.png" width="60" height="60">
-    <i class="bi bi-person-circle" id="person"></i>Ola , Nome Admin!</p>
-    <hr>
-    <a href="#" id="func">Funcionarios</a>
-    <a href="#" id="itens">Itensㅤㅤㅤㅤㅤㅤㅤㅤ<i class="bi bi-arrow-down-short"></i></a>
-    <a href="#">ㅤTodos os itens</a>
-    <a href="#">ㅤRoupas</a>
-    <a href="#">ㅤFerramentas</a>
-    <a href="#">ㅤMatérias Primas</a>
-    <hr>
-    <a href="#"><b class="bi bi-box-arrow-left"> Logout</b></a>
-</div>
-<div class="container">
+{% extends "base.html" %}
+
+
+{% block conteudo %}
+    <link rel="stylesheet" href="/static/TelaFItem.css">
+
+    <div class="container">
         <div id="numero">
-            <h2>ITENS</h2>
-            <p for="numero" id="textonumero"> TOTAL</p>
-            <input type="number" id="camponumero" name="numero" required>
-        </div>
-    <table>
-        <thead>
-            <tr>
-                <th>
-                <p>MATERIA PRIMA</p>
-                </th>
-                <th>
-                <p>ROUPAS</p>
-                </th>
-                <th>
-                <p>FERRAMENTAS</p>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th><div class="input-group">
-                <input type="text" id="nome" name="nome" required>
-                <input type="number" id="nomenumero" name="numero" required>
+            <div class="titulo"><p>ITENS</p></div>
+            <div class="campoTotal">
+                <p for="numero" id="textonumero"> TOTAL:</p>
+                <input type="number" id="camponumero" name="numero" required>
             </div>
-                </th>
 
-                <th><div class="input-group">
+        </div>
+        <div class="cards">
+            <div class="materias">
+                <p>MATERIA PRIMA</p>
+                <form class="input-group">
                 <input type="text" id="nome" name="nome" required>
-                <input type="number" id="nomenumero" name="numero" required>
-            </div>
-                </th>
-                <th><div class="input-group">
+                <input type="number" id="camponumeroCard" required>
+            </form>
+                <form class="input-group">
                 <input type="text" id="nome" name="nome" required>
-                <input type="number" id="nomenumero" name="numero" required>
-            </div>
-                </th>
-            </tr>
-            <tr>
-                <th><div class="input-group">
+                <input type="number" id="camponumeroCard" required>
+            </form>
+                <form class="input-group">
                 <input type="text" id="nome" name="nome" required>
-                <input type="number" id="nomenumero" name="numero" required>
+                <input type="number" id="camponumeroCard" required>
+            </form>
             </div>
-                </th>
-                <th><div class="input-group">
+            <div class="roupas">
+                <p>ROUPAS</p>
+                <form class="input-group">
                 <input type="text" id="nome" name="nome" required>
-                <input type="number" id="nomenumero" name="numero" required>
+                <input type="number" id="camponumeroCard" required>
+            </form>
             </div>
-                </th>
-                <th><div class="input-group">
+            <div class="ferramentas">
+                <p>FERRAMENTAS</p>
+                <form class="input-group">
                 <input type="text" id="nome" name="nome" required>
-                <input type="number" id="nomenumero" name="numero" required>
+                <input type="number" id="camponumeroCard" required>
+            </form>
             </div>
-                </th>
-            </tr>
-            <tr>
-                <th><div class="input-group">
-                <input type="text" id="nome" name="nome" required>
-                <input type="number" id="nomenumero" name="numero" required>
-            </div>
-                </th>
-                <th><div class="input-group">
-                <input type="text" id="nome" name="nome" required>
-                <input type="number" id="nomenumero" name="numero" required>
-            </div>
-                </th>
-                <th><div class="input-group">
-                <input type="text" id="nome" name="nome" required>
-                <input type="number" id="nomenumero" name="numero" required>
-            </div>
-                </th>
-            </tr>
-            <tr>
-                <th><div class="input-group">
-                <input type="text" id="nome" name="nome" required>
-                <input type="number" id="nomenumero" name="numero" required>
-            </div>
-                </th>
-                <th><div class="input-group">
-                <input type="text" id="nome" name="nome" required>
-                <input type="number" id="nomenumero" name="numero" required>
-            </div>
-                </th>
-                <th><div class="input-group">
-                <input type="text" id="nome" name="nome" required>
-                <input type="number" id="nomenumero" name="numero" required>
-            </div>
-                </th>
-            </tr>
-        <tr>
-                <th><div class="input-group">
-                <input type="text" id="nome" name="nome" required>
-                <input type="number" id="nomenumero" name="numero" required>
-            </div>
-                </th>
-                <th><div class="input-group">
-                <input type="text" id="nome" name="nome" required>
-                <input type="number" id="nomenumero" name="numero" required>
-            </div>
-                </th>
-                <th><div class="input-group">
-                <input type="text" id="nome" name="nome" required>
-                <input type="number" id="nomenumero" name="numero" required>
-            </div>
-                </th>
-            </tr>
-        </tbody>
-    </table>
+
+        </div>
     </div>
 
-</main>
-<footer class="footer"></footer>
-</body>
-</html>
+{% endblock %}
