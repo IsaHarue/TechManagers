@@ -8,6 +8,7 @@ from models import Funcionario, db_session, ITEM, MOVIMENTACAO
 
 app = Flask(__name__)
 
+
 @app.route('/teste')
 def inicial():
     return render_template("teste.html")
@@ -19,6 +20,7 @@ def login():
 @app.route('/base')
 def base():
     return render_template("base.html")
+
 
 @app.route('/TelaF')
 def TelaF():
@@ -40,25 +42,31 @@ def TelaFR():
 def TelaFF():
     return render_template("TelaFItemFerramentas.html")
 
+
 @app.route('/TelaCF')
 def TelaCF():
     return render_template("TelaCadastroFuncionario.html")
+
 
 @app.route('/TelaCItem')
 def TelaCItem():
     return render_template("TelaCadastroItem.html")
 
+
 @app.route('/TelaDF')
 def TelaDF():
     return render_template("TelaDetalhesFuncionario.html")
+
 
 @app.route('/TelaDItem')
 def TelaDItem():
     return render_template("TelaDetalhesItem.html")
 
+
 @app.route('/TelaEF')
 def TelaEF():
     return render_template("TelaEdicaoFuncionario.html")
+
 
 @app.route('/TelaEItem')
 def TelaEItem():
@@ -68,6 +76,26 @@ def TelaEItem():
 def TelaRF():
     return render_template("RelatorioFuncionarios.html")
 
+
+@app.route('/TelaAFerramentas')
+def telaferramentas():
+    return render_template("TelaAFerramentas.html")
+
+
+@app.route('/TelaARoupas')
+def telaroupas():
+    return render_template("TelaARoupas.html")
+
+
+@app.route('/TelaAMateriaPrima')
+def telamateriaprima():
+    return render_template("TelaAMateriaPrima.html")
+
+@app.route('/TelaAFuncionarios')
+def telafuncionarios():
+    return render_template("TelaAFuncionarios.html")
+
+
 # ___________________________FUNCIONARIO____________________________
 @app.route('/add_funcionario', methods=['POST'])
 def addd():
@@ -75,11 +103,11 @@ def addd():
     #Para que esta rota funcione é necessario passar algumas informações(nome; email; cpf...)'''
     try:
         funcionario = Funcionario(
-                    nome=request.form['nome'],
-                    email=request.form['email'],
-                    cpf=request.form['cpf'],
-                    senha=request.form['senha'],
-                    admin=request.form['admin'])
+            nome=request.form['nome'],
+            email=request.form['email'],
+            cpf=request.form['cpf'],
+            senha=request.form['senha'],
+            admin=request.form['admin'])
         db_session.add(funcionario)
         funcionario.save()
         final = {
@@ -91,8 +119,8 @@ def addd():
             'admin': funcionario.admin}
 
         return app.response_class(response=json.dumps(final),
-                                status= 201,
-                                mimetype='application/json')
+                                  status=201,
+                                  mimetype='application/json')
 
 
     except ValueError:
@@ -146,6 +174,7 @@ def updatee(id):
         }
         return app.response_class(response=json.dumps(final), status=409, mimetype='application/json')
 
+
 @app.route('/get_funcionarios', methods=['GET'])
 def cunsultar_usuarios():
     '''Esta rota é responsável por selecionar um usuario do database
@@ -158,10 +187,10 @@ def cunsultar_usuarios():
             result.append(consulta.serialize_funcionario())
             final = json.dumps(result)
         return Response(response=final,
-                    status=201,
-                    content_type='application/json')
+                        status=201,
+                        content_type='application/json')
     except sqlalchemy.exc.OperationalError:
-        final ={
+        final = {
             'status': 'erro',
             'mensagem': 'não foi possivel atualizar, verifique se o id é compatível no database'
 
@@ -173,6 +202,7 @@ def cunsultar_usuarios():
             'mensagem': 'Nenhum funcionario cadastrado'
         }
         return app.response_class(response=json.dumps(final), status=200, mimetype='application/json')
+
 
 @app.route('/get_funcionario/<int:id>', methods=['GET'])
 def cunsultar_usuarioo(id):
@@ -189,7 +219,7 @@ def cunsultar_usuarioo(id):
                         status=201,
                         content_type='application/json')
     except AttributeError:
-        final ={
+        final = {
             'status': 'erro',
             'mensagem': 'não foi possivel consultar, verifique se o id é compatível no database'
 
@@ -201,6 +231,7 @@ def cunsultar_usuarioo(id):
             'mensagem': 'cpf'
         }
         return app.response_class(response=json.dumps(final), status=409, mimetype='application/json')
+
 
 @app.route('/get_funcionario/<cpf>', methods=['GET'])
 def cunsultar_usuariocpf(cpf):
@@ -214,8 +245,8 @@ def cunsultar_usuariocpf(cpf):
             result.append(consulta.serialize_funcionario())
             final = json.dumps(result)
         return Response(response=final,
-                                status=201,
-                                content_type='application/json')
+                        status=201,
+                        content_type='application/json')
     except AttributeError:
         final = {
             'status': 'erro',
@@ -229,6 +260,7 @@ def cunsultar_usuariocpf(cpf):
             'mensagem': 'cpf'
         }
         return app.response_class(response=json.dumps(final), status=409, mimetype='application/json')
+
 
 @app.route('/delete_funcionario/<int:id>', methods=['DELETE'])
 def delete_funcionario(id):
@@ -249,17 +281,16 @@ def delete_funcionario(id):
         db_session.delete(funcionario)
         db_session.commit()
         return app.response_class(response=json.dumps(final),
-                            status=201,
-                            mimetype='application/json')
+                                  status=201,
+                                  mimetype='application/json')
     except AttributeError:
-        final ={
+        final = {
             'status': 'erro',
             'mensagem': 'não foi possivel deletar, verifique se o id é compatível no database'
         }
 
 
-
-# ________________________________ITEM________________________________
+# ________________________________EPI________________________________
 
 @app.route('/add_item', methods=['POST'])
 def add():
@@ -267,9 +298,9 @@ def add():
     #adiciona uma EPI no banco, esta EPI deve conter: nome, data_fabricacao, validade e description'''
     try:
         item = ITEM(nome=request.form['nome'],
-                tipo=request.form['tipo'],
-                Quantidade=request.form['quantidade'],
-                )
+                    tipo=request.form['tipo'],
+                    Quantidade=request.form['quantidade'],
+                    )
         db_session.add(ITEM)
         item.save()
         final = {
@@ -277,10 +308,10 @@ def add():
             'nome': item.nome,
             'tipo': item.tipo,
             'Quantidade': item.Quantidade
-            }
+        }
         return app.response_class(response=json.dumps(final),
-                              status=201,
-                              mimetype='application/json')
+                                  status=201,
+                                  mimetype='application/json')
     except ValueError:
         final = {
             'status': 'erro',
@@ -289,6 +320,7 @@ def add():
         return app.response_class(response=json.dumps(final),
                                   status=500,
                                   mimetype='application/json')
+
 
 @app.route('/update_item/<int:id>', methods=['PUT'])
 def update(id):
@@ -336,6 +368,7 @@ def update(id):
 
         return app.response_class(response=json.dumps(final), status=201, mimetype='application/json')
 
+
 @app.route('/delete_item/<int:id>', methods=['DELETE'])
 def delete(id):
     '''Esta rota é responsável por deletar um ITEM do database
@@ -352,8 +385,8 @@ def delete(id):
         db_session.delete(item)
         db_session.commit()
         return Response(response=json.dumps(final),
-                    status=201,
-                    mimetype='application/json')
+                        status=201,
+                        mimetype='application/json')
     except AttributeError:
         final = {
             'status': 'erro',
@@ -372,15 +405,16 @@ def cunsultar_itens():
             result.append(consulta.serialize_epi())
         final = json.dumps(result)
         return Response(response=final,
-                    status=201,
-                    content_type='application/json')
+                        status=201,
+                        content_type='application/json')
     except sqlalchemy.exc.OperationalError:
-        final ={
+        final = {
             'status': 'erro',
             'mensagem': 'não foi possivel atualizar, verifique se o id é compatível no database'
 
         }
         return app.response_class(response=json.dumps(final), status=409, mimetype='application/json')
+
 
 @app.route('/get_item/<int:id>', methods=['GET'])
 def cunsultar_item(id):
@@ -393,10 +427,10 @@ def cunsultar_item(id):
             result.append(consulta.serialize_epi())
         final = json.dumps(result)
         return Response(response=final,
-                    status=201,
-                    content_type='application/json')
+                        status=201,
+                        content_type='application/json')
     except AttributeError:
-        final ={
+        final = {
             'status': 'erro',
             'mensagem': 'não foi possivel consultar, verifique se o id é compatível no database'
 
@@ -413,25 +447,23 @@ def ad():
     é possivel cadastrar o entrega no banco'''
     try:
         movimentacao = MOVIMENTACAO(funcionario_id=int(request.form['funcionario_id']),
-                            item_id=int(request.form['item_id']),
-                            item_quantidade=request.form['item_quantidade'],
-                            tipo_movimentacao=request.form['tipo_movimentacao'],
-                            data_movimentacao=request.form['data_movimentacao'],
-                            movimentacao_item=request.form['movimentacao_item'])
+                                    item_id=int(request.form['item_id']),
+                                    estoque_quantidade=request.form['estoque_quantidade'],
+                                    movimentacao_item=request.form['movimentacao_item'],
+                                    data_estoque=request.form['data_estoque'])
         db_session.add(movimentacao)
         movimentacao.save()
         final = {
             'status': 'ok',
             'funcionario_id': movimentacao.funcionario_id,
             'item_id': movimentacao.item_id,
-            'item_quantidade': movimentacao.item_quantidade,
-            'tipo_movimentacao': movimentacao.tipo_movimentacao,
-            'data_movimentacao': movimentacao.data_movimentacao,
+            'estoque_quantidade': movimentacao.estoque_quantidade,
+            'data_estoque': movimentacao.data_estoque,
             'movimentacao_item': movimentacao.movimentacao_item
         }
         return app.response_class(response=json.dumps(final),
-                              status=201,
-                              mimetype='application/json')
+                                  status=201,
+                                  mimetype='application/json')
     except ValueError:
         final = {
             'status': 'erro',
@@ -454,19 +486,17 @@ def update_movimentacao(id):
         movimentacao = db_session.execute(movimentacao).scalar()
         movimentacao.funcionario_id = request.form['funcionario_id']
         movimentacao.item_id = request.form['item_id']
-        movimentacao.item_quantidade = request.form['item_quantidade']
-        movimentacao.tipo_movimentacao = request.form['tipo_movimentacao']
+        movimentacao.estoque_quantidade = request.form['estoque_quantidade']
         movimentacao.movimentacao_item = request.form['movimentacao_item']
-        movimentacao.data_movimentacao = request.form['data_movimentacao']
+        movimentacao.data_estoque = request.form['data_Estoque']
         db_session.commit()
         final = {
             'status': 'ok',
             'funcionario_id': movimentacao.funcionario_id,
             'item_id': movimentacao.item_id,
-            'item_quantidade': movimentacao.item_quantidade,
-            'tipo_movimentacao': movimentacao.tipo_movimentacao,
+            'estoque_quantidade': movimentacao.estoque_quantidade,
             'movimentacao_item': movimentacao.movimentacao_item,
-            'data_movimentacao': movimentacao.data_movimentacao
+            'data_estoque': movimentacao.data_estoque
         }
 
         return app.response_class(response=json.dumps(final), status=201, mimetype='application/json')
@@ -475,7 +505,6 @@ def update_movimentacao(id):
     except ValueError:
 
         final = {
-
 
             'status': 'erro',
 
@@ -497,6 +526,7 @@ def update_movimentacao(id):
 
         return app.response_class(response=json.dumps(final), status=201, mimetype='application/json')
 
+
 @app.route('/delete_movimentacao/<int:id>', methods=['DELETE'])
 def delete_movimentacao(id):
     '''Esta rota é responsável por deletar um esprestimo no database
@@ -509,15 +539,14 @@ def delete_movimentacao(id):
             'status': 'removido',
             'funcionario_id': movimentacao.funcionario_id,
             'item_id': movimentacao.item_id,
-            'tipo_movimentacao': movimentacao.tipo_movimentacao,
+            'data_estoque': movimentacao.data_estoque,
             'movimetacao_item': movimentacao.movimentacao_item,
-            'item_quantidade': movimentacao.item_quantidade,
-            'data_movimentacao': movimentacao.data_movimentacao}
+            'estoque_quantidade': movimentacao.estoque_quantidade}
         db_session.delete(movimentacao)
         db_session.commit()
         return Response(response=json.dumps(final),
-                    status=201,
-                    mimetype='application/json')
+                        status=201,
+                        mimetype='application/json')
     except AttributeError:
         final = {
             'status': 'erro',
@@ -537,10 +566,10 @@ def cunsultar_movimentacao():
             result.append(consulta.serialize_entrega())
         final = json.dumps(result)
         return Response(response=final,
-                    status=201,
-                    content_type='application/json')
+                        status=201,
+                        content_type='application/json')
     except sqlalchemy.exc.OperationalError:
-        final ={
+        final = {
             'status': 'erro',
             'mensagem': 'não foi possivel atualizar, verifique se o id é compatível no database'
 
@@ -552,6 +581,7 @@ def cunsultar_movimentacao():
             'mensagem': 'CA'
         }
         return app.response_class(response=json.dumps(final), status=409, mimetype='application/json')
+
 
 @app.route('/get_movimentacao/<int:id>', methods=['GET'])
 def cunsultar_movimentacaoid(id):
@@ -565,10 +595,10 @@ def cunsultar_movimentacaoid(id):
             result.append(consulta.serialize_entrega())
         final = json.dumps(result)
         return Response(response=final,
-                    status=201,
-                    content_type='application/json')
+                        status=201,
+                        content_type='application/json')
     except AttributeError:
-        final ={
+        final = {
             'status': 'erro',
             'mensagem': 'não foi possivel consultar, verifique se o id é compatível no database'
 
