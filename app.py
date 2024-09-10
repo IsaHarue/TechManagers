@@ -12,6 +12,10 @@ app = Flask(__name__)
 def inicial():
     return render_template("teste.html")
 
+@app.route('/base')
+def base():
+    return render_template("base.html")
+
 @app.route('/TelaF')
 def TelaF():
     return render_template("TelaFuncionario.html")
@@ -39,6 +43,10 @@ def TelaEF():
 @app.route('/TelaEItem')
 def TelaEItem():
     return render_template("TelaEdicaoItem.html")
+
+@app.route('/TelaRF')
+def TelaRF():
+    return render_template("RelatorioFuncionarios.html")
 
 # ___________________________FUNCIONARIO____________________________
 @app.route('/add_funcionario', methods=['POST'])
