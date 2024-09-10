@@ -12,6 +12,10 @@ app = Flask(__name__)
 def inicial():
     return render_template("teste.html")
 
+@app.route('/login')
+def login():
+    return render_template("login.html")
+
 @app.route('/base')
 def base():
     return render_template("base.html")
