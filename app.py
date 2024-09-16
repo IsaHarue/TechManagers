@@ -21,7 +21,7 @@ def login():
 def base():
     return render_template("base.html")
 
-
+# ------------------------------------------- FUNCIONARIO ------------------------------------------------
 @app.route('/TelaF')
 def TelaF():
     return render_template("TelaFuncionario.html")
@@ -42,60 +42,56 @@ def TelaFR():
 def TelaFF():
     return render_template("TelaFItemFerramentas.html")
 
-
+# -------------------------------------------- CADASTRO ------------------------------------------------
 @app.route('/TelaCF')
 def TelaCF():
     return render_template("TelaCadastroFuncionario.html")
 
-
-@app.route('/TelaCItem')
+@app.route('/TelaCI')
 def TelaCItem():
     return render_template("TelaCadastroItem.html")
 
-
+# -------------------------------------------- DETALHES ------------------------------------------------
 @app.route('/TelaDF')
 def TelaDF():
     return render_template("TelaDetalhesFuncionario.html")
 
-
-@app.route('/TelaDItem')
+@app.route('/TelaDI')
 def TelaDItem():
     return render_template("TelaDetalhesItem.html")
 
-
+# -------------------------------------------- EDITAR ------------------------------------------------
 @app.route('/TelaEF')
 def TelaEF():
     return render_template("TelaEdicaoFuncionario.html")
 
-
-@app.route('/TelaEItem')
+@app.route('/TelaEI')
 def TelaEItem():
     return render_template("TelaEdicaoItem.html")
 
+# ------------------------------------ RELATORIO FUNCIONARIO --------------------------------------------
 @app.route('/TelaRF')
 def TelaRF():
     return render_template("RelatorioFuncionarios.html")
 
-
-@app.route('/TelaAFerramentas')
+# ---------------------------------------------- ADMIN ------------------------------------------------
+@app.route('/TelaAF')
 def telaferramentas():
     return render_template("TelaAFerramentas.html")
 
-
-@app.route('/TelaARoupas')
+@app.route('/TelaAR')
 def telaroupas():
     return render_template("TelaARoupas.html")
 
-
-@app.route('/TelaAMateriaPrima')
+@app.route('/TelaAM')
 def telamateriaprima():
     return render_template("TelaAMateriaPrima.html")
 
-@app.route('/TelaAFuncionarios')
+@app.route('/TelaAFun')
 def telafuncionarios():
     return render_template("TelaAFuncionarios.html")
 
-@app.route('/TelaAItens')
+@app.route('/TelaAI')
 def telaitens():
     return render_template("TelaAItens.html")
 
