@@ -1,40 +1,11 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Itens Admin</title>
-    <html lang="pt-BR">
-    <head>
-        <meta charset="UTF-8">
-        <title>Tela A-Item</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-        <link rel="stylesheet" href="../static/TelaAItens.css">
-    </head>
+{% extends "base.html" %}
+
+
+{% block conteudo %}
     <body>
-    <header>
-        <div class="navbar navbar-expand-sm navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" id="logo">
-                    <img src="../static/imagens/logo.png" width="60" height="60">
-                    <strong class="koulen-regular">Tech Managers</strong>
-                </a>
-            </div>
-        </div>
-    </header>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../static/TelaAItens.css">
     <main>
-        <div class="sidebar">
-            <p href="#" id="perfil">
-                <i class="bi bi-person-circle" id="person"> </i> Olá, Nome Admin!</p>
-            <hr>
-            <a href="#" id="func">Funcionarios</a>
-            <a href="#" id="itens">Itens</a>
-            <a href="#">ㅤTodos os itens</a>
-            <a href="#">ㅤRoupas</a>
-            <a href="#">ㅤFerramentas</a>
-            <a href="#">ㅤMatérias Primas</a>
-            <hr>
-            <a href="#"><b class="bi bi-box-arrow-left"> Logout</b></a>
-        </div>
         <div class="container">
             <div id="numero">
                 <h2 id="itens1">ITENS</h2>
@@ -101,9 +72,5 @@
         </div>
 
     </main>
-    <footer class="footer"></footer>
     </body>
-    </html>
-    </title>
-</head>
-</html>
+{% endblock %}
