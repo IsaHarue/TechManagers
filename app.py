@@ -25,7 +25,6 @@ def base():
 @app.route('/TelaF')
 def TelaF():
     return render_template("TelaFuncionario.html")
-
 @app.route('/TelaFI')
 def TelaFI():
     return render_template("TelaFItem.html")
