@@ -3,10 +3,33 @@
 {% block conteudo %}
 <link rel="stylesheet" href="../static/Teladegraficos.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
 <div class="container">
     <h1>Dashboard de Vendas</h1>
-    <div class="charts-containervaitomarnocu">
+
+    <div class="quadros-fofos">
+        <div class="card">
+            <i class="fas fa-dollar-sign"></i>
+            <h3>Total de Vendas</h3>
+            <p>R$ 25.000</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-users"></i>
+            <h3>Funcionários</h3>
+            <p>10 fofinhos</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-chart-line"></i>
+            <h3>Crescimento</h3>
+            <p>15%</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-coins"></i>
+            <h3>Lucro</h3>
+            <p>R$ 5.000</p>
+        </div>
+    </div>
+
+    <div class="charts-containers">
         <div class="chart-wrapper">
             <canvas id="salesBarChart"></canvas>
         </div>
@@ -26,7 +49,7 @@
     .container {
         max-width: 1200px;
         margin: 0 auto;
-        text-align: right;
+        text-align: center;
         padding: 20px;
         background-color: #f9f9f9;
         border-radius: 10px;
@@ -40,7 +63,39 @@
         text-align: center;
     }
 
-    .charts-containervaitomarnocu {
+    .quadros-fofos {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 20px;
+    }
+
+    .card {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 22%;
+        text-align: center;
+    }
+
+    .card i {
+        font-size: 2em;
+        margin-bottom: 15px;
+        color: #4CAF50;
+    }
+
+    .card h3 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .card p {
+        font-size: 1.2em;
+        color: #666;
+    }
+
+    .charts-containers {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -60,13 +115,22 @@
         padding: 10px;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         border-radius: 10px;
-        width: 100%; /* Ajusta o canvas para ocupar a largura do wrapper */
-        max-width: 600px; /* Limita o tamanho máximo do gráfico */
+        width: 100%; /* ajusta o canvas pra ocupar a largura do wrapper */
+        max-width: 600px; /* limita o tamanho máximo do gráfico */
         height: auto;
     }
 
     @media (max-width: 768px) {
-        .charts-container {
+        .quadros-fofos {
+            flex-direction: column;
+        }
+
+        .card {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .charts-containers {
             flex-direction: column;
         }
 
@@ -75,13 +139,13 @@
         }
 
         canvas {
-            max-width: 100%; /* Gráficos ocupam a largura total em telas menores */
+            max-width: 100%; /* gráficos ocupam a largura total em telas menores */
         }
     }
 </style>
 
 <script>
-    // Dados para o gráfico de barras
+    // dados e cores para o gráfico de barra
     const ctxBar = document.getElementById('salesBarChart').getContext('2d');
     const salesBarChart = new Chart(ctxBar, {
         type: 'bar',
@@ -116,7 +180,7 @@
         }
     });
 
-    // Dados para o gráfico de pizza
+    // cores e dados do gráfico de pizza
     const ctxPie = document.getElementById('salesPieChart').getContext('2d');
     const salesPieChart = new Chart(ctxPie, {
         type: 'pie',
