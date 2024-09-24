@@ -22,6 +22,10 @@ def base():
     return render_template("base.html")
 
 
+@app.route('/TelaGraficos')
+def TelaGraficos():
+    return render_template("TeladeGraficos.html")
+
 @app.route('/TelaF')
 def TelaF():
     return render_template("TelaFuncionario.html")
