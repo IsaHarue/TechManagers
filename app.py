@@ -1,21 +1,49 @@
 import email
+from lib2to3.pgen2 import driver
 
-from flask import Flask, request, Response, render_template
+from flask import Flask, request, Response, render_template, redirect, session, flash
 import json
 import sqlalchemy
-from sqlalchemy import select
+from sqlalchemy import select, true, false
 from models import Funcionario, db_session, ITEM, MOVIMENTACAO
 
+
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'TECHMANAGERS'
+
+
+@app.route('/')
+def home():
+    return redirect("/login")
 
 
 @app.route('/teste')
 def inicial():
     return render_template("teste.html")
 
-@app.route('/login')
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template("login.html")
+    admin_email = 'admin@gmail.com'
+    admin_senha = 'admin123'
+
+    if request.method == 'POST':
+        email = request.form.get('email')
+        senha = request.form.get('senha')
+        if email == admin_email and senha == admin_senha:
+            # Se o email e senha forem válidos, redireciona para a tela privada do admin
+            session['admin'] = True
+            return redirect("/TelaAI")
+        elif email == admin_email and senha != admin_senha:
+            flash('senha do admin incorreta')
+            return redirect("/login")
+        else:
+            # Se o email e senha forem inválidos, redireciona para a tela de login novamente
+            session['admin'] = False
+            return redirect("/TelaFI")
+    else:
+        return render_template('login.html')
+
 
 @app.route('/base')
 def base():
@@ -29,17 +57,22 @@ def TelaGraficos():
 @app.route('/TelaF')
 def TelaF():
     return render_template("TelaFuncionario.html")
+
+
 @app.route('/TelaFI')
 def TelaFI():
     return render_template("TelaFItem.html")
+
 
 @app.route('/TelaFM')
 def TelaFM():
     return render_template("TelaFItemMateriaPrima.html")
 
+
 @app.route('/TelaFR')
 def TelaFR():
     return render_template("TelaFItemRoupas.html")
+
 
 @app.route('/TelaFF')
 def TelaFF():
@@ -51,7 +84,7 @@ def TelaCF():
     return render_template("TelaCadastroFuncionario.html")
 
 
-@app.route('/TelaCItem')
+@app.route('/TelaCI')
 def TelaCItem():
     return render_template("TelaCadastroItem.html")
 
@@ -61,7 +94,7 @@ def TelaDF():
     return render_template("TelaDetalhesFuncionario.html")
 
 
-@app.route('/TelaDItem')
+@app.route('/TelaDI')
 def TelaDItem():
     return render_template("TelaDetalhesItem.html")
 
@@ -71,34 +104,37 @@ def TelaEF():
     return render_template("TelaEdicaoFuncionario.html")
 
 
-@app.route('/TelaEItem')
+@app.route('/TelaEI')
 def TelaEItem():
     return render_template("TelaEdicaoItem.html")
+
 
 @app.route('/TelaRF')
 def TelaRF():
     return render_template("RelatorioFuncionarios.html")
 
 
-@app.route('/TelaAFerramentas')
+@app.route('/TelaAFe')
 def telaferramentas():
     return render_template("TelaAFerramentas.html")
 
 
-@app.route('/TelaARoupas')
+@app.route('/TelaAR')
 def telaroupas():
     return render_template("TelaARoupas.html")
 
 
-@app.route('/TelaAMateriaPrima')
+@app.route('/TelaAM')
 def telamateriaprima():
     return render_template("TelaAMateriaPrima.html")
 
-@app.route('/TelaAFuncionarios')
+
+@app.route('/TelaAF')
 def telafuncionarios():
     return render_template("TelaAFuncionarios.html")
 
-@app.route('/TelaAItens')
+
+@app.route('/TelaAI')
 def telaitens():
     return render_template("TelaAItens.html")
 
@@ -620,4 +656,4 @@ def cunsultar_movimentacaoid(id):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

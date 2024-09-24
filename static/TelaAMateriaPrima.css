@@ -168,13 +168,19 @@
 }
 
 .input-group input[type=text]{
-    width: 100%;
+    width: 70%;
     padding-left: 10px;
     padding-right:5px;
     font-size: 16px;
     color: #6c6c6c;
 }
 
+.input-group input[type=number]{
+    width: 30%;
+    justify-self: end;
+    text-align: end;
+    font-size: 36px;
+}
 
 .botoes {
     display: flex;
@@ -209,4 +215,13 @@
     background-color: grey;
     border-radius: 10px;
     border: none;
+}
+
+.dt2 a{
+    color: black;
+    font-weight: bold;
+}
+
+.dd4 a{
+    color: black;
 }

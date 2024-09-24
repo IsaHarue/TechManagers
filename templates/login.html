@@ -20,17 +20,23 @@
         </div>
     </div>
 </header>
-
+    {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                    {% for message in messages %}
+                        <div id="mensagem"><h1>{{ message }}</h1></div>
+                    {% endfor %}
+            {% endif %}
+        {% endwith %}
 <main>
     <div class="page">
-         <img src="../static/imagens/Businesswomen%20shaking%20hands%20at%20work.png" id="imgLogin">
-        <form class="formLogin">
+        <img src="../static/imagens/Businesswomen%20shaking%20hands%20at%20work.png" id="imgLogin">
+        <form class="formLogin" method="post">
             <h1><b class="bi bi-person-circle"></b> Bem-Vindo</h1>
             <label for="email"><i class="bi bi-envelope"></i></label>
-            <input type="email" autofocus="true"/>
+            <input type="email" autofocus="true" name="email" required/>
             <label for="password"><i class="bi bi-lock"></i></label>
-            <input type="password" autofocus="true"/>
-            <input type="submit" value="LOGIN" class="btn"/>
+            <input type="password" autofocus="true" name="senha" required/>
+            <input type="submit" value="LOGIN" class="btn" name="botao"/>
         </form>
     </div>
 </main>

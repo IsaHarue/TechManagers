@@ -110,3 +110,8 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
 }
+
+.dt1 a{
+    color: black;
+    font-weight: bold;
+}

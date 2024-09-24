@@ -79,7 +79,7 @@ aside hr {
 
 aside {
     height: inherit;
-    width: 300px;
+    width: 250px;
     background-color: #C2C2C2;
     color: #6c6c6c;
     padding-top: 10px;
@@ -127,8 +127,9 @@ aside {
     cursor: pointer;
 }
 
-.deslogar p {
+.deslogar a {
     margin-left: 5px;
+    color: black;
 }
 
 
@@ -154,7 +155,7 @@ dd {
     margin-bottom: 10px;
 }
 
-dl #txt:hover {
+dl #txt a:hover {
     color: black;
     cursor: pointer;
 }
@@ -164,4 +165,9 @@ dl #txt:hover {
     width: 100%;
     height: 100%;
     background-color: #d9d9d9;
+}
+
+a{
+    text-decoration: none;
+    color: #6c6c6c;
 }

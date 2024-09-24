@@ -121,3 +121,12 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
 }
+
+.dt2 a{
+    color: black;
+    font-weight: bold;
+}
+
+.dd4 a{
+    color: black;
+}
