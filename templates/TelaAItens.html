@@ -2,75 +2,66 @@
 
 
 {% block conteudo %}
-    <body>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../static/TelaAItens.css">
-    <main>
-        <div class="container">
-            <div id="numero">
-                <h2 id="itens1">ITENS</h2>
-                <div class="botoestitle" id="ladinho">
-                    <button id="btn1"><i class="bi bi-plus-lg"></i></button>
-                    <button id="btn2"><i class="bi bi-file-earmark-text"></i></button>
-                    <button id="btn3"><img src="../static/imagens/Graphic.png" height="20" width="20"></button>
-                </div>
+    <link rel="stylesheet" href="/static/TelaAItens.css">
+    <div class="container">
+        <div id="numero">
+            <p class="titulo">Ferramentas</p>
+            <div class="botoestitle" id="ladinho">
+                <button id="btn1"><i class="bi bi-plus-lg"></i></button>
+                <button id="btn2"><i class="bi bi-file-earmark-text"></i></button>
+                <button id="btn3"><img src="../static/imagens/Graphic.png"></button>
             </div>
-            <div id="total">
-                <p for="numero" id="textonumero"> TOTAL: </p>
-                <input type="number" id="camponumero" name="numero" required>
-            </div>
-            <table>
-                <thead>
-                <tr>
-                    <th>
-                        <p>MATERIA PRIMA</p>
-                    </th>
-                    <th>
-                        <p>ROUPAS</p>
-                    </th>
-                    <th>
-                        <p>FERRAMENTAS</p>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th>
-                        <div class="card">
-                            <div class="input-group">
-                                <input type="text" id="nome" name="nome" required>
-                                <input type="number" id="nomenumero" name="numero" required>
-                            </div>
-
-                            <div class="botoes">
-                                <button id="btn1"><i class="bi bi-pencil"></i></button>
-                                <button id="btn2"><i class="bi bi-trash"></i></button>
-                                <button id="btn3"><i class="bi bi-info-circle"></i></button>
-                            </div>
-                        </div>
-                    </th>
-
-                </tr>
-                <tr>
-                    <th>
-                        <div class="card">
-                            <div class="input-group">
-                                <input type="text" id="nome" name="nome" required>
-                                <input type="number" id="nomenumero" name="numero" required>
-                            </div>
-                            <div class="botoes">
-                                <button id="btn1"><i class="bi bi-pencil"></i></button>
-                                <button id="btn2"><i class="bi bi-trash"></i></button>
-                                <button id="btn3"><i class="bi bi-info-circle"></i></button>
-                            </div>
-                        </div>
-                    </th>
-
-                </tr>
-                </tbody>
-            </table>
+        </div>
+        <div id="total">
+            <p for="numero" id="textonumero"> TOTAL: </p>
+            <input type="number" id="camponumero" name="numero" required>
         </div>
 
-    </main>
-    </body>
+        <div class="cards">
+            <div class="materias">
+                <p>MATERIA PRIMA</p>
+                <div class="card">
+                <form class="input-group">
+                    <input type="text" id="nome" name="nome" required>
+                    <input type="number" id="nomenumero" name="numero" required>
+                </form>
+                <div class="botoes">
+                    <button id="btn1"><i class="bi bi-pencil"></i></button>
+                    <button id="btn2"><i class="bi bi-trash"></i></button>
+                    <button id="btn3"><i class="bi bi-info-circle"></i></button>
+                </div>
+            </div>
+            </div>
+            <div class="roupas">
+                <p>ROUPAS</p>
+                <div class="card">
+                <form class="input-group">
+                    <input type="text" id="nome" name="nome" required>
+                    <input type="number" id="nomenumero" name="numero" required>
+                </form>
+                <div class="botoes">
+                    <button id="btn1"><i class="bi bi-pencil"></i></button>
+                    <button id="btn2"><i class="bi bi-trash"></i></button>
+                    <button id="btn3"><i class="bi bi-info-circle"></i></button>
+                </div>
+            </div>
+            </div>
+            <div class="ferramentas">
+                <p>FERRAMENTAS</p>
+                <div class="card">
+                <form class="input-group">
+                    <input type="text" id="nome" name="nome" required>
+                    <input type="number" id="nomenumero" name="numero" required>
+                </form>
+                <div class="botoes">
+                    <button id="btn1"><i class="bi bi-pencil"></i></button>
+                    <button id="btn2"><i class="bi bi-trash"></i></button>
+                    <button id="btn3"><i class="bi bi-info-circle"></i></button>
+                </div>
+            </div>
+            </div>
+
+        </div>
+    </div>
+
 {% endblock %}

@@ -7,6 +7,8 @@ from sqlalchemy import select
 from models import Funcionario, db_session, ITEM, MOVIMENTACAO
 
 app = Flask(__name__)
+
+
 @app.route('/teste')
 def inicial():
     return render_template("teste.html")
@@ -45,7 +47,7 @@ def TelaFF():
 def TelaCF():
     return render_template("TelaCadastroFuncionario.html")
 
-#medeiros esteve aqui
+
 @app.route('/TelaCItem')
 def TelaCItem():
     return render_template("TelaCadastroItem.html")
@@ -97,9 +99,6 @@ def telafuncionarios():
 def telaitens():
     return render_template("TelaAItens.html")
 
-@app.route('/TelaG')
-def telagrafico():
-    return render_template("Teladegraficos.html")
 
 # ___________________________FUNCIONARIO____________________________
 @app.route('/add_funcionario', methods=['POST'])
