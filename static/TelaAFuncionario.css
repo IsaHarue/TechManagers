@@ -209,3 +209,8 @@
     border-radius: 10px;
     border: none;
 }
+
+.dt1 a{
+    color: black;
+    font-weight: bold;
+}

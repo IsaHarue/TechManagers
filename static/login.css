@@ -121,3 +121,14 @@ footer {
     width: 100%;
     background-color: white;
 }
+
+#mensagem h1{
+    color: red;
+}
+
+#mensagem{
+    margin-left: 40px;
+    position: absolute;
+    top: 0;
+    margin-top: 50px;
+}

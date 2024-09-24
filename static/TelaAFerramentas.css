@@ -216,3 +216,12 @@
     border-radius: 10px;
     border: none;
 }
+
+.dt2 a{
+    color: black;
+    font-weight: bold;
+}
+
+.dd3 a{
+    color: black;
+}

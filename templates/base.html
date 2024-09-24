@@ -19,19 +19,30 @@
 </header>
 <aside class="sidebar">
      <div class="pessoa"><i class="bi bi-person-circle" id="person"></i>
-            <p>Olá, Nome</p></div>
+            <p>Olá, {{ nome_usuario }}</p></div>
         <hr>
+    {% if 'admin' in session and session['admin'] %}
         <dl class="lista">
-            <dt class="dt1" id="txt"><a>Funcionarios</a></dt>
-            <dt class="dt2" id="txt"><a>Itens</a></dt>
-            <dd class="dd1" id="txt"><a>Todos os itens</a></dd>
-            <dd class="dd2" id="txt"><a>Roupas</a></dd>
-            <dd class="dd3" id="txt"><a>Ferramentas</a></dd>
-            <dd class="dd4" id="txt"><a>Matérias primas</a></dd>
+            <dt class="dt1" id="txt"><a href="TelaAF">Funcionarios</a></dt>
+            <dt class="dt2" id="txt"><a href="TelaAI">Itens</a></dt>
+            <dd class="dd1" id="txt"><a href="TelaAI">Todos os itens</a></dd>
+            <dd class="dd2" id="txt"><a href="TelaAR">Roupas</a></dd>
+            <dd class="dd3" id="txt"><a href="TelaAFe">Ferramentas</a></dd>
+            <dd class="dd4" id="txt"><a href="TelaAM">Matérias primas</a></dd>
         </dl>
+    {% else %}
+        <dl class="lista">
+            <dt class="dt1" id="txt"><a href="TelaF">Funcionarios</a></dt>
+            <dt class="dt2" id="txt"><a href="TelaFI">Itens</a></dt>
+            <dd class="dd1" id="txt"><a href="TelaFI">Todos os itens</a></dd>
+            <dd class="dd2" id="txt"><a href="TelaFR">Roupas</a></dd>
+            <dd class="dd3" id="txt"><a href="TelaFF">Ferramentas</a></dd>
+            <dd class="dd4" id="txt"><a href="TelaFM">Matérias primas</a></dd>
+        </dl>
+    {% endif %}
         <hr>
         <div class="deslogar"><i class="bi bi-box-arrow-left" id="logout"></i>
-            <p>Logout</p></div>
+            <a href="login">Logout</a></div>
 </aside>
 
 <main>

@@ -146,3 +146,12 @@
     font-family: "Koulen", sans-serif;
     font-weight: bold;
 }
+
+.dt2 a{
+    color: black;
+    font-weight: bold;
+}
+
+.dd1 a{
+    color: black;
+}
