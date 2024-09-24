@@ -1,325 +1,142 @@
 {% extends "base.html" %}
 
-
 {% block conteudo %}
-<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-<body>
 <link rel="stylesheet" href="../static/Teladegraficos.css">
-    <main>
-        <script>
-am5.ready(function() {
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
+<div class="container">
+    <h1>Dashboard de Vendas</h1>
+    <div class="charts-containervaitomarnocu">
+        <div class="chart-wrapper">
+            <canvas id="salesBarChart"></canvas>
+        </div>
+        <div class="chart-wrapper">
+            <canvas id="salesPieChart"></canvas>
+        </div>
+    </div>
+</div>
 
-// Create root element
-// https://www.amcharts.com/docs/v5/getting-started/#Root_element
-var root = am5.Root.new("chartdiv");
-
-
-// Set themes
-// https://www.amcharts.com/docs/v5/concepts/themes/
-root.setThemes([
-  am5themes_Animated.new(root)
-]);
-
-
-// Create chart
-// https://www.amcharts.com/docs/v5/charts/xy-chart/
-var chart = root.container.children.push(am5xy.XYChart.new(root, {
-  panX: false,
-  panY: false,
-  paddingLeft: 0,
-  wheelX: "panX",
-  wheelY: "zoomX",
-  layout: root.verticalLayout
-}));
-
-
-// Add legend
-// https://www.amcharts.com/docs/v5/charts/xy-chart/legend-xy-series/
-var legend = chart.children.push(
-  am5.Legend.new(root, {
-    centerX: am5.p50,
-    x: am5.p50
-  })
-);
-
-var data = [{
-  "year": "2021",
-  "europe": 2.5,
-  "namerica": 2.5,
-  "asia": 2.1,
-  "lamerica": 1,
-  "meast": 0.8,
-  "africa": 0.4
-}, {
-  "year": "2022",
-  "europe": 2.6,
-  "namerica": 2.7,
-  "asia": 2.2,
-  "lamerica": 0.5,
-  "meast": 0.4,
-  "africa": 0.3
-}, {
-  "year": "2023",
-  "europe": 2.8,
-  "namerica": 2.9,
-  "asia": 2.4,
-  "lamerica": 0.3,
-  "meast": 0.9,
-  "africa": 0.5
-}]
-
-
-// Create axes
-// https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
-var xRenderer = am5xy.AxisRendererX.new(root, {
-  cellStartLocation: 0.1,
-  cellEndLocation: 0.9,
-  minorGridEnabled: true
-})
-
-var xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
-  categoryField: "year",
-  renderer: xRenderer,
-  tooltip: am5.Tooltip.new(root, {})
-}));
-
-xRenderer.grid.template.setAll({
-  location: 1
-})
-
-xAxis.data.setAll(data);
-
-var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
-  renderer: am5xy.AxisRendererY.new(root, {
-    strokeOpacity: 0.1
-  })
-}));
-
-
-// Add series
-// https://www.amcharts.com/docs/v5/charts/xy-chart/series/
-function makeSeries(name, fieldName) {
-  var series = chart.series.push(am5xy.ColumnSeries.new(root, {
-    name: name,
-    xAxis: xAxis,
-    yAxis: yAxis,
-    valueYField: fieldName,
-    categoryXField: "year"
-  }));
-
-  series.columns.template.setAll({
-    tooltipText: "{name}, {categoryX}:{valueY}",
-    width: am5.percent(90),
-    tooltipY: 0,
-    strokeOpacity: 0
-  });
-
-  series.data.setAll(data);
-
-  // Make stuff animate on load
-  // https://www.amcharts.com/docs/v5/concepts/animations/
-  series.appear();
-
-  series.bullets.push(function () {
-    return am5.Bullet.new(root, {
-      locationY: 0,
-      sprite: am5.Label.new(root, {
-        text: "{valueY}",
-        fill: root.interfaceColors.get("alternativeText"),
-        centerY: 0,
-        centerX: am5.p50,
-        populateText: true
-      })
-    });
-  });
-
-  legend.data.push(series);
-}
-
-makeSeries("Europe", "europe");
-makeSeries("North America", "namerica");
-makeSeries("Asia", "asia");
-makeSeries("Latin America", "lamerica");
-makeSeries("Middle East", "meast");
-makeSeries("Africa", "africa");
-
-
-// Make stuff animate on load
-// https://www.amcharts.com/docs/v5/concepts/animations/
-chart.appear(1000, 100);
-
-}); // end am5.ready()
-</script>
-
-<!-- HTML -->
-<div id="chartdiv"></div>
-    </main>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-#chartdiv {
-  width: 100%;
-  height: 500px;
-}
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: right;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        color: #444;
+        text-align: center;
+    }
+
+    .charts-containervaitomarnocu {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 30px;
+        margin-top: 20px;
+    }
+
+    .chart-wrapper {
+        flex: 1 1 45%;
+        display: flex;
+        justify-content: center;
+    }
+
+    canvas {
+        background-color: white;
+        padding: 10px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        width: 100%; /* Ajusta o canvas para ocupar a largura do wrapper */
+        max-width: 600px; /* Limita o tamanho máximo do gráfico */
+        height: auto;
+    }
+
+    @media (max-width: 768px) {
+        .charts-container {
+            flex-direction: column;
+        }
+
+        .chart-wrapper {
+            width: 100%;
+        }
+
+        canvas {
+            max-width: 100%; /* Gráficos ocupam a largura total em telas menores */
+        }
+    }
 </style>
 
-<!-- Resources -->
-<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-
-<!-- Chart code -->
 <script>
-am5.ready(function() {
-
-
-// Create root element
-// https://www.amcharts.com/docs/v5/getting-started/#Root_element
-var root = am5.Root.new("chartdiv");
-
-
-// Set themes
-// https://www.amcharts.com/docs/v5/concepts/themes/
-root.setThemes([
-  am5themes_Animated.new(root)
-]);
-
-
-// Create chart
-// https://www.amcharts.com/docs/v5/charts/xy-chart/
-var chart = root.container.children.push(am5xy.XYChart.new(root, {
-  panX: false,
-  panY: false,
-  paddingLeft: 0,
-  wheelX: "panX",
-  wheelY: "zoomX",
-  layout: root.verticalLayout
-}));
-
-
-// Add legend
-// https://www.amcharts.com/docs/v5/charts/xy-chart/legend-xy-series/
-var legend = chart.children.push(
-  am5.Legend.new(root, {
-    centerX: am5.p50,
-    x: am5.p50
-  })
-);
-
-var data = [{
-  "year": "2021",
-  "europe": 2.5,
-  "namerica": 2.5,
-  "asia": 2.1,
-  "lamerica": 1,
-  "meast": 0.8,
-  "africa": 0.4
-}, {
-  "year": "2022",
-  "europe": 2.6,
-  "namerica": 2.7,
-  "asia": 2.2,
-  "lamerica": 0.5,
-  "meast": 0.4,
-  "africa": 0.3
-}, {
-  "year": "2023",
-  "europe": 2.8,
-  "namerica": 2.9,
-  "asia": 2.4,
-  "lamerica": 0.3,
-  "meast": 0.9,
-  "africa": 0.5
-}]
-
-
-// Create axes
-// https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
-var xRenderer = am5xy.AxisRendererX.new(root, {
-  cellStartLocation: 0.1,
-  cellEndLocation: 0.9,
-  minorGridEnabled: true
-})
-
-var xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
-  categoryField: "year",
-  renderer: xRenderer,
-  tooltip: am5.Tooltip.new(root, {})
-}));
-
-xRenderer.grid.template.setAll({
-  location: 1
-})
-
-xAxis.data.setAll(data);
-
-var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
-  renderer: am5xy.AxisRendererY.new(root, {
-    strokeOpacity: 0.1
-  })
-}));
-
-
-// Add series
-// https://www.amcharts.com/docs/v5/charts/xy-chart/series/
-function makeSeries(name, fieldName) {
-  var series = chart.series.push(am5xy.ColumnSeries.new(root, {
-    name: name,
-    xAxis: xAxis,
-    yAxis: yAxis,
-    valueYField: fieldName,
-    categoryXField: "year"
-  }));
-
-  series.columns.template.setAll({
-    tooltipText: "{name}, {categoryX}:{valueY}",
-    width: am5.percent(90),
-    tooltipY: 0,
-    strokeOpacity: 0
-  });
-
-  series.data.setAll(data);
-
-  // Make stuff animate on load
-  // https://www.amcharts.com/docs/v5/concepts/animations/
-  series.appear();
-
-  series.bullets.push(function () {
-    return am5.Bullet.new(root, {
-      locationY: 0,
-      sprite: am5.Label.new(root, {
-        text: "{valueY}",
-        fill: root.interfaceColors.get("alternativeText"),
-        centerY: 0,
-        centerX: am5.p50,
-        populateText: true
-      })
+    // Dados para o gráfico de barras
+    const ctxBar = document.getElementById('salesBarChart').getContext('2d');
+    const salesBarChart = new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+            labels: ['Produto A', 'Produto B', 'Produto C', 'Produto D', 'Produto E'],
+            datasets: [{
+                label: 'Vendas (R$)',
+                data: [1200, 1900, 3000, 2500, 3200],
+                backgroundColor: [
+                    'rgba(255,137,0,0.2)',
+                    'rgba(255,243,0,0.2)',
+                    'rgba(48,255,0,0.2)',
+                    'rgba(0,57,255,0.2)',
+                    'rgba(153, 102, 255, 0.2)'
+                ],
+                borderColor: [
+                    'rgb(255,92,0)',
+                    'rgb(255,214,0)',
+                    'rgb(86,255,0)',
+                    'rgb(0,89,255)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
     });
-  });
 
-  legend.data.push(series);
-}
-
-makeSeries("Europe", "europe");
-makeSeries("North America", "namerica");
-makeSeries("Asia", "asia");
-makeSeries("Latin America", "lamerica");
-makeSeries("Middle East", "meast");
-makeSeries("Africa", "africa");
-
-
-// Make stuff animate on load
-// https://www.amcharts.com/docs/v5/concepts/animations/
-chart.appear(1000, 100);
-
-}); // end am5.ready()
+    // Dados para o gráfico de pizza
+    const ctxPie = document.getElementById('salesPieChart').getContext('2d');
+    const salesPieChart = new Chart(ctxPie, {
+        type: 'pie',
+        data: {
+            labels: ['Produto A', 'Produto B', 'Produto C', 'Produto D', 'Produto E'],
+            datasets: [{
+                label: 'Vendas (%)',
+                data: [30, 19, 30, 25, 32],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        }
+    });
 </script>
-
-<!-- HTML -->
-<div id="chartdiv"></div>
-</body>
 {% endblock %}
