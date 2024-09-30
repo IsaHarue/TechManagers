@@ -31,14 +31,14 @@ def login():
         email = request.form.get('email')
         senha = request.form.get('senha')
         if email == admin_email and senha == admin_senha:
-            # Se o email e senha forem válidos, redireciona para a tela privada do admin
+            # Se o email e senha do admin forem válidos, redireciona para a tela privada do admin
             session['admin'] = True
             return redirect("/TelaAI")
         elif email == admin_email and senha != admin_senha:
             flash('senha do admin incorreta')
             return redirect("/login")
         else:
-            # Se o email e senha forem inválidos, redireciona para a tela de login novamente
+            # Se o email e senha do admin forem inválidos, redireciona para a tela de login novamente
             session['admin'] = False
             return redirect("/login")
     else:
