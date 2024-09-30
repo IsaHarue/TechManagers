@@ -15,7 +15,7 @@
         </div>
         <div id="total">
             <p for="numero" id="textonumero"> TOTAL: </p>
-            <input type="number" id="camponumero" name="numero" required>
+            <input type="number" id="camponumero" name="numero" value="{{ funcionarios | length }}" readonly>
         </div>
 
         <div class="cards">
@@ -23,10 +23,10 @@
                 <div class="card">
                     <p>{{ funcionario.nome}}</p>
                     <div class="botoes">
-                        <button id="btn1" onclick="window.location.href='{{ url_for('TelaEF') }}'"><i
+                        <button id="btn1" onclick="window.location.href='{{ url_for('TelaEF', id=funcionario.id) }}'"><i
                                 class="bi bi-pencil"></i></button>
-                        <button id="btn2"><i class="bi bi-trash"></i></button>
-                        <button id="btn3" onclick="window.location.href='{{ url_for('TelaDF') }}'"><i
+                        <button id="btn2"><a href="{{ url_for('delete_funcionario', id=funcionario.id) }}" methods="DELETE"><i class="bi bi-trash"></i></a></button>
+                        <button id="btn3" onclick="window.location.href='{{ url_for('TelaDF', id=funcionario.id) }}'"><i
                                 class="bi bi-info-circle"></i></button>
                     </div>
                 </div>
