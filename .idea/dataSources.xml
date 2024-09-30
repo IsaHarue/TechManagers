@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="TechManagers" uuid="a86e0738-d9bc-4d91-b2b0-139db1610301">
-      <driver-ref>sqlite.xerial</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\dev2\projetoTechManagers\TechManagers\TechManagers.db</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="TechManagers [2]" uuid="b6c15ab9-4102-427c-bf92-30bf7baf001c">
+    <data-source source="LOCAL" name="TechManagers" uuid="0d227463-f9aa-4282-bcef-8efdf65ec0e2">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
