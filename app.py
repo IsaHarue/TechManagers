@@ -1,7 +1,7 @@
 import email
 from lib2to3.pgen2 import driver
 
-from flask import Flask, request, Response, render_template, redirect, session, flash
+from flask import Flask, request, Response, render_template, redirect, session, flash, url_for
 import json
 import sqlalchemy
 from sqlalchemy import select, true, false
@@ -25,7 +25,7 @@ def inicial():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     admin_email = 'admin@gmail.com'
-    admin_senha = 'admin123'
+    admin_senha = '123*'
 
     if request.method == 'POST':
         email = request.form.get('email')
@@ -40,7 +40,7 @@ def login():
         else:
             # Se o email e senha forem inválidos, redireciona para a tela de login novamente
             session['admin'] = False
-            return redirect("/TelaFI")
+            return redirect("/login")
     else:
         return render_template('login.html')
 
@@ -54,9 +54,10 @@ def base():
 def TelaGraficos():
     return render_template("TeladeGraficos.html")
 
-@app.route('/TelaF')
+@app.route('/TelaF', methods=["GET"])
 def TelaF():
-    return render_template("TelaFuncionario.html")
+    funcionarios = Funcionario.query.all()
+    return render_template("TelaFuncionario.html", funcionarios=funcionarios)
 
 
 @app.route('/TelaFI')
@@ -79,8 +80,31 @@ def TelaFF():
     return render_template("TelaFItemFerramentas.html")
 
 
-@app.route('/TelaCF')
+@app.route('/TelaCF', methods=['GET', 'POST'])
 def TelaCF():
+    if request.method == 'POST':
+        try:
+            print('entrou')
+            funcionario = Funcionario(
+                nome=request.form['nome'],
+                email=request.form['email'],
+                cpf=request.form['cpf'],
+                senha=request.form['senha'],
+                admin= True)
+            print('leu',funcionario)
+
+            db_session.add(funcionario)
+
+            funcionario.save()
+            print('salvo')
+            return redirect(url_for('telafuncionarios'))
+
+        except ValueError:
+            flash('não foi possivel adicionar um funcionario no database', 'error')
+        except sqlalchemy.exc.IntegrityError:
+            flash('cpf ja cadastrado', 'error')
+
+
     return render_template("TelaCadastroFuncionario.html")
 
 
@@ -131,7 +155,10 @@ def telamateriaprima():
 
 @app.route('/TelaAF')
 def telafuncionarios():
-    return render_template("TelaAFuncionarios.html")
+    # pega todos os funcionarios
+    funcionarios = Funcionario.query.all()
+
+    return render_template("TelaAFuncionarios.html", funcionarios=funcionarios)
 
 
 @app.route('/TelaAI')
@@ -167,15 +194,14 @@ def addd():
 
 
     except ValueError:
-        final = {
-            'status': 'erro',
-            'mensagem': 'não foi possivel adicionar um funcionario no database'
-        }
+        flash('não foi possivel adicionar um funcionario no database','error')
     except sqlalchemy.exc.IntegrityError:
         final = {
             'status': 'erro',
             'mensagem': 'CPF já cadastrado na base de dados'
         }
+
+        return redirect(url_for('TelaAF'))
 
 
 @app.route('/update_funcionario/<int:id>', methods=['PUT'])

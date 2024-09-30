@@ -7,7 +7,7 @@
 <main>
 <div class="container">
         <h2>CADASTRE SEU FUNCIONARIO</h2>
-        <form>
+        <form action="{{ url_for('TelaCF')}}" method="POST">
             <div class="input-group">
                 <label for="nome"><i class="fas fa-user"></i> NOME</label>
                 <input type="text" id="nome" name="nome" required>
@@ -24,7 +24,7 @@
                 <label for="senha"><i class="fas fa-lock"></i> SENHA</label>
                 <input type="password" id="senha" name="senha" required>
             </div>
-            <button type="submit" class="btn">CADASTRAR</button>
+            <button class="btn">CADASTRAR</button>
         </form>
     </div>
 </main>
