@@ -53,12 +53,6 @@ def base():
 def TelaGraficos():
     return render_template("TeladeGraficos.html")
 
-@app.route('/TelaF', methods=["GET"])
-def TelaF():
-    funcionarios = Funcionario.query.all()
-    return render_template("TelaFuncionario.html", funcionarios=funcionarios)
-
-
 @app.route('/TelaFI')
 def TelaFI():
     return render_template("TelaFItem.html")
