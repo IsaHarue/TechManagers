@@ -199,42 +199,6 @@ def telaitens():
 
 
 # ___________________________FUNCIONARIO____________________________
-@app.route('/add_funcionario', methods=['POST'])
-def addd():
-    '''Esta rota é responsável por adicionar um funcionario no database
-    #Para que esta rota funcione é necessario passar algumas informações(nome; email; cpf...)'''
-    try:
-        funcionario = Funcionario(
-            nome=request.form['nome'],
-            email=request.form['email'],
-            cpf=request.form['cpf'],
-            senha=request.form['senha'],
-            admin=request.form['admin'])
-        db_session.add(funcionario)
-        funcionario.save()
-        final = {
-            'status': 'ok',
-            'nome': funcionario.nome,
-            'email': funcionario.email,
-            'cpf': funcionario.cpf,
-            'senha': funcionario.senha,
-            'admin': funcionario.admin}
-
-        return app.response_class(response=json.dumps(final),
-                                  status=201,
-                                  mimetype='application/json')
-
-
-    except ValueError:
-        flash('não foi possivel adicionar um funcionario no database','error')
-    except sqlalchemy.exc.IntegrityError:
-        final = {
-            'status': 'erro',
-            'mensagem': 'CPF já cadastrado na base de dados'
-        }
-
-        return redirect(url_for('TelaAF'))
-
 
 @app.route('/update_funcionario/<int:id>', methods=['PUT'])
 def updatee(id):
@@ -250,18 +214,6 @@ def updatee(id):
         funcionario.senha = request.form['senha']
         funcionario.admin = request.form['admin']
         db_session.commit()
-        final = {
-
-            'status': 'ok',
-            'nome': funcionario.nome,
-            'email': funcionario.email,
-            'cpf': funcionario.cpf,
-            'senha': funcionario.senha,
-            'admin': funcionario.admin
-        }
-
-        return app.response_class(response=json.dumps(final), status=201, mimetype='application/json')
-
     except AttributeError:
         final = {
             'status': 'erro',
@@ -363,27 +315,16 @@ def cunsultar_usuariocpf(cpf):
         return app.response_class(response=json.dumps(final), status=409, mimetype='application/json')
 
 
-@app.route('/delete_funcionario/<int:id>', methods=['DELETE'])
+@app.route('/delete_funcionario/<int:id>', methods=['GET', 'DELETE'])
 def delete_funcionario(id):
     '''Esta rota é responsável por deleter um funcionario no database
     #Para deletar um funcionario no database é necessário informar o id do funcionario'''
     try:
         funcionario = select(Funcionario).where(Funcionario.id == id)
         funcionario = db_session.execute(funcionario).scalar()
-        print(funcionario)
-        final = {
-            'status': 'removido',
-            'nome:': funcionario.nome,
-            'email': funcionario.email,
-            'cpf': funcionario.cpf,
-            'senha': funcionario.senha,
-            'admin': funcionario.admin,
-        }
         db_session.delete(funcionario)
         db_session.commit()
-        return app.response_class(response=json.dumps(final),
-                                  status=201,
-                                  mimetype='application/json')
+        return redirect(url_for('telafuncionarios'))
     except AttributeError:
         final = {
             'status': 'erro',
