@@ -156,16 +156,32 @@ def TelaRF():
 
 @app.route('/TelaAFe')
 def telaferramentas():
+    item = select(ITEM).where(ITEM.tipo == 2)
+    result = []
+    for consulta in ITEM:
+        result.append((consulta.serialize_item))
+    final = json.dumps(result)
     return render_template("TelaAFerramentas.html")
 
 
 @app.route('/TelaAR')
 def telaroupas():
+    item = select(ITEM).where(ITEM.tipo == 1)
+    result = []
+    for consulta in item:
+        result.append(consulta.serialize_item())
+    final = json.dumps(result)
+
     return render_template("TelaARoupas.html")
 
 
 @app.route('/TelaAM')
 def telamateriaprima():
+    item = select(ITEM).where(ITEM.tipo == 3)
+    result = []
+    for consulta in item:
+        result.append(consulta.serialize_item())
+    final = json.dumps(result)
     return render_template("TelaAMateriaPrima.html")
 
 
@@ -183,6 +199,42 @@ def telaitens():
 
 
 # ___________________________FUNCIONARIO____________________________
+@app.route('/add_funcionario', methods=['POST'])
+def addd():
+    '''Esta rota é responsável por adicionar um funcionario no database
+    #Para que esta rota funcione é necessario passar algumas informações(nome; email; cpf...)'''
+    try:
+        funcionario = Funcionario(
+            nome=request.form['nome'],
+            email=request.form['email'],
+            cpf=request.form['cpf'],
+            senha=request.form['senha'],
+            admin=request.form['admin'])
+        db_session.add(funcionario)
+        funcionario.save()
+        final = {
+            'status': 'ok',
+            'nome': funcionario.nome,
+            'email': funcionario.email,
+            'cpf': funcionario.cpf,
+            'senha': funcionario.senha,
+            'admin': funcionario.admin}
+
+        return app.response_class(response=json.dumps(final),
+                                  status=201,
+                                  mimetype='application/json')
+
+
+    except ValueError:
+        flash('não foi possivel adicionar um funcionario no database','error')
+    except sqlalchemy.exc.IntegrityError:
+        final = {
+            'status': 'erro',
+            'mensagem': 'CPF já cadastrado na base de dados'
+        }
+
+        return redirect(url_for('TelaAF'))
+
 
 @app.route('/update_funcionario/<int:id>', methods=['PUT'])
 def updatee(id):
@@ -198,6 +250,18 @@ def updatee(id):
         funcionario.senha = request.form['senha']
         funcionario.admin = request.form['admin']
         db_session.commit()
+        final = {
+
+            'status': 'ok',
+            'nome': funcionario.nome,
+            'email': funcionario.email,
+            'cpf': funcionario.cpf,
+            'senha': funcionario.senha,
+            'admin': funcionario.admin
+        }
+
+        return app.response_class(response=json.dumps(final), status=201, mimetype='application/json')
+
     except AttributeError:
         final = {
             'status': 'erro',
@@ -250,7 +314,7 @@ def cunsultar_usuarioo(id):
         funcionario = db_session.execute(funcionario).scalars()
         result = []
         for consulta in funcionario:
-            result.append(consulta.serialize_epi())
+            result.append(consulta.serialize_item())
         final = json.dumps(result)
         return Response(response=final,
                         status=201,
@@ -299,16 +363,27 @@ def cunsultar_usuariocpf(cpf):
         return app.response_class(response=json.dumps(final), status=409, mimetype='application/json')
 
 
-@app.route('/delete_funcionario/<int:id>', methods=['GET', 'DELETE'])
+@app.route('/delete_funcionario/<int:id>', methods=['DELETE'])
 def delete_funcionario(id):
     '''Esta rota é responsável por deleter um funcionario no database
     #Para deletar um funcionario no database é necessário informar o id do funcionario'''
     try:
         funcionario = select(Funcionario).where(Funcionario.id == id)
         funcionario = db_session.execute(funcionario).scalar()
+        print(funcionario)
+        final = {
+            'status': 'removido',
+            'nome:': funcionario.nome,
+            'email': funcionario.email,
+            'cpf': funcionario.cpf,
+            'senha': funcionario.senha,
+            'admin': funcionario.admin,
+        }
         db_session.delete(funcionario)
         db_session.commit()
-        return redirect(url_for('telafuncionarios'))
+        return app.response_class(response=json.dumps(final),
+                                  status=201,
+                                  mimetype='application/json')
     except AttributeError:
         final = {
             'status': 'erro',
@@ -318,39 +393,27 @@ def delete_funcionario(id):
 
 # ________________________________ITEM________________________________
 
-@app.route('/add_item', methods=['POST'])
+@app.route('/add_item', methods=['GET', 'POST'])
 def add():
-    '''Esta rota é responsável por adicionar um EPI ao database
-    #adiciona uma EPI no banco, esta EPI deve conter: nome, data_fabricacao, validade e description'''
-    try:
-        item = ITEM(nome=request.form['nome'],
-                    tipo=request.form['tipo'],
-                    Quantidade=request.form['quantidade'],
-                    )
-        db_session.add(ITEM)
-        item.save()
-        final = {
-            'status': 'ok',
-            'nome': item.nome,
-            'tipo': item.tipo,
-            'Quantidade': item.Quantidade
-        }
-        return app.response_class(response=json.dumps(final),
-                                  status=201,
-                                  mimetype='application/json')
-    except ValueError:
-        final = {
-            'status': 'erro',
-            'mensagem': 'não foi possivel adicionar um ITEM no database'
-        }
-        return app.response_class(response=json.dumps(final),
-                                  status=500,
-                                  mimetype='application/json')
+    '''Esta rota é responsável por adicionar um item ao database
+    #adiciona uma item no banco, esta item deve conter: nome, data_fabricacao, validade e description'''
+    if request.method == 'POST':
+        try:
+            add_item = ITEM(nome=request.form['nome'],
+                        tipo=request.form['tipo'],
+                        Quantidade=request.form['quantidade'],
+                        )
+            print(add_item)
+            db_session.add(ITEM)
+            add_item.save()
+
+            return
+    return render_template('TelaCadastroItem.html')
 
 
 @app.route('/update_item/<int:id>', methods=['PUT'])
 def update(id):
-    '''Esta rota é responsável por modificar as informações de um EPI no database
+    '''Esta rota é responsável por modificar as informações de um item no database
     #para que esta rota funcione deve-se auterar ou o nome, a validade ou description
     #utiliza-se try no update, para informar se ouver algum erro na hora de atualizar'''
     try:
@@ -388,7 +451,7 @@ def update(id):
 
             'status': 'erro',
 
-            'mensagem': 'epi não cadastrado na base de dados'
+            'mensagem': 'item não cadastrado na base de dados'
 
         }
 
@@ -428,7 +491,7 @@ def cunsultar_itens():
         item = ITEM.query.all()
         result = []
         for consulta in item:
-            result.append(consulta.serialize_epi())
+            result.append(consulta.serialize_item())
         final = json.dumps(result)
         return Response(response=final,
                         status=201,
@@ -450,7 +513,7 @@ def cunsultar_item(id):
         item = ITEM.id.query.id()
         result = []
         for consulta in item:
-            result.append(consulta.serialize_epi())
+            result.append(consulta.serialize_item())
         final = json.dumps(result)
         return Response(response=final,
                         status=201,
@@ -469,7 +532,7 @@ def cunsultar_item(id):
 @app.route('/add_movimentacao', methods=['POST'])
 def ad():
     '''Esta rota é responsável por adicionar um esprestimo no database
-    #Adicionando os ids do funcionario e do EPI no database, assim como o tempo_de_entrega,
+    #Adicionando os ids do funcionario e do item no database, assim como o tempo_de_entrega,
     é possivel cadastrar o entrega no banco'''
     try:
         movimentacao = MOVIMENTACAO(funcionario_id=int(request.form['funcionario_id']),
@@ -505,7 +568,7 @@ def ad():
 @app.route('/update_movimentacao/<int:id>', methods=['PUT'])
 def update_movimentacao(id):
     '''Esta rota é responsável por modificar informações de um esprestimo no database
-    #É possivel alterar os ids do funcionario e do EPI, assim como do tempo de emprestimo
+    #É possivel alterar os ids do funcionario e do item, assim como do tempo de emprestimo
     #Utilizando o try podemos notificar o usuario caso aja algum dado inválido'''
     try:
         movimentacao = select(MOVIMENTACAO).where(MOVIMENTACAO.id == id)
