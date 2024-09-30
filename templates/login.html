@@ -28,9 +28,9 @@
             {% endif %}
         {% endwith %}
 <main>
-    <div class="page">
+    <div class="page" >
         <img src="../static/imagens/Businesswomen%20shaking%20hands%20at%20work.png" id="imgLogin">
-        <form class="formLogin" method="post">
+        <form class="formLogin" method="POST" action="{{ url_for('login')}}">
             <h1><b class="bi bi-person-circle"></b> Bem-Vindo</h1>
             <label for="email"><i class="bi bi-envelope"></i></label>
             <input type="email" autofocus="true" name="email" required/>

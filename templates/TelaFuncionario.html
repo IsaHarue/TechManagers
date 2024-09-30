@@ -11,12 +11,13 @@
                 <p for="numero" id="textonumero"> TOTAL:</p>
                 <input type="number" id="camponumero" name="numero" >
             </div>
-
         </div>
         <div class="cards">
-            <form class="input-group">
-                <input type="text" id="nome" name="nome" required>
-            </form>
+            {%for funcionario in funcionario %}
+            <div class="card">
+                <p>{{ funcionario.nome }}</p>
+            </div>
+            {% endfor %}
         </div>
     </div>
 
