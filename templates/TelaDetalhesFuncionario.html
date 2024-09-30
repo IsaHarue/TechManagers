@@ -11,23 +11,23 @@
         <form>
             <div class="input-group">
                 <label for="nome"><i class="fas fa-user"></i> NOME</label>
-                <input type="text" id="nome" name="nome" required>
+                <input type="text" id="nome" name="nome" value="{{ funcionario.nome }}" readonly>
             </div>
             <div class="input-group">
                 <label for="email"><i class="fas fa-envelope"></i> EMAIL</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" value="{{ funcionario.email }}" readonly>
             </div>
             <div class="input-group">
                 <label for="cpf"><i class="fas fa-id-card"></i> CPF</label>
-                <input type="number" id="cpf" name="cpf" required>
+                <input type="number" id="cpf" name="cpf" value="{{ funcionario.cpf }}" readonly>
             </div>
             <div class="input-group">
                 <label for="senha"><i class="fas fa-lock"></i> SENHA</label>
-                <input type="password" id="senha" name="senha" required>
+                <input type="password" id="senha" name="senha" value="{{ funcionario.senha }}" readonly>
             </div>
             <div class="input-group">
                 <label for="ID"><i class="fas fas-card"></i> ID</label>
-                <input type="number" id="ID" name="ID" required>
+                <input type="number" id="ID" name="ID" value="{{ funcionario.id }}" readonly>
             </div>
         </form>
     </div>
