@@ -44,6 +44,23 @@ def login():
     else:
         return render_template('login.html')
 
+    if request.method == 'POST':
+        email = request.form.get('email')
+        senha = request.form.get('senha')
+        if email == "" and senha == "":
+            # Se o email e senha do admin forem válidos, redireciona para a tela privada do admin
+            return redirect("/TelaFI")
+        elif email == admin_email and senha != admin_senha:
+            flash('senha do admin incorreta')
+            return redirect("/login")
+        else:
+            # Se o email e senha do admin forem inválidos, redireciona para a tela de login novamente
+            return redirect("/login")
+    else:
+        return render_template('login.html')
+
+
+
 
 @app.route('/base')
 def base():
@@ -156,7 +173,6 @@ def telaferramentas():
 @app.route('/TelaAR')
 def telaroupas():
     return render_template("TelaARoupas.html")
-
 
 @app.route('/TelaAM')
 def telamateriaprima():
