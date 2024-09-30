@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:sqlite:C:\dev2\projetoTechManagers\TechManagers\TechManagers.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="TechManagers [2]" uuid="b6c15ab9-4102-427c-bf92-30bf7baf001c">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\progetoFlask\TechManagers\TechManagers.db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
