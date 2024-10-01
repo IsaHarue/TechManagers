@@ -75,7 +75,8 @@ def TelaF():
 
 @app.route('/TelaFI')
 def TelaFI():
-    return render_template("TelaFItem.html")
+    itens = ITEM.query.all()
+    return render_template("TelaFitem.html", itens=itens)
 
 
 @app.route('/TelaFM')
