@@ -57,6 +57,10 @@ def base():
 def TelaGraficos():
     return render_template("TeladeGraficos.html")
 
+@app.route('/TelaRelatorio')
+def TelaRelatorio():
+    return render_template("RelatorioItens.html")
+
 
 @app.route('/TelaF', methods=["GET"])
 def TelaF():
