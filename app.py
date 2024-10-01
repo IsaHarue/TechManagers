@@ -20,6 +20,10 @@ def home():
 def inicial():
     return render_template("teste.html")
 
+@app.route('/conf')
+def conf():
+    flash('tem certeza que deseja excluir esse')
+
 @app.route('/logout')
 def logout():
     session.pop('admin', None)
@@ -57,9 +61,10 @@ def base():
 def TelaGraficos():
     return render_template("TeladeGraficos.html")
 
-@app.route('/TelaRelatorio')
+@app.route('/TelaRelatorio', methods=['GET'])
 def TelaRelatorio():
-    return render_template("RelatorioItens.html")
+    itens = ITEM.query.all()
+    return render_template("RelatorioItens.html", itens=itens)
 
 
 @app.route('/TelaF', methods=["GET"])
