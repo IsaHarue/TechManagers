@@ -24,25 +24,25 @@
         <hr>
     {% if 'admin' in session and session['admin'] %}
         <dl class="lista">
-            <dt class="dt1" id="txt"><a href="TelaAF">Funcionarios</a></dt>
-            <dt class="dt2" id="txt"><a href="TelaAI">Itens</a></dt>
-            <dd class="dd1" id="txt"><a href="TelaAI">Todos os itens</a></dd>
-            <dd class="dd2" id="txt"><a href="TelaAR">Roupas</a></dd>
-            <dd class="dd3" id="txt"><a href="TelaAFe">Ferramentas</a></dd>
-            <dd class="dd4" id="txt"><a href="TelaAM">Matérias primas</a></dd>
+            <dt class="dt1" id="txt"><a href="{{ url_for('telafuncionarios') }}">Funcionarios</a></dt>
+            <dt class="dt2" id="txt"><a href="{{ url_for('telaitens') }}">Itens</a></dt>
+            <dd class="dd1" id="txt"><a href="{{ url_for('telaitens') }}">Todos os itens</a></dd>
+            <dd class="dd2" id="txt"><a href="{{ url_for('tela_roupas') }}">Roupas</a></dd>
+            <dd class="dd3" id="txt"><a href="{{ url_for('tela_ferramentas') }}">Ferramentas</a></dd>
+            <dd class="dd4" id="txt"><a href="{{ url_for('tela_materia_prima') }}">Matérias primas</a></dd>
         </dl>
     {% else %}
         <dl class="lista">
-            <dt class="dt2" id="txt"><a href="TelaFI">Itens</a></dt>
-            <dd class="dd1" id="txt"><a href="TelaFI">Todos os itens</a></dd>
-            <dd class="dd2" id="txt"><a href="TelaFR">Roupas</a></dd>
-            <dd class="dd3" id="txt"><a href="TelaFF">Ferramentas</a></dd>
-            <dd class="dd4" id="txt"><a href="TelaFM">Matérias primas</a></dd>
+            <dt class="dt2" id="txt"><a href="{{ url_for('TelaFI') }}">Itens</a></dt>
+            <dd class="dd1" id="txt"><a href="{{ url_for('TelaFI') }}">Todos os itens</a></dd>
+            <dd class="dd2" id="txt"><a href="{{ url_for('TelaFR') }}">Roupas</a></dd>
+            <dd class="dd3" id="txt"><a href="{{ url_for('TelaFF') }}">Ferramentas</a></dd>
+            <dd class="dd4" id="txt"><a href="{{ url_for('TelaFM') }}">Matérias primas</a></dd>
         </dl>
     {% endif %}
         <hr>
         <div class="deslogar"><i class="bi bi-box-arrow-left" id="logout"></i>
-            <a href="login">Logout</a></div>
+            <a href="{{ url_for('logout') }}">Logout</a></div>
 </aside>
 
 <main>

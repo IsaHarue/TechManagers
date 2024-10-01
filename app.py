@@ -20,28 +20,32 @@ def home():
 def inicial():
     return render_template("teste.html")
 
+@app.route('/logout')
+def logout():
+    session.pop('admin', None)
+    session.pop('funcionario', None)
+    return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     admin_email = 'admin@gmail.com'
     admin_senha = '123*'
-
     if request.method == 'POST':
         email = request.form.get('email')
         senha = request.form.get('senha')
+        # Verificar se o usuário é o administrador
         if email == admin_email and senha == admin_senha:
-            # Se o email e senha forem válidos, redireciona para a tela privada do admin
             session['admin'] = True
             return redirect("/TelaAI")
-        elif email == admin_email and senha != admin_senha:
-            flash('senha do admin incorreta')
-            return redirect("/login")
-        else:
-            # Se o email e senha forem inválidos, redireciona para a tela de login novamente
-            session['admin'] = False
-            return redirect("/login")
-    else:
-        return render_template('login.html')
+        # Verificar se o usuário é um funcionário comum
+        funcionario = Funcionario.query.filter_by(email=email, senha=senha).first()
+        if funcionario:
+            session['funcionario'] = True
+            return redirect("/TelaFI")
+        # Se o usuário não for encontrado, exibir mensagem de erro
+        flash('Usuário ou senha incorretos')
+        return redirect("/login")
+    return render_template('login.html')
 
 
 @app.route('/base')
