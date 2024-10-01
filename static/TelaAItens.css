@@ -119,6 +119,11 @@
     font-size: 60px;
 }
 
+#quantidade {
+    width: 80px;
+    color: #068A23;
+}
+
 
 .cards{
     margin-top: 40px;
