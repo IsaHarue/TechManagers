@@ -6,29 +6,21 @@
     <div class="container">
         <div id="numero">
             <p class="titulo">Ferramentas</p>
-            <div class="botoestitle" id="ladinho">
-                <button id="btn1" onclick="window.location.href='{{ url_for('TelaCItem') }}'"><i class="bi bi-plus-lg"></i></button>
-                <button id="btn2"><i class="bi bi-file-earmark-text"></i></button>
-                <button id="btn3"><img src="../static/imagens/Graphic.png"></button>
-            </div>
         </div>
         <div id="total">
             <p for="numero" id="textonumero"> TOTAL: </p>
-            <input type="number" id="camponumero" name="numero" required>
+            <input type="number" id="camponumero" name="numero" value="{{ itens | length }}" readonly>
         </div>
 
         <div class="cards">
-            <div class="card">
-                <form class="input-group">
-                    <input type="text" id="nome" name="nome" required>
-                    <input type="number" id="nomenumero" name="numero" required>
-                </form>
-                <div class="botoes">
-                    <button id="btn1" onclick="window.location.href='{{ url_for('TelaEItem') }}'"><i class="bi bi-pencil"></i></button>
-                    <button id="btn2"><i class="bi bi-trash"></i></button>
-                    <button id="btn3" onclick="window.location.href='{{ url_for('TelaDItem') }}'"><i class="bi bi-info-circle"></i></button>
+           {% for item in itens %}
+                <div class="card">
+                    <form class="input-group">
+                        <input type="text" id="nome" name="nome" value="{{ item.nome }}" readonly>
+                        <input type="number" id="quantidade" name="quantidade" value="{{ item.quantidade }}" disabled>
+                    </form>
                 </div>
-            </div>
+        {% endfor %}
         </div>
     </div>
 

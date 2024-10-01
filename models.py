@@ -66,10 +66,10 @@ class ITEM(Base):
     id = Column(Integer, primary_key=True, unique=True, nullable=False, index=True)
     nome = Column(String(40), nullable=False, index=True)
     tipo = Column(String(40), nullable=False, index=True)
-    Quantidade = Column(Integer, nullable=False, index=True)
+    quantidade = Column(Integer, nullable=False, index=True)
 
     def __repr__(self):
-        return '<ITEM: {}>'.format(self.nome, self.tipo, self.Quantidade)
+        return '<ITEM: {}>'.format(self.nome, self.tipo, self.quantidade)
 
     def save(self):
         db_session.add(self)
@@ -84,7 +84,7 @@ class ITEM(Base):
             'item_id': self.id,
             'nome': self.nome,
             'tipo': self.tipo,
-            'Quantidade': self.Quantidade
+            'quantidade': self.quantidade
         }
         return dados_item
 
@@ -101,7 +101,7 @@ class MOVIMENTACAO(Base):
 
 
     def __repr__(self):
-        return '<Entrega: {}>'.format(self.item_quantidade, self.item_id, self.funcionario_id, self.movimentacao_item, self.data_movimentacao)
+        return '<Entrega: {}>'.format(self.item_id, self.funcionario_id, self.movimentacao_item, self.data_movimentacao)
 
     def save(self):
         db_session.add(self)

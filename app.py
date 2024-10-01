@@ -7,7 +7,6 @@ import sqlalchemy
 from sqlalchemy import select, true, false
 from models import Funcionario, db_session, ITEM, MOVIMENTACAO
 
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'TECHMANAGERS'
 
@@ -49,9 +48,11 @@ def login():
 def base():
     return render_template("base.html")
 
+
 @app.route('/TelaGraficos')
 def TelaGraficos():
     return render_template("TeladeGraficos.html")
+
 
 @app.route('/TelaF', methods=["GET"])
 def TelaF():
@@ -88,7 +89,7 @@ def TelaCF():
                 email=request.form['email'],
                 cpf=request.form['cpf'],
                 senha=request.form['senha'],
-                admin= True)
+                admin=True)
 
             db_session.add(funcionario)
 
@@ -100,12 +101,23 @@ def TelaCF():
         except sqlalchemy.exc.IntegrityError:
             flash('cpf ja cadastrado', 'error')
 
-
     return render_template("TelaCadastroFuncionario.html")
 
 
-@app.route('/TelaCI')
+@app.route('/TelaCI', methods=["GET", "POST"])
 def TelaCItem():
+    if request.method == 'POST':
+        print(request.form['tipo'])
+        item = ITEM(
+            nome=request.form['nome'],
+            tipo=request.form['tipo'],
+            quantidade=int(request.form['quantidade']))
+
+        db_session.add(item)
+
+        item.save()
+        return redirect(url_for('telaitens'))
+
     return render_template("TelaCadastroItem.html")
 
 
@@ -120,9 +132,11 @@ def TelaDF(id):
         return redirect(url_for('telafuncionarios'))
 
 
-@app.route('/TelaDI')
-def TelaDItem():
-    return render_template("TelaDetalhesItem.html")
+@app.route('/TelaDI/<int:id>', methods=['GET'])
+def TelaDItem(id):
+    item = select(ITEM).where(ITEM.id == id)
+    item = db_session.execute(item).scalar()
+    return render_template('TelaDetalhesItem.html', item=item)
 
 
 @app.route('/TelaEF/<int:id>', methods=['GET', 'POST'])
@@ -143,10 +157,21 @@ def TelaEF(id):
         return render_template("TelaEdicaoFuncionario.html")
 
 
-
-@app.route('/TelaEI')
-def TelaEItem():
-    return render_template("TelaEdicaoItem.html")
+@app.route('/TelaEI/<int:id>', methods=['GET', 'POST'])
+def TelaEItem(id):
+    try:
+        item = select(ITEM).where(ITEM.id == id)
+        item = db_session.execute(item).scalar()
+        if request.method == 'POST':
+            item.nome = request.form['nome']
+            item.tipo = request.form['tipo']
+            item.quantidade = request.form['quantidade']
+            db_session.commit()
+            return redirect(url_for('telaitens'))
+        return render_template('TelaEdicaoItem.html', item=item)
+    except AttributeError:
+        flash(message="Erro ao editar item", category='error')
+        return render_template("TelaEdicaoItem.html")
 
 
 @app.route('/TelaRF')
@@ -154,35 +179,20 @@ def TelaRF():
     return render_template("RelatorioFuncionarios.html")
 
 
-@app.route('/TelaAFe')
-def telaferramentas():
-    item = select(ITEM).where(ITEM.tipo == 2)
-    result = []
-    for consulta in ITEM:
-        result.append((consulta.serialize_item))
-    final = json.dumps(result)
-    return render_template("TelaAFerramentas.html")
-
+@app.route('/TelaAM')
+def tela_materia_prima():
+    itens = ITEM.query.filter_by(tipo="Materia").all()
+    return render_template("TelaAMateriaPrima.html", itens=itens)
 
 @app.route('/TelaAR')
-def telaroupas():
-    item = select(ITEM).where(ITEM.tipo == 1)
-    result = []
-    for consulta in item:
-        result.append(consulta.serialize_item())
-    final = json.dumps(result)
+def tela_roupas():
+    itens = ITEM.query.filter_by(tipo="Roupa").all()
+    return render_template("TelaARoupas.html", itens=itens)
 
-    return render_template("TelaARoupas.html")
-
-
-@app.route('/TelaAM')
-def telamateriaprima():
-    item = select(ITEM).where(ITEM.tipo == 3)
-    result = []
-    for consulta in item:
-        result.append(consulta.serialize_item())
-    final = json.dumps(result)
-    return render_template("TelaAMateriaPrima.html")
+@app.route('/TelaAFe')
+def tela_ferramentas():
+    itens = ITEM.query.filter_by(tipo="Ferramenta").all()
+    return render_template("TelaAFerramentas.html", itens=itens)
 
 
 @app.route('/TelaAF')
@@ -195,7 +205,8 @@ def telafuncionarios():
 
 @app.route('/TelaAI')
 def telaitens():
-    return render_template("TelaAItens.html")
+    itens = ITEM.query.all()
+    return render_template("TelaAItens.html", itens=itens)
 
 
 # ___________________________FUNCIONARIO____________________________
@@ -339,16 +350,19 @@ def add():
     '''Esta rota é responsável por adicionar um item ao database
     #adiciona uma item no banco, esta item deve conter: nome, data_fabricacao, validade e description'''
     if request.method == 'POST':
-        try:
-            add_item = ITEM(nome=request.form['nome'],
-                        tipo=request.form['tipo'],
-                        Quantidade=request.form['quantidade'],
-                        )
-            print(add_item)
-            db_session.add(ITEM)
-            add_item.save()
+        add_item = ITEM(
+            nome=request.form['nome'],
+            tipo=request.form['tipo'],
+            quantidade=int(request.form['quantidade'])
+        )
 
-            return
+        print(add_item)
+        db_session.add(ITEM)
+
+        add_item.save()
+
+        return redirect(url_for('consultar_itens'))
+
     return render_template('TelaCadastroItem.html')
 
 
@@ -399,28 +413,20 @@ def update(id):
         return app.response_class(response=json.dumps(final), status=201, mimetype='application/json')
 
 
-@app.route('/delete_item/<int:id>', methods=['DELETE'])
+@app.route('/delete_item/<int:id>', methods=['GET', 'DELETE'])
 def delete(id):
     '''Esta rota é responsável por deletar um ITEM do database
     #Para deletar um ITEM voce deve informar o id do ITEM que deseja excluir'''
     try:
         item = select(ITEM).where(ITEM.id == id)
         item = db_session.execute(item).scalar()
-        print(item)
-        final = {
-            'status': 'removido',
-            'nome': item.nome,
-            'Quantidade': item.Quantidade,
-            'tipo': item.tipo}
         db_session.delete(item)
         db_session.commit()
-        return Response(response=json.dumps(final),
-                        status=201,
-                        mimetype='application/json')
+        return redirect(url_for('telaitens'))
     except AttributeError:
         final = {
             'status': 'erro',
-            'mensagem': 'não foi possivel atualizar, verifique se o id é compatível no database'
+            'mensagem': 'não foi possivel deletar, verifique se o id é compatível no database'
         }
 
 
