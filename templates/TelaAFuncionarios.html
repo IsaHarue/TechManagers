@@ -21,11 +21,12 @@
                 <div class="card">
                     <p>{{ funcionario.nome}}</p>
                     <div class="botoes">
-                        <button id="btn1" onclick="window.location.href='{{ url_for('TelaEF', id=funcionario.id) }}'"><i
-                                class="bi bi-pencil"></i></button>
-                        <button id="btn2"><a href="{{ url_for('delete_funcionario', id=funcionario.id) }}" methods="DELETE"><i class="bi bi-trash"></i></a></button>
-                        <button id="btn3" onclick="window.location.href='{{ url_for('TelaDF', id=funcionario.id) }}'"><i
-                                class="bi bi-info-circle"></i></button>
+                        <button id="btn1" onclick="window.location.href='{{ url_for('TelaEF', id=funcionario.id) }}'">
+                            <i class="bi bi-pencil"></i></button>
+                        <button id="btn2"><a href="{{ url_for('delete_funcionario', id=funcionario.id) }}" methods="DELETE">
+                            <i class="bi bi-trash"></i></a></button>
+                        <button id="btn3" onclick="window.location.href='{{ url_for('TelaDF', id=funcionario.id) }}'">
+                            <i class="bi bi-info-circle"></i></button>
                     </div>
                 </div>
             {% endfor %}
