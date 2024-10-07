@@ -1,34 +1,40 @@
 {% extends "base.html" %}
 
-
 {% block conteudo %}
-<body>
-<link rel="stylesheet" href="../static/TelaCadastroItem.css">
-<main>
-
-<div class="container">
+  <body>
+    <link rel="stylesheet" href="../static/TelaCadastroItem.css">
+    <main>
+      <div class="container">
         <h2>CADASTRO DE ITEM</h2>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="alert alert-danger">
+              {% for message in messages %}
+                {{ message }}
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
         <form action="{{ url_for('TelaCItem') }}" method="post">
-            <div class="input-group">
-                <label for="nome"><i class="fas fa-user"></i> NOME</label>
-                <input type="text" id="nome" name="nome" required>
-            </div>
-            <div class="input-group">
-                <label for="tipo"><i class="fas fa-user"></i> TIPO</label>
-                <select name="tipo" class="tipos">
-                    <option value="Roupa">Roupa</option>
-                    <option value="Ferramenta">Ferramenta</option>
-                    <option value="Materia">Materia Prima</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label for="quantidade"><i class="fas fa-id-card"></i> QUANTIDADE</label>
-                <input type="number" id="quantidade" name="quantidade" required>
-            </div>
-            <button class="btn">CADASTRAR</button>
+          <div class="input-group">
+            <label for="nome"><i class="fas fa-user"></i> NOME</label>
+            <input type="text" id="nome" name="nome" required>
+          </div>
+          <div class="input-group">
+            <label for="tipo"><i class="fas fa-user"></i> TIPO</label>
+            <select name="tipo" class="tipos">
+              <option value="Roupa">Roupa</option>
+              <option value="Ferramenta">Ferramenta</option>
+              <option value="Materia">Materia Prima</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="quantidade"><i class="fas fa-id-card"></i> QUANTIDADE</label>
+            <input type="number" id="quantidade" name="quantidade" required>
+          </div>
+          <button class="btn">CADASTRAR</button>
         </form>
-    </div>
-</main>
-
-</body>
+      </div>
+    </main>
+  </body>
 {% endblock %}
