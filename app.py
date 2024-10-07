@@ -47,7 +47,7 @@ def login():
             session['funcionario'] = True
             return redirect("/TelaFI")
         # Se o usuário não for encontrado, exibir mensagem de erro
-        flash('Usuário ou senha incorretos')
+        flash('Usuario ou senha incorretos')
         return redirect("/login")
     return render_template('login.html')
 
