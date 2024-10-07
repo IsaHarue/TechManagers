@@ -1,4 +1,3 @@
-
 .container {
     font-family: "Mako", sans-serif;
     display: flex;
@@ -16,19 +15,68 @@
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto;
     grid-template-areas:
-    "r t c";
+    "n t c";
     width: 100%;
     height: 70px;
     background-color: white;
     font-family: "Koulen", sans-serif;
 }
 
-.campoTotal{
+.botoestitle {
     margin-top: 10px;
     grid-area: c;
-    width: 150px;
+    width: 200px;
     height: 50px;
-    background-color: #d9d9d9;
+    display: flex;
+    justify-self: center;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+    padding: 0px 10px 0px 10px;
+}
+
+.botoestitle button {
+    border: none;
+    width: auto;
+    height: auto;
+
+}
+
+.botoestitle #btn1 {
+    background-color: green;
+    border-radius: 10px;
+    width: 90px;
+    height: 30px;
+
+
+}
+
+.botoestitle #btn1 i {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.botoestitle #btn2 {
+    font-size: 30px;
+    background-color: #ffffff;
+}
+
+.botoestitle #btn3 {
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+
+.botoestitle #btn3 img {
+    width: 40px;
+    height: 40px;
+}
+
+#total {
+    margin-top: 30px;
+    width: 130px;
+    height: 50px;
+    background-color: #e8e8e8;
     display: flex;
     justify-self: center;
     align-items: center;
@@ -39,11 +87,12 @@
 
 #camponumero {
     height: 50px;
-    width: 75px;
-    background-color: #d9d9d9;
-    color: #068A23;
+    width: 60px;
+    background-color: #e8e8e8;
     font-size: 40px;
     border: none;
+    color: #068A23;
+    text-align: end;
 }
 
 #textonumero {
@@ -51,6 +100,7 @@
     font-size: 40px;
     align-self: center;
     justify-self: center;
+    font-family: "Koulen", sans-serif;
 }
 
 .titulo {
@@ -65,51 +115,12 @@
     align-items: center;
     justify-self: center;
     margin-top: 5px;
-}
-
-.titulo p{
     font-size: 60px;
-    justify-self: center;
-    text-align: center;
-    align-self: center;
 }
 
-.input-group {
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-    justify-items: center;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 15px;
-    width: 250px;
-    height: 60px;
-    background-color: white;
-    align-self: center;
-    justify-self: center;
-    padding-left: 5px;
-    padding-right:5px;
-}
-
-.input-group input {
-    background-color: #d9d9d9;
-    height: 50px;
-    border: none;
-    font-size: 20px;
-    font-family: "Mako", sans-serif;
-}
-
-.input-group input[type=text]{
-    width: 70%;
-    padding-left: 10px;
-    padding-right:5px;
-}
-
-.input-group input[type=number]{
-    width: 30%;
-    justify-self: end;
-    text-align: end;
-    font-size: 40px;
+#quantidade {
+    width: 80px;
+    color: #068A23;
 }
 
 .cards{
@@ -147,11 +158,100 @@
     font-weight: bold;
 }
 
+.card {
+    background-color: white;
+    width: 200px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    padding: 5px;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    width: 100%;
+    height: 100%;
+    align-self: center;
+    justify-self: center;
+    padding-left: 5px;
+    padding-right:5px;
+}
+
+.input-group input {
+    background-color: #d9d9d9;
+    height: 40px;
+    border: none;
+    font-size: 20px;
+    font-family: "Mako", sans-serif;
+}
+
+.input-group input[type=text]{
+    width: 70%;
+    padding-left: 10px;
+    padding-right:5px;
+    font-size: 16px;
+    color: #6c6c6c;
+}
+
+.input-group input[type=number]{
+    width: 30%;
+    justify-self: end;
+    text-align: end;
+    font-size: 36px;
+}
+
+.botoes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    justify-items: center;
+    width: 70%;
+    margin-bottom: 5px;
+}
+
+.botoes button{
+    width: 35px;
+    height: 25px;
+    font-size: 18px;
+}
+
+.botoes #btn1 {
+    background-color: #F7D527;
+    border-radius: 10px;
+    border: none;
+}
+
+.botoes #btn2 {
+    background-color: red;
+    border-radius: 10px;
+    border: none;
+}
+
+.botoes #btn3 {
+    background-color: grey;
+    border-radius: 10px;
+    border: none;
+}
+
 .dt2 a{
     color: black;
     font-weight: bold;
 }
 
 .dd1 a{
+    color: black;
+}
+
+button a{
+    text-decoration: none;
     color: black;
 }
