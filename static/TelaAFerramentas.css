@@ -95,6 +95,7 @@
     color: #068A23;
     font-size: 40px;
     border: none;
+    text-align: end;
 }
 
 #textonumero {
@@ -138,12 +139,9 @@
 .card {
     background-color: white;
     width: 200px;
-    height: auto;
+    height: 40px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    align-self: center;
     justify-self: center;
     padding: 5px;
     margin-bottom: 20px;

@@ -24,7 +24,11 @@
                 <label for="senha"><i class="fas fa-lock"></i> SENHA</label>
                 <input type="password" id="senha" name="senha" required>
             </div>
-            <button class="btn">CADASTRAR</button>
+            <div class="btnS">
+                <button type="button" class="btnV" onclick="location.href='{{ url_for('telafuncionarios') }}'">VOLTAR</button>
+                <button type="submit" class="btn" >CADASTRAR</button>
+            </div>
+
         </form>
     </div>
 </main>

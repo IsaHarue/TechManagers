@@ -53,3 +53,31 @@ h2 {
     border-radius: 4px;
 
 }
+
+.btnS {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 920px;
+}
+
+.btnV {
+    font-family: "Koulen", sans-serif;
+    margin-top: 50px;
+    display: flex;
+    width: 30%;
+    padding: 1px;
+    background-color: red;
+    color: white;
+    border: 3px solid red;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 30px;
+    justify-content: center;
+    margin-right: 20px;
+    transition: transform 0.3s ease;
+}
+
+.btnV:hover{
+    transform: scale(1.1);
+}

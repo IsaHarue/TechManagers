@@ -15,14 +15,9 @@ app.config['SECRET_KEY'] = 'TECHMANAGERS'
 def home():
     return redirect("/login")
 
-
 @app.route('/teste')
 def inicial():
     return render_template("teste.html")
-
-@app.route('/conf')
-def conf():
-    flash('tem certeza que deseja excluir esse')
 
 @app.route('/logout')
 def logout():
@@ -40,22 +35,30 @@ def login():
         # Verificar se o usuário é o administrador
         if email == admin_email and senha == admin_senha:
             session['admin'] = True
+            session['nome_funcionario'] = 'Admin'
+            print(session['nome_funcionario'])
             return redirect("/TelaAI")
         # Verificar se o usuário é um funcionário comum
         funcionario = Funcionario.query.filter_by(email=email, senha=senha).first()
         if funcionario:
             session['funcionario'] = True
+            session['nome_funcionario'] = funcionario.nome
+            print(session['nome_funcionario'])
             return redirect("/TelaFI")
         # Se o usuário não for encontrado, exibir mensagem de erro
-        flash('Usuário ou senha incorretos')
+        flash('Usuario ou senha incorretos')
         return redirect("/login")
     return render_template('login.html')
+
+def get_nome_funcionario():
+    print(session['nome_funcionario'])
+    return session.get('nome_funcionario')
 
 
 @app.route('/base')
 def base():
-    return render_template("base.html")
-
+    nome_funcionario = get_nome_funcionario()
+    return render_template("base.html", nome_funcionario=nome_funcionario)
 
 @app.route('/TelaGraficos')
 def TelaGraficos():
@@ -66,33 +69,27 @@ def TelaRelatorio():
     itens = ITEM.query.all()
     return render_template("RelatorioItens.html", itens=itens)
 
-
 @app.route('/TelaF', methods=["GET"])
 def TelaF():
     funcionarios = Funcionario.query.all()
     return render_template("TelaFuncionario.html", funcionarios=funcionarios)
 
-
 @app.route('/TelaFI')
 def TelaFI():
     itens = ITEM.query.all()
-    return render_template("TelaFitem.html", itens=itens)
-
+    return render_template("TelaFItem.html", itens=itens)
 
 @app.route('/TelaFM')
 def TelaFM():
     return render_template("TelaFItemMateriaPrima.html")
 
-
 @app.route('/TelaFR')
 def TelaFR():
     return render_template("TelaFItemRoupas.html")
 
-
 @app.route('/TelaFF')
 def TelaFF():
     return render_template("TelaFItemFerramentas.html")
-
 
 @app.route('/TelaCF', methods=['GET', 'POST'])
 def TelaCF():
@@ -117,7 +114,6 @@ def TelaCF():
 
     return render_template("TelaCadastroFuncionario.html")
 
-
 @app.route('/TelaCI', methods=["GET", "POST"])
 def TelaCItem():
     if request.method == 'POST':
@@ -141,7 +137,6 @@ def TelaCItem():
 
     return render_template("TelaCadastroItem.html")
 
-
 @app.route('/TelaDF/<int:id>', methods=['GET'])
 def TelaDF(id):
     try:
@@ -152,13 +147,11 @@ def TelaDF(id):
         flash(message="Erro ao carregar detalhes do funcionário", category='error')
         return redirect(url_for('telafuncionarios'))
 
-
 @app.route('/TelaDI/<int:id>', methods=['GET'])
 def TelaDItem(id):
     item = select(ITEM).where(ITEM.id == id)
     item = db_session.execute(item).scalar()
     return render_template('TelaDetalhesItem.html', item=item)
-
 
 @app.route('/TelaEF/<int:id>', methods=['GET', 'POST'])
 def TelaEF(id):
@@ -177,7 +170,6 @@ def TelaEF(id):
         flash(message="Erro ao editar funcionário", category='error')
         return render_template("TelaEdicaoFuncionario.html")
 
-
 @app.route('/TelaEI/<int:id>', methods=['GET', 'POST'])
 def TelaEItem(id):
     try:
@@ -194,11 +186,9 @@ def TelaEItem(id):
         flash(message="Erro ao editar item", category='error')
         return render_template("TelaEdicaoItem.html")
 
-
 @app.route('/TelaRF')
 def TelaRF():
     return render_template("RelatorioFuncionarios.html")
-
 
 @app.route('/TelaAM')
 def tela_materia_prima():
@@ -215,14 +205,11 @@ def tela_ferramentas():
     itens = ITEM.query.filter_by(tipo="Ferramenta").all()
     return render_template("TelaAFerramentas.html", itens=itens)
 
-
 @app.route('/TelaAF')
 def telafuncionarios():
     # pega todos os funcionarios
     funcionarios = Funcionario.query.all()
-
     return render_template("TelaAFuncionarios.html", funcionarios=funcionarios)
-
 
 @app.route('/TelaAI')
 def telaitens():

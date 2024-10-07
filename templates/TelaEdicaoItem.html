@@ -10,7 +10,7 @@
             <form action="{{ url_for('TelaEItem', id=item.id) }}" method="post">
                 <div class="input-group">
                     <label for="nome"><i class="fas fa-user"></i> NOME</label>
-                    <input type="text" id="nome" name="nome" value="{{ item.nome }}" >
+                    <input type="text" id="nome" name="nome" value="{{ item.nome }}">
                 </div>
 
                 <div class="input-group">
@@ -26,9 +26,12 @@
 
                 <div class="input-group">
                     <label for="quantidade"><i class="fas fa-id-card"></i> QUANTIDADE</label>
-                    <input type="number" id="quantidade" name="quantidade" value="{{ item.quantidade }}" >
+                    <input type="number" id="quantidade" name="quantidade" value="{{ item.quantidade }}">
                 </div>
-                <button class="btn">EDITAR</button>
+                <div class="btnS">
+                    <button type="button" class="btnV" onclick="location.href='{{ url_for('telaitens') }}'">VOLTAR</button>
+                    <button type="submit" class="btn">EDITAR</button>
+                </div>
             </form>
         </div>
     </main>

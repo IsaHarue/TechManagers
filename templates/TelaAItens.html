@@ -30,7 +30,7 @@
                     </form>
                     <div class="botoes">
                         <button id="btn1" onclick="window.location.href='{{ url_for('TelaEItem', id=item.id) }}'"><i class="bi bi-pencil"></i></button>
-                        <button id="btn2"><a href="{{ url_for('delete', id=item.id) }}" onclick="return confirm('Deseja deletar esta Materia Prima?') "><i class="bi bi-trash"></i></a></button>
+                        <button id="btn2"><a href="{{ url_for('delete', id=item.id) }}"><i class="bi bi-trash"></i></a></button>
                         <button id="btn3" onclick="window.location.href='{{ url_for('TelaDItem', id=item.id) }}'"><i class="bi bi-info-circle"></i></button>
                     </div>
                 </div>

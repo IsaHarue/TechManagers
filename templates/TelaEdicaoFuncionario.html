@@ -25,7 +25,10 @@
                 <label for="senha"><i class="fas fa-lock"></i> SENHA</label>
                 <input type="password" id="senha" name="senha" value="{{ funcionario.senha }}">
             </div>
-            <button class="btn">EDITAR</button>
+            <div class="btnS">
+                <button type="button" class="btnV" onclick="location.href='{{ url_for('telafuncionarios') }}'">VOLTAR</button>
+                <button type="submit" class="btn" >EDITAR</button>
+            </div>
 
         </form>
     </div>
