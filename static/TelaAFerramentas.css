@@ -138,12 +138,9 @@
 .card {
     background-color: white;
     width: 200px;
-    height: auto;
+    height: 40px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    align-self: center;
     justify-self: center;
     padding: 5px;
     margin-bottom: 20px;

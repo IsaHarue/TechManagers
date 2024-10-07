@@ -24,6 +24,7 @@ table {
     border-collapse: collapse;
     align-self: center;
     justify-self: center;
+    font-family: "Koulen", sans-serif;
 }
 
 th, td {
