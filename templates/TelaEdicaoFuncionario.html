@@ -26,8 +26,8 @@
                 <input type="password" id="senha" name="senha" value="{{ funcionario.senha }}">
             </div>
             <div class="btnS">
-                <button class="btnV">VOLTAR</button>
-                <button class="btn">EDITAR</button>
+                <button type="button" class="btnV" onclick="location.href='{{ url_for('telafuncionarios') }}'">VOLTAR</button>
+                <button type="submit" class="btn" >EDITAR</button>
             </div>
 
         </form>
