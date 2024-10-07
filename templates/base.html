@@ -16,13 +16,12 @@
         <img src="../static/imagens/logo.png" width="60" height="60">
         <strong class="koulen-regular" id="txt_logo">Tech Managers</strong>
     </a>
-
 </header>
 <aside class="sidebar">
-     <div class="pessoa"><i class="bi bi-person-circle" id="person"></i>
-            <p>Olá, {{ nome_usuario }}</p></div>
-        <hr>
     {% if 'admin' in session and session['admin'] %}
+        <div class="pessoa"><i class="bi bi-person-circle" id="person"></i>
+            <p>Olá Admin</p></div>
+        <hr>
         <dl class="lista">
             <dt class="dt1" id="txt"><a href="{{ url_for('telafuncionarios') }}">Funcionarios</a></dt>
             <dt class="dt2" id="txt"><a href="{{ url_for('telaitens') }}">Itens</a></dt>
@@ -32,6 +31,9 @@
             <dd class="dd4" id="txt"><a href="{{ url_for('tela_materia_prima') }}">Matérias primas</a></dd>
         </dl>
     {% else %}
+        <div class="pessoa"><i class="bi bi-person-circle" id="person"></i>
+            <p>Olá {{ session['nome_funcionario'] }}</p></div>
+        <hr>
         <dl class="lista">
             <dt class="dt2" id="txt"><a href="{{ url_for('TelaFI') }}">Itens</a></dt>
             <dd class="dd1" id="txt"><a href="{{ url_for('TelaFI') }}">Todos os itens</a></dd>
