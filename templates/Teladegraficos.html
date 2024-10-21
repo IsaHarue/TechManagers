@@ -3,8 +3,9 @@
 {% block conteudo %}
 <link rel="stylesheet" href="../static/Teladegraficos.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 <div class="container">
-    <h1>Dashboard de Vendass</h1>
+    <h1>Dashboard de Vendas</h1>
 
     <div class="quadros-fofos">
         <div class="card">
@@ -15,7 +16,7 @@
         <div class="card">
             <i class="fas fa-users"></i>
             <h3>Funcionários</h3>
-            <p>10 fofinhos</p>
+            <p>6</p>
         </div>
         <div class="card">
             <i class="fas fa-chart-line"></i>
@@ -33,15 +34,11 @@
         <div class="chart-wrapper">
             <canvas id="salesBarChart"></canvas>
         </div>
-        <div class="chart-wrapper">
-            <canvas id="salesPieChart"></canvas>
-        </div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-
     main {
         margin-left: 100px;
     }
@@ -51,87 +48,89 @@
         margin: 0 auto;
         text-align: center;
         padding: 20px;
-        background-color: #f9f9f9;
-        border-radius: 10px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #f3f3f3;
+        border-radius: 15px;
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
     }
 
     h1 {
-        font-size: 2.5em;
-        margin-bottom: 20px;
-        color: #444;
-        text-align: center;
+        font-size: 2.8em;
+        margin-bottom: 25px;
+        color: #333;
     }
 
     .quadros-fofos {
         display: flex;
-        justify-content: space-around;
-        margin-bottom: 20px;
+        justify-content: space-between;
+        margin-bottom: 25px;
+        gap: 15px;
     }
 
     .card {
-        background-color: #ffffff;
-        border-radius: 10px;
+        background-color: #fff;
+        border-radius: 15px;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         padding: 20px;
         width: 22%;
         text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
     }
 
     .card i {
-        font-size: 2em;
+        font-size: 2.5em;
         margin-bottom: 15px;
         color: #4CAF50;
     }
 
     .card h3 {
-        font-size: 1.5em;
+        font-size: 1.6em;
         margin-bottom: 10px;
-        color: #333;
+        color: #444;
     }
 
     .card p {
-        font-size: 1.2em;
-        color: #666;
+        font-size: 1.3em;
+        color: #777;
     }
 
     .charts-containers {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 30px;
+        justify-content: center;
         margin-top: 20px;
     }
 
     .chart-wrapper {
-        flex: 1 1 45%;
-        display: flex;
-        justify-content: center;
+        flex: 1;
+        max-width: 700px;
     }
 
     canvas {
         background-color: white;
-        padding: 10px;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
-        width: 100%; /* ajusta o canvas pra ocupar a largura do wrapper */
-        max-width: 600px; /* limita o tamanho máximo do gráfico */
-        height: auto;
+        padding: 15px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        max-width: 100%;
+        height: 400px;
     }
 
     @media (max-width: 768px) {
         .quadros-fofos {
             flex-direction: column;
+            gap: 15px;
         }
 
         .card {
             width: 100%;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .charts-containers {
             flex-direction: column;
+            align-items: center;
         }
 
         .chart-wrapper {
@@ -139,13 +138,12 @@
         }
 
         canvas {
-            max-width: 100%; /* gráficos ocupam a largura total em telas menores */
+            height: 300px;
         }
     }
 </style>
 
 <script>
-    // dados e cores para o gráfico de barra
     const ctxBar = document.getElementById('salesBarChart').getContext('2d');
     const salesBarChart = new Chart(ctxBar, {
         type: 'bar',
@@ -176,36 +174,11 @@
                 y: {
                     beginAtZero: true
                 }
-            }
-        }
-    });
-
-    // cores e dados do gráfico de pizza
-    const ctxPie = document.getElementById('salesPieChart').getContext('2d');
-    const salesPieChart = new Chart(ctxPie, {
-        type: 'pie',
-        data: {
-            labels: ['Produto A', 'Produto B', 'Produto C', 'Produto D', 'Produto E'],
-            datasets: [{
-                label: 'Vendas (%)',
-                data: [30, 19, 30, 25, 32],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)'
-                ],
-                borderWidth: 1
-            }]
+            },
+            responsive: true,
+            maintainAspectRatio: false,
         }
     });
 </script>
+
 {% endblock %}

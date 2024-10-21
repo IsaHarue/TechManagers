@@ -117,16 +117,23 @@ def TelaCF():
 @app.route('/TelaCI', methods=["GET", "POST"])
 def TelaCItem():
     if request.method == 'POST':
-        print(request.form['tipo'])
-        item = ITEM(
-            nome=request.form['nome'],
-            tipo=request.form['tipo'],
-            quantidade=int(request.form['quantidade']))
+        nome = request.form['nome']
+        tipo = request.form['tipo']
+        quantidade = int(request.form['quantidade'])
 
-        db_session.add(item)
+        # Verificar se o item já existe no banco de dados
+        item = ITEM.query.filter_by(nome=nome, tipo=tipo).first()
 
-        item.save()
-        return redirect(url_for('telaitens'))
+        if item:
+            # Se o item já existe, exibir mensagem de erro
+            flash('Item já cadastrado!', 'error')
+            return redirect(url_for('TelaCItem'))
+        else:
+            # Se o item não existe, criar um novo item
+            item = ITEM(nome=nome, tipo=tipo, quantidade=quantidade)
+            db_session.add(item)
+            item.save()
+            return redirect(url_for('telaitens'))
 
     return render_template("TelaCadastroItem.html")
 
@@ -208,6 +215,7 @@ def telafuncionarios():
 def telaitens():
     itens = ITEM.query.all()
     return render_template("TelaAItens.html", itens=itens)
+
 
 
 # ___________________________FUNCIONARIO____________________________
