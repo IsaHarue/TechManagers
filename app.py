@@ -1,13 +1,13 @@
-import email
-from lib2to3.pgen2 import driver
-
 from flask import Flask, request, Response, render_template, redirect, session, flash, url_for
 import json
 import sqlalchemy
-from sqlalchemy import select, true, false
+from sqlalchemy import select
 from models import Funcionario, db_session, ITEM, MOVIMENTACAO
+from werkzeug.security import generate_password_hash, check_password_hash
+import os
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
 app.config['SECRET_KEY'] = 'TECHMANAGERS'
 
 
@@ -28,19 +28,19 @@ def logout():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     admin_email = 'admin@gmail.com'
-    admin_senha = '123*'
+    admin_senha = generate_password_hash('123*')
     if request.method == 'POST':
         email = request.form.get('email')
         senha = request.form.get('senha')
         # Verificar se o usuário é o administrador
-        if email == admin_email and senha == admin_senha:
+        if email == admin_email and check_password_hash(admin_senha, senha):
             session['admin'] = True
             session['nome_funcionario'] = 'Admin'
             print(session['nome_funcionario'])
             return redirect("/TelaAI")
         # Verificar se o usuário é um funcionário comum
-        funcionario = Funcionario.query.filter_by(email=email, senha=senha).first()
-        if funcionario:
+        funcionario = Funcionario.query.filter_by(email=email).first()
+        if funcionario and check_password_hash(funcionario.senha, senha):
             session['funcionario'] = True
             session['nome_funcionario'] = funcionario.nome
             print(session['nome_funcionario'])
@@ -90,7 +90,6 @@ def TelaFR():
 @app.route('/TelaFF')
 def TelaFF():
     return render_template("TelaFItemFerramentas.html")
-
 @app.route('/TelaCF', methods=['GET', 'POST'])
 def TelaCF():
     if request.method == 'POST':
@@ -99,12 +98,10 @@ def TelaCF():
                 nome=request.form['nome'],
                 email=request.form['email'],
                 cpf=request.form['cpf'],
-                senha=request.form['senha'],
-                admin=True)
-
+                senha=generate_password_hash(request.form['senha']),
+                admin=False)
             db_session.add(funcionario)
-
-            funcionario.save()
+            db_session.commit()
             return redirect(url_for('telafuncionarios'))
 
         except ValueError:
@@ -162,7 +159,7 @@ def TelaEF(id):
             funcionario.nome = request.form['nome']
             funcionario.email = request.form['email']
             funcionario.cpf = request.form['cpf']
-            funcionario.senha = request.form['senha']
+            funcionario.senha = generate_password_hash(request.form['senha'])
             db_session.commit()
             return redirect(url_for('telafuncionarios'))
         return render_template('TelaEdicaoFuncionario.html', funcionario=funcionario)
