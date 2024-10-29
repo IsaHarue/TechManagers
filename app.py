@@ -1,14 +1,40 @@
+from Crypto.Util.Padding import unpad, pad
 from flask import Flask, request, Response, render_template, redirect, session, flash, url_for
 import json
 import sqlalchemy
 from sqlalchemy import select
 from models import Funcionario, db_session, ITEM, MOVIMENTACAO
-from werkzeug.security import generate_password_hash, check_password_hash
 import os
+from Crypto.Cipher import AES
+from Crypto.Random import get_random_bytes
+from base64 import b64encode, b64decode
+
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 app.config['SECRET_KEY'] = 'TECHMANAGERS'
+
+# Chave e IV para criptografia AES (16 bytes cada para AES-128)
+AES_KEY = b'teste_de_senha_de_32_bits_123456'  # Use uma chave de 32 bytes para segurança
+AES_IV = get_random_bytes(16)  # Vetor de inicialização (IV)
+
+# Função para criptografar senhas
+# Função para criptografar senhas
+
+def encrypt_password(password):
+    iv = get_random_bytes(16)  # Gerar um novo IV para cada criptografia
+    cipher = AES.new(AES_KEY, AES.MODE_CBC, iv)
+    password_padded = pad(password.encode(), AES.block_size)  # Preenche a senha para múltiplos de 16 bytes
+    encrypted_password = cipher.encrypt(password_padded)
+    return b64encode(iv + encrypted_password).decode('utf-8')  # Inclui o IV no resultado codificado
+
+# Função para descriptografar senhas
+def decrypt_password(encrypted_password):
+    encrypted_data = b64decode(encrypted_password)
+    iv = encrypted_data[:16]  # Extrai o IV dos primeiros 16 bytes
+    cipher = AES.new(AES_KEY, AES.MODE_CBC, iv)
+    decrypted_password = unpad(cipher.decrypt(encrypted_data[16:]), AES.block_size).decode('utf-8')  # Remove padding
+    return decrypted_password
 
 
 @app.route('/')
@@ -28,19 +54,19 @@ def logout():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     admin_email = 'admin@gmail.com'
-    admin_senha = generate_password_hash('123*')
+    admin_senha = encrypt_password('123*')
     if request.method == 'POST':
         email = request.form.get('email')
         senha = request.form.get('senha')
         # Verificar se o usuário é o administrador
-        if email == admin_email and check_password_hash(admin_senha, senha):
+        if email == admin_email and decrypt_password(admin_senha) == senha:
             session['admin'] = True
             session['nome_funcionario'] = 'Admin'
             print(session['nome_funcionario'])
             return redirect("/TelaAI")
         # Verificar se o usuário é um funcionário comum
         funcionario = Funcionario.query.filter_by(email=email).first()
-        if funcionario and check_password_hash(funcionario.senha, senha):
+        if funcionario and decrypt_password(funcionario.senha) == senha:
             session['funcionario'] = True
             session['nome_funcionario'] = funcionario.nome
             print(session['nome_funcionario'])
@@ -98,7 +124,7 @@ def TelaCF():
                 nome=request.form['nome'],
                 email=request.form['email'],
                 cpf=request.form['cpf'],
-                senha=generate_password_hash(request.form['senha']),
+                senha=encrypt_password(request.form['senha']),
                 admin=False)
             db_session.add(funcionario)
 
@@ -143,6 +169,8 @@ def TelaDF(id):
     try:
         funcionario = select(Funcionario).where(Funcionario.id == id)
         funcionario = db_session.execute(funcionario).scalar()
+        if funcionario and funcionario.senha:
+            funcionario.senha = decrypt_password(funcionario.senha)
         return render_template('TelaDetalhesFuncionario.html', funcionario=funcionario)
     except AttributeError:
         flash(message="Erro ao carregar detalhes do funcionário", category='error')
@@ -159,11 +187,13 @@ def TelaEF(id):
     try:
         funcionario = select(Funcionario).where(Funcionario.id == id)
         funcionario = db_session.execute(funcionario).scalar()
+        if funcionario and funcionario.senha:
+            funcionario.senha = decrypt_password(funcionario.senha)
         if request.method == 'POST':
             funcionario.nome = request.form['nome']
             funcionario.email = request.form['email']
             funcionario.cpf = request.form['cpf']
-            funcionario.senha = generate_password_hash(request.form['senha'])
+            funcionario.senha = encrypt_password(request.form['senha'])
             db_session.commit()
             flash('Funcionario editado com sucesso!')
             return redirect(url_for('telafuncionarios'))
@@ -217,6 +247,7 @@ def telafuncionarios():
 @app.route('/TelaAI')
 def telaitens():
     itens = ITEM.query.all()
+
     return render_template("TelaAItens.html", itens=itens)
 
 
