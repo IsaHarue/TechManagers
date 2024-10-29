@@ -34,8 +34,8 @@ class Funcionario(Base):
     nome = Column(String(40), nullable=False, index=True)
     email = Column(String(40), nullable=False, index=True, unique=True)
     cpf = Column(String(11), nullable=False, index=True, unique=True)
-    senha = Column(String(11), nullable=False, index=True)
-    admin = Column(String(11), nullable=False, index=True)
+    senha = Column(String(128), nullable=False, index=True)
+    admin = Column(Boolean, default=False)
 
     def __repr__(self):
         return '<Funcionario: {}>'.format(self.nome, self.email, self.cpf, self.senha, self.admin)
