@@ -102,3 +102,12 @@ h2 {
 .btnV:hover{
     transform: scale(1.1);
 }
+
+.btn:disabled {
+    background-color: #cccccc; /* Cor de fundo quando desabilitado */
+    color: #666666; /* Cor do texto quando desabilitado */
+    border: none;
+    cursor: not-allowed; /* Muda o cursor para indicar que não é clicável */
+    transition: none;
+    transform: none;
+}

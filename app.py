@@ -2,7 +2,7 @@ from Crypto.Util.Padding import unpad, pad
 from flask import Flask, request, Response, render_template, redirect, session, flash, url_for
 import json
 import sqlalchemy
-from sqlalchemy import select
+from sqlalchemy import select, func
 from models import Funcionario, db_session, ITEM, MOVIMENTACAO
 import os
 from Crypto.Cipher import AES
@@ -247,8 +247,11 @@ def telafuncionarios():
 @app.route('/TelaAI')
 def telaitens():
     itens = ITEM.query.all()
+    total = db_session.query(func.sum(ITEM.quantidade)).scalar() or 0
+    print(itens)
+    print(total)
 
-    return render_template("TelaAItens.html", itens=itens)
+    return render_template("TelaAItens.html", itens=itens, total=total)
 
 
 

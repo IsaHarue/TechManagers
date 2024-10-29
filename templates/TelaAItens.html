@@ -9,82 +9,115 @@
             <div class="botoestitle" id="ladinho">
                 <button id="btn1" onclick="window.location.href='{{ url_for('TelaCItem') }}'"><i
                         class="bi bi-plus-lg"></i></button>
-                <button id="btn2" onclick="window.location.href='{{ url_for('TelaRelatorio') }}'"><i class="bi bi-file-earmark-text"></i></button>
-                <button id="btn3" onclick="window.location.href='{{ url_for('TelaGraficos') }}'"><img src="../static/imagens/Graphic.png"></button>
+                <button id="btn2" onclick="window.location.href='{{ url_for('TelaRelatorio') }}'"><i
+                        class="bi bi-file-earmark-text"></i></button>
+                <button id="btn3" onclick="window.location.href='{{ url_for('TelaGraficos') }}'"><img
+                        src="../static/imagens/Graphic.png"></button>
             </div>
         </div>
         <div id="total">
             <p for="numero" id="textonumero"> TOTAL: </p>
-            <input type="number" id="camponumero" name="numero" value="{{ itens | length }}" readonly>
+            <input type="number" id="camponumero" name="numero" value="{{ total }}" readonly>
         </div>
 
 
-    {% with messages = get_flashed_messages() %}
-              {% if messages %}
-                <div class="alert alert-danger">
-                  {% for message in messages %}
-                    {{ message }}
-                  {% endfor %}
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
                 </div>
-              {% endif %}
+                <script>
+                    // Função para ocultar a mensagem após um determinado tempo
+                    setTimeout(function () {
+                        var alertBox = document.getElementsByClassName('alert')[0];
+                        alertBox.classList.add('hide'); // Adiciona a classe 'hide' para ocultar a mensagem
+                        // Remove a mensagem do DOM após a animação de saída
+                        setTimeout(function () {
+                            alertBox.style.display = 'none'; // Remove a mensagem completamente
+                        }, 500); // O tempo deve corresponder ao tempo de transição do CSS
+                    }, 2000); // Tempo em milissegundos antes de ocultar (3 segundos)
+                </script>
+            {% endif %}
         {% endwith %}
 
         <div class="cards">
-    <div class="materias">
-        <p>MATERIA PRIMA</p>
-        {% for item in itens %}
-            {% if item.tipo == "Materia" %}
-                <div class="card">
-                    <form class="input-group">
-                        <input type="text" id="nome" name="nome" value="{{ item.nome }}" readonly>
-                        <input type="number" id="quantidade" name="quantidade" value="{{ item.quantidade }}" disabled>
-                    </form>
-                    <div class="botoes">
-                        <button id="btn1" onclick="window.location.href='{{ url_for('TelaEItem', id=item.id) }}'"><i class="bi bi-pencil"></i></button>
-                        <button id="btn2"><a href="{{ url_for('delete', id=item.id) }}"><i class="bi bi-trash"></i></a></button>
-                        <button id="btn3" onclick="window.location.href='{{ url_for('TelaDItem', id=item.id) }}'"><i class="bi bi-info-circle"></i></button>
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
-    <div class="roupas">
-        <p>ROUPAS</p>
-        {% for item in itens %}
-            {% if item.tipo == "Roupa" %}
-                <div class="card">
-                    <form class="input-group">
-                        <input type="text" id="nome" name="nome" value="{{ item.nome }}" readonly>
-                        <input type="number" id="quantidade" name="quantidade" value="{{ item.quantidade }}" disabled>
-                    </form>
-                    <div class="botoes">
-                        <button id="btn1" onclick="window.location.href='{{ url_for('TelaEItem', id=item.id) }}'"><i class="bi bi-pencil"></i></button>
-                        <button id="btn2"><a href="{{ url_for('delete', id=item.id) }}" onclick="return confirm('Deseja deletar esta Roupa?') "><i class="bi bi-trash"></i></a></button>
-                        <button id="btn3" onclick="window.location.href='{{ url_for('TelaDItem', id=item.id) }}'"><i class="bi bi-info-circle"></i></button>
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
-    <div class="ferramentas">
-        <p>FERRAMENTAS</p>
-        {% for item in itens %}
-            {% if item.tipo == "Ferramenta" %}
-                <div class="card">
-                    <form class="input-group">
-                        <input type="text" id="nome" name="nome" value="{{ item.nome }}" readonly>
-                        <input type="number" id="quantidade" name="quantidade" value="{{ item.quantidade }}" disabled>
-                    </form>
-                    <div class="botoes">
-                        <button id="btn1" onclick="window.location.href='{{ url_for('TelaEItem', id=item.id) }}'"><i class="bi bi-pencil"></i></button>
-                        <button id="btn2"><a href="{{ url_for('delete', id=item.id) }}" onclick="return confirm('Deseja deletar esta Ferramenta?') "><i class="bi bi-trash"></i></a></button>
-                        <button id="btn3" onclick="window.location.href='{{ url_for('TelaDItem', id=item.id) }}'"><i class="bi bi-info-circle"></i></button>
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
-</div>
+            <div class="materias">
+                <p>MATERIA PRIMA</p>
+                {% for item in itens %}
+                    {% if item.tipo == "Materia" %}
+                        <div class="card">
+                            <form class="input-group">
+                                <input type="text" id="nome" name="nome" value="{{ item.nome }}" readonly>
+                                <input type="number" id="quantidade" name="quantidade" value="{{ item.quantidade }}"
+                                       disabled>
+                            </form>
+                            <div class="botoes">
+                                <button id="btn1"
+                                        onclick="window.location.href='{{ url_for('TelaEItem', id=item.id) }}'"><i
+                                        class="bi bi-pencil"></i></button>
+                                <button id="btn2"><a href="{{ url_for('delete', id=item.id) }}"><i
+                                        class="bi bi-trash"></i></a></button>
+                                <button id="btn3"
+                                        onclick="window.location.href='{{ url_for('TelaDItem', id=item.id) }}'"><i
+                                        class="bi bi-info-circle"></i></button>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="roupas">
+                <p>ROUPAS</p>
+                {% for item in itens %}
+                    {% if item.tipo == "Roupa" %}
+                        <div class="card">
+                            <form class="input-group">
+                                <input type="text" id="nome" name="nome" value="{{ item.nome }}" readonly>
+                                <input type="number" id="quantidade" name="quantidade" value="{{ item.quantidade }}"
+                                       disabled>
+                            </form>
+                            <div class="botoes">
+                                <button id="btn1"
+                                        onclick="window.location.href='{{ url_for('TelaEItem', id=item.id) }}'"><i
+                                        class="bi bi-pencil"></i></button>
+                                <button id="btn2"><a href="{{ url_for('delete', id=item.id) }}"
+                                                     onclick="return confirm('Deseja deletar esta Roupa?') "><i
+                                        class="bi bi-trash"></i></a></button>
+                                <button id="btn3"
+                                        onclick="window.location.href='{{ url_for('TelaDItem', id=item.id) }}'"><i
+                                        class="bi bi-info-circle"></i></button>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="ferramentas">
+                <p>FERRAMENTAS</p>
+                {% for item in itens %}
+                    {% if item.tipo == "Ferramenta" %}
+                        <div class="card">
+                            <form class="input-group">
+                                <input type="text" id="nome" name="nome" value="{{ item.nome }}" readonly>
+                                <input type="number" id="quantidade" name="quantidade" value="{{ item.quantidade }}"
+                                       disabled>
+                            </form>
+                            <div class="botoes">
+                                <button id="btn1"
+                                        onclick="window.location.href='{{ url_for('TelaEItem', id=item.id) }}'"><i
+                                        class="bi bi-pencil"></i></button>
+                                <button id="btn2"><a href="{{ url_for('delete', id=item.id) }}"
+                                                     onclick="return confirm('Deseja deletar esta Ferramenta?') "><i
+                                        class="bi bi-trash"></i></a></button>
+                                <button id="btn3"
+                                        onclick="window.location.href='{{ url_for('TelaDItem', id=item.id) }}'"><i
+                                        class="bi bi-info-circle"></i></button>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
     </div>
 
 {% endblock %}

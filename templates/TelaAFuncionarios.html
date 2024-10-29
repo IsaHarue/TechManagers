@@ -17,23 +17,36 @@
         </div>
 
         {% with messages = get_flashed_messages() %}
-              {% if messages %}
+            {% if messages %}
                 <div class="alert alert-danger">
-                  {% for message in messages %}
-                    {{ message }}
-                  {% endfor %}
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
                 </div>
-              {% endif %}
+                <script>
+                    // Função para ocultar a mensagem após um determinado tempo
+                    setTimeout(function () {
+                        var alertBox = document.getElementsByClassName('alert')[0];
+                        alertBox.classList.add('hide'); // Adiciona a classe 'hide' para ocultar a mensagem
+                        // Remove a mensagem do DOM após a animação de saída
+                        setTimeout(function () {
+                            alertBox.style.display = 'none'; // Remove a mensagem completamente
+                        }, 500); // O tempo deve corresponder ao tempo de transição do CSS
+                    }, 2000); // Tempo em milissegundos antes de ocultar (3 segundos)
+                </script>
+            {% endif %}
         {% endwith %}
 
         <div class="cards">
             {% for funcionario in funcionarios %}
                 <div class="card">
-                    <p>{{ funcionario.nome}}</p>
+                    <p>{{ funcionario.nome }}</p>
                     <div class="botoes">
                         <button id="btn1" onclick="window.location.href='{{ url_for('TelaEF', id=funcionario.id) }}'">
                             <i class="bi bi-pencil"></i></button>
-                        <button id="btn2"><a href="{{ url_for('delete_funcionario', id=funcionario.id) }}" onclick="return confirm('Deseja deletar este funcionario?')" methods="DELETE">
+                        <button id="btn2"><a href="{{ url_for('delete_funcionario', id=funcionario.id) }}"
+                                             onclick="return confirm('Deseja deletar este funcionario?')"
+                                             methods="DELETE">
                             <i class="bi bi-trash"></i></a></button>
                         <button id="btn3" onclick="window.location.href='{{ url_for('TelaDF', id=funcionario.id) }}'">
                             <i class="bi bi-info-circle"></i></button>

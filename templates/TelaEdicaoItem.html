@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="../static/TelaEdicaoItem.css">
     <main>
         <div class="container">
-            <h2>EDICAO DE ITENS</h2>
-            <form action="{{ url_for('TelaEItem', id=item.id) }}" method="post">
+            <h2>EDIÇÃO DE ITENS</h2>
+            <form action="{{ url_for('TelaEItem', id=item.id) }}" method="post" id="editForm">
                 <div class="input-group">
                     <label for="nome"><i class="fas fa-user"></i> NOME</label>
                     <input type="text" id="nome" name="nome" value="{{ item.nome }}">
@@ -15,7 +15,7 @@
 
                 <div class="input-group">
                     <label for="tipo"><i class="fas fa-user"></i> TIPO</label>
-                    <select name="tipo" class="tipos">
+                    <select name="tipo" class="tipos" id="tipo">
                         <option value="Roupa" {% if item.tipo == "Roupa" %} selected {% endif %}>Roupa</option>
                         <option value="Ferramenta" {% if item.tipo == "Ferramenta" %} selected {% endif %}>Ferramenta
                         </option>
@@ -29,11 +29,40 @@
                     <input type="number" id="quantidade" name="quantidade" value="{{ item.quantidade }}">
                 </div>
                 <div class="btnS">
-                    <button type="button" class="btnV" onclick="location.href='{{ url_for('telaitens') }}'">VOLTAR</button>
-                    <button type="submit" class="btn">EDITAR</button>
+                    <button type="button" class="btnV" onclick="location.href='{{ url_for('telaitens') }}'">VOLTAR
+                    </button>
+                    <button type="submit" class="btn" id="editButton" disabled>EDITAR</button>
                 </div>
             </form>
         </div>
     </main>
+
+    <script>
+        const editButton = document.getElementById('editButton');
+        const editForm = document.getElementById('editForm');
+
+        // Função para verificar alterações
+        function checkFormChanges() {
+            const originalValues = {
+                nome: '{{ item.nome }}',
+                tipo: '{{ item.tipo }}',
+                quantidade: '{{ item.quantidade }}'
+            };
+
+            const nome = document.getElementById('nome').value;
+            const tipo = document.getElementById('tipo').value;
+            const quantidade = document.getElementById('quantidade').value;
+
+            // Verifica se algum campo foi alterado
+            editButton.disabled = !(
+                nome !== originalValues.nome ||
+                tipo !== originalValues.tipo ||
+                quantidade != originalValues.quantidade // Usar != para comparação numérica
+            );
+        }
+
+        // Adiciona evento de input a cada campo
+        editForm.addEventListener('input', checkFormChanges);
+    </script>
     </body>
 {% endblock %}

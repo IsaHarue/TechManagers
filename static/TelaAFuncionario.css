@@ -203,13 +203,49 @@ button a{
 }
 
 .alert {
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    text-align: center;
+    align-items: center;
+    border-radius: 5px;
+    background-color: #087e0a;
+    border: 1px solid #087e0a;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 40px;
+    width: auto;
+    font-size: 20px;
+    color: #fff;
+    top: 0;
+    margin-top: 20px;
+    animation: slideIn 0.5s ease-in-out;
 }
 
-.alert-danger {
-  background-color: #f44336;
-  color: #fff;
-  border: 1px solid #f44336;
+@keyframes slideIn {
+    0% {
+        transform: translateY(-100%); /* Começa fora da tela à esquerda */
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0); /* Chega à posição final */
+        opacity: 1;
+    }
+}
+
+.hide{
+    animation: slideOut 0.5s ease-out; /* Efeito de transição suave para sair */
+    animation-fill-mode: forwards; /* Mantém o estado final da animação */
+}
+
+@keyframes slideOut {
+    0% {
+        transform: translateY(0); /* Começa fora da tela à esquerda */
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100%); /* Chega à posição final */
+        opacity: 0;
+    }
 }
