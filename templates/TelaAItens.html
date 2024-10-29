@@ -43,61 +43,6 @@
         {% endwith %}
 
         <div class="cards">
-    <div class="materias">
-        <p>MATERIA PRIMA</p>
-        {% for item in itens %}
-            {% if item.tipo == "Materia" %}
-                <div class="card">
-                    <form class="input-group">
-                        <input type="text" id="nome" name="nome" value="{{ item.nome }}" readonly>
-                        <input type="number" id="quantidade" name="quantidade" value="{{ item.quantidade }}" disabled>
-                    </form>
-                    <div class="botoes">
-                        <button id="btn1" onclick="window.location.href='{{ url_for('TelaEItem', id=item.id) }}'"><i class="bi bi-pencil"></i></button>
-                        <button id="btn2"><a href="{{ url_for('delete', id=item.id) }}" onclick="return confirm('Deseja deletar esta Roupa?')"><i class="bi bi-trash"></i></a></button>
-                        <button id="btn3" onclick="window.location.href='{{ url_for('TelaDItem', id=item.id) }}'"><i class="bi bi-info-circle"></i></button>
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
-    <div class="roupas">
-        <p>ROUPAS</p>
-        {% for item in itens %}
-            {% if item.tipo == "Roupa" %}
-                <div class="card">
-                    <form class="input-group">
-                        <input type="text" id="nome" name="nome" value="{{ item.nome }}" readonly>
-                        <input type="number" id="quantidade" name="quantidade" value="{{ item.quantidade }}" disabled>
-                    </form>
-                    <div class="botoes">
-                        <button id="btn1" onclick="window.location.href='{{ url_for('TelaEItem', id=item.id) }}'"><i class="bi bi-pencil"></i></button>
-                        <button id="btn2"><a href="{{ url_for('delete', id=item.id) }}" onclick="return confirm('Deseja deletar esta Roupa?') "><i class="bi bi-trash"></i></a></button>
-                        <button id="btn3" onclick="window.location.href='{{ url_for('TelaDItem', id=item.id) }}'"><i class="bi bi-info-circle"></i></button>
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
-    <div class="ferramentas">
-        <p>FERRAMENTAS</p>
-        {% for item in itens %}
-            {% if item.tipo == "Ferramenta" %}
-                <div class="card">
-                    <form class="input-group">
-                        <input type="text" id="nome" name="nome" value="{{ item.nome }}" readonly>
-                        <input type="number" id="quantidade" name="quantidade" value="{{ item.quantidade }}" disabled>
-                    </form>
-                    <div class="botoes">
-                        <button id="btn1" onclick="window.location.href='{{ url_for('TelaEItem', id=item.id) }}'"><i class="bi bi-pencil"></i></button>
-                        <button id="btn2"><a href="{{ url_for('delete', id=item.id) }}" onclick="return confirm('Deseja deletar esta Ferramenta?') "><i class="bi bi-trash"></i></a></button>
-                        <button id="btn3" onclick="window.location.href='{{ url_for('TelaDItem', id=item.id) }}'"><i class="bi bi-info-circle"></i></button>
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
-</div>
             <div class="materias">
                 <p>MATERIA PRIMA</p>
                 {% for item in itens %}
@@ -112,7 +57,8 @@
                                 <button id="btn1"
                                         onclick="window.location.href='{{ url_for('TelaEItem', id=item.id) }}'"><i
                                         class="bi bi-pencil"></i></button>
-                                <button id="btn2"><a href="{{ url_for('delete', id=item.id) }}"><i
+                                <button id="btn2"><a href="{{ url_for('delete', id=item.id) }}"
+                                                     onclick="return confirm('Deseja deletar esta Roupa?')"><i
                                         class="bi bi-trash"></i></a></button>
                                 <button id="btn3"
                                         onclick="window.location.href='{{ url_for('TelaDItem', id=item.id) }}'"><i
@@ -173,6 +119,7 @@
                 {% endfor %}
             </div>
         </div>
+    </div>
     </div>
 
 {% endblock %}

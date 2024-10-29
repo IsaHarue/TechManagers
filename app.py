@@ -103,7 +103,8 @@ def TelaF():
 @app.route('/TelaFI')
 def TelaFI():
     itens = ITEM.query.all()
-    return render_template("TelaFItem.html", itens=itens)
+    total = db_session.query(func.sum(ITEM.quantidade)).scalar() or 0
+    return render_template("TelaFItem.html", itens=itens, total=total)
 
 @app.route('/TelaFM')
 def TelaFM():
@@ -226,17 +227,20 @@ def TelaRF():
 @app.route('/TelaAM')
 def tela_materia_prima():
     itens = ITEM.query.filter_by(tipo="Materia").all()
-    return render_template("TelaAMateriaPrima.html", itens=itens)
+    total = db_session.query(func.sum(ITEM.quantidade)).filter(ITEM.tipo == "Materia").scalar() or 0
+    return render_template("TelaAMateriaPrima.html", itens=itens, total=total)
 
 @app.route('/TelaAR')
 def tela_roupas():
     itens = ITEM.query.filter_by(tipo="Roupa").all()
-    return render_template("TelaARoupas.html", itens=itens)
+    total = db_session.query(func.sum(ITEM.quantidade)).filter(ITEM.tipo == "Roupa").scalar() or 0
+    return render_template("TelaARoupas.html", itens=itens, total=total)
 
 @app.route('/TelaAFe')
 def tela_ferramentas():
     itens = ITEM.query.filter_by(tipo="Ferramenta").all()
-    return render_template("TelaAFerramentas.html", itens=itens)
+    total = db_session.query(func.sum(ITEM.quantidade)).filter(ITEM.tipo == "Ferramenta").scalar() or 0
+    return render_template("TelaAFerramentas.html", itens=itens, total=total)
 
 @app.route('/TelaAF')
 def telafuncionarios():
@@ -248,8 +252,7 @@ def telafuncionarios():
 def telaitens():
     itens = ITEM.query.all()
     total = db_session.query(func.sum(ITEM.quantidade)).scalar() or 0
-    print(itens)
-    print(total)
+
 
     return render_template("TelaAItens.html", itens=itens, total=total)
 

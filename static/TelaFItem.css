@@ -81,13 +81,15 @@
     justify-self: center;
     align-items: center;
     text-align: center;
+    align-self: center;
     justify-content: space-between;
     padding: 0px 10px 0px 10px;
+    margin-right: 20px;
 }
 
 #camponumero {
     height: 50px;
-    width: 60px;
+    width: 80px;
     background-color: #e8e8e8;
     font-size: 40px;
     border: none;
