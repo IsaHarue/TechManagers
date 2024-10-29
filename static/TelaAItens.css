@@ -258,3 +258,16 @@ button a{
     text-decoration: none;
     color: black;
 }
+
+.alert {
+    margin-top: 30px;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.alert-danger {
+  background-color: #f44336;
+  color: #fff;
+  border: 1px solid #f44336;
+}

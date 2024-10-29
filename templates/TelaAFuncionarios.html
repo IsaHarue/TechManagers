@@ -16,6 +16,16 @@
             <input type="number" id="camponumero" name="numero" value="{{ funcionarios | length }}" readonly>
         </div>
 
+        {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <div class="alert alert-danger">
+                  {% for message in messages %}
+                    {{ message }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+        {% endwith %}
+
         <div class="cards">
             {% for funcionario in funcionarios %}
                 <div class="card">
@@ -23,7 +33,7 @@
                     <div class="botoes">
                         <button id="btn1" onclick="window.location.href='{{ url_for('TelaEF', id=funcionario.id) }}'">
                             <i class="bi bi-pencil"></i></button>
-                        <button id="btn2"><a href="{{ url_for('delete_funcionario', id=funcionario.id) }}" methods="DELETE">
+                        <button id="btn2"><a href="{{ url_for('delete_funcionario', id=funcionario.id) }}" onclick="return confirm('Deseja deletar este funcionario?')" methods="DELETE">
                             <i class="bi bi-trash"></i></a></button>
                         <button id="btn3" onclick="window.location.href='{{ url_for('TelaDF', id=funcionario.id) }}'">
                             <i class="bi bi-info-circle"></i></button>
