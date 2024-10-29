@@ -105,12 +105,14 @@ def TelaCF():
             db_session.add(funcionario)
 
             funcionario.save()
+            flash("Funcionario cadastrado com sucesso!")
             return redirect(url_for('telafuncionarios'))
 
         except ValueError:
             flash('não foi possivel adicionar um funcionario no database', 'error')
         except sqlalchemy.exc.IntegrityError:
             flash('cpf ja cadastrado', 'error')
+            return redirect(url_for('TelaCF'))
 
     return render_template("TelaCadastroFuncionario.html")
 
@@ -133,6 +135,7 @@ def TelaCItem():
             item = ITEM(nome=nome, tipo=tipo, quantidade=quantidade)
             db_session.add(item)
             item.save()
+            flash('Item cadastrado com sucesso!')
             return redirect(url_for('telaitens'))
 
     return render_template("TelaCadastroItem.html")
@@ -164,6 +167,7 @@ def TelaEF(id):
             funcionario.cpf = request.form['cpf']
             funcionario.senha = request.form['senha']
             db_session.commit()
+            flash('Funcionario editado com sucesso!')
             return redirect(url_for('telafuncionarios'))
         return render_template('TelaEdicaoFuncionario.html', funcionario=funcionario)
     except AttributeError:
@@ -180,6 +184,7 @@ def TelaEItem(id):
             item.tipo = request.form['tipo']
             item.quantidade = request.form['quantidade']
             db_session.commit()
+            flash('Item editado com sucesso!')
             return redirect(url_for('telaitens'))
         return render_template('TelaEdicaoItem.html', item=item)
     except AttributeError:
