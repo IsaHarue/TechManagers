@@ -257,6 +257,10 @@ def telaitens():
     return render_template("TelaAItens.html", itens=itens, total=total)
 
 
+@app.route('/TelaMv')
+def tela_movimentacao():
+
+    return render_template("TelaMovimentacao.html")
 
 # ___________________________FUNCIONARIO____________________________
 
