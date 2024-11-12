@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+  <body>
+    <link rel="stylesheet" href="../static/TelaMovimentacao.css">
+    <main>
+      <div class="container">
+        <h2>Movimentação</h2>
+
+          <label for="item"><i class="fas fa-user"></i> NOME DO ITEM</label>
+          <select name="item" class="item">
+              <option value="Vestido">Vestido</option>
+              <option value="Camisa">Camisa</option>
+              <option value="Tecido">Tecido</option>
+          </select>
+
+          <label for="tipoI"><i class="fas fa-user"></i> TIPO DO ITEM</label>
+          <input type="text" id="tipoI" name="tipoI" required>
+
+          <label for="id"><i class="fas fa-user"></i> TIPO DO ITEM</label>
+          <input type="text" id="id" name="id" required>
+
+          <label for="nome"><i class="fas fa-user"></i> NOME DO ITEM</label>
+          <select name="funcionario" class="funcionario">
+              <option value=">Emilio">Emilio</option>
+              <option value="Isa Harue">Isa Harue</option>
+              <option value="Pedro Paulo">Pedro Paulo</option>
+          </select>
+
+          <label for="data"><i class="fas fa-user"></i> DATA</label>
+          <input type="date" id="data" name="data" required>
+
+          <label for="movimentacao"><i class="fas fa-user"></i> TIPO DA MOVIMENTAÇÃO</label>
+          <select name="tipoM" class="tipoM">
+              <option value=">Entrada">Entrada</option>
+              <option value="Saida">Saida</option>
+          </select>
+
+          <div class="btnS">
+              <button type="button" class="btnV" onclick="location.href='{{ url_for('telafuncionarios') }}'">VOLTAR</button>
+              <button type="submit" class="btn" >CONFIRMAR</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </body>
+{% endblock %}
