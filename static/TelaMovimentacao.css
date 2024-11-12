@@ -44,7 +44,6 @@ h2 {
     margin-bottom: 5px;
     font-size: 18px;
     font-family: "Koulen", sans-serif;
-
 }
 
 label {
@@ -56,6 +55,7 @@ label {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    font-family: "Koulen", sans-serif;
 }
 
 .item {
