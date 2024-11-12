@@ -535,7 +535,8 @@ def ad():
                                     item_id=int(request.form['item_id']),
                                     estoque_quantidade=request.form['estoque_quantidade'],
                                     movimentacao_item=request.form['movimentacao_item'],
-                                    data_estoque=request.form['data_estoque'])
+                                    data_estoque=request.form['data_estoque'],
+                                    tipo_movimentacao=request.form['tipo_movimentacao'])
         db_session.add(movimentacao)
         movimentacao.save()
         final = {
@@ -544,7 +545,8 @@ def ad():
             'item_id': movimentacao.item_id,
             'estoque_quantidade': movimentacao.estoque_quantidade,
             'data_estoque': movimentacao.data_estoque,
-            'movimentacao_item': movimentacao.movimentacao_item
+            'movimentacao_item': movimentacao.movimentacao_item,
+            'tipo_movimentacao': movimentacao.tipo_movimentacao
         }
         return app.response_class(response=json.dumps(final),
                                   status=201,

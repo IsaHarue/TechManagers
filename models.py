@@ -98,10 +98,11 @@ class MOVIMENTACAO(Base):
     funcionario = relationship('Funcionario', backref='movimentacoes')
     movimentacao_item = Column(Integer, nullable=False)
     data_movimentacao = Column(String(255), nullable=False, index=True)
+    tipo_movimentacao = Column(Integer, nullable=False, index=True)
 
 
     def __repr__(self):
-        return '<Entrega: {}>'.format(self.item_id, self.funcionario_id, self.movimentacao_item, self.data_movimentacao)
+        return '<Entrega: {}>'.format(self.item_id, self.funcionario_id, self.movimentacao_item, self.data_movimentacao, self.tipo_movimentacao)
 
     def save(self):
         db_session.add(self)
@@ -117,7 +118,8 @@ class MOVIMENTACAO(Base):
             'item_id': self.item_id,
             'funcionario_id': self.funcionario_id,
             'movimentacao_item': self.movimentacao_item,
-            'data_movimentacao': self.data_movimentacao
+            'data_movimentacao': self.data_movimentacao,
+            'tipo_movimetacao': self.tipo_movimentacao
         }
         return dados_entrega
 
