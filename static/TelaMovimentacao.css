@@ -15,6 +15,7 @@
     margin-top: 70px;
     align-items: center;
     padding-left: 500px;
+    margin-bottom: 40px;
 }
 
 h2 {
@@ -44,6 +45,7 @@ h2 {
     margin-bottom: 5px;
     font-size: 18px;
     font-family: "Koulen", sans-serif;
+
 }
 
 label {
@@ -55,7 +57,6 @@ label {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-family: "Koulen", sans-serif;
 }
 
 .item {
@@ -85,6 +86,7 @@ label {
 input {
     font-family: "Koulen", sans-serif;
     width: 900px;
+    height: 20px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -137,4 +139,26 @@ input {
 
 .btnV:hover{
     transform: scale(1.1);
+}
+
+.alert.success {
+    color: green;
+}
+
+.alert.error {
+    color: red;
+}
+
+#quantidades{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+#quantidade_final, #quantidade{
+    width: 150px;
+}
+
+#iFlecha{
+    margin-top:5px;
 }

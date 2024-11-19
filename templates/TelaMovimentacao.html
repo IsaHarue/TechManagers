@@ -1,47 +1,82 @@
 {% extends "base.html" %}
 
 {% block conteudo %}
-  <body>
+    <body>
     <link rel="stylesheet" href="../static/TelaMovimentacao.css">
     <main>
-      <div class="container">
-        <h2>Movimentação</h2>
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    <ul>
+                        {% for category, message in messages %}
+                            <li class="alert {{ category }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
 
-          <label for="item"><i class="fas fa-user"></i> NOME DO ITEM</label>
-          <select name="item" class="item">
-              <option value="Vestido">Vestido</option>
-              <option value="Camisa">Camisa</option>
-              <option value="Tecido">Tecido</option>
-          </select>
+            <h2>Movimentação</h2>
+            <form method="post" action="{{ url_for('ad') }}">
+                <label for="item"><i class="fas fa-user"></i> NOME DO ITEM</label>
+                <select name="nome_item" class="item" id="itemSelect" onchange="updateItemDetails()" required>
+                    <option value="">Selecione um item</option>
+                    {% for item in itens %}
+                        <option value="{{ item.id }}" data-nome="{{ item.nome }}"
+                                data-tipo="{{ item.tipo }}"
+                                data-quantidade="{{ item.quantidade }}">{{ item.nome }}</option>
+                    {% endfor %}
+                </select>
 
-          <label for="tipoI"><i class="fas fa-user"></i> TIPO DO ITEM</label>
-          <input type="text" id="tipoI" name="tipoI" required>
+                <label for="tipoI"><i class="fas fa-user"></i> TIPO DO ITEM</label>
+                <input type="text" id="tipoI" name="tipoI" required readonly>
 
-          <label for="id"><i class="fas fa-user"></i> ID ITEM</label>
-          <input type="text" id="id" name="id" required>
+                <label for="id"><i class="fas fa-user"></i> ID ITEM</label>
+                <input type="text" id="id" name="id" required readonly>
 
-          <label for="nome"><i class="fas fa-user"></i> NOME DO FUNCIONARIO</label>
-          <select name="funcionario" class="funcionario">
-              <option value=">Emilio">Emilio</option>
-              <option value="Isa Harue">Isa Harue</option>
-              <option value="Pedro Paulo">Pedro Paulo</option>
-          </select>
+                <label for="nome"><i class="fas fa-user"></i> NOME DO FUNCIONARIO</label>
+                <select name="funcionario" class="funcionario" required>
+                    <option value="" >Selecione um item</option>
+                    {% for func in func %}
+                        <option value="{{ func.id }}">{{ func.nome }}</option>
+                    {% endfor %}
+                </select>
 
-          <label for="data"><i class="fas fa-user"></i> DATA</label>
-          <input type="date" id="data" name="data" required>
+                <label for="data"><i class="fas fa-user"></i> DATA</label>
+                <input type="date" id="data" name="data" required>
 
-          <label for="movimentacao"><i class="fas fa-user"></i> TIPO DA MOVIMENTAÇÃO</label>
-          <select name="tipoM" class="tipoM">
-              <option value=">Entrada">Entrada</option>
-              <option value="Saida">Saida</option>
-          </select>
+                <label for="quantidade">QUANTIDADE</label>
+                <div id="quantidades">
+                    <input type="number" id="quantidade" name="quantidade" readonly>
+                    <img src="../static/imagens/flecha.png" height="30" width="30" id="iFlecha">
+                    <input type="number" id="quantidade_final" name="quantidade_final" required>
+                </div>
 
-          <div class="btnS">
-              <button type="button" class="btnV" onclick="location.href='{{ url_for('telafuncionarios') }}'">VOLTAR</button>
-              <button type="submit" class="btn" >CONFIRMAR</button>
-          </div>
-        </form>
-      </div>
+                <label for="movimentacao"><i class="fas fa-user"></i> TIPO DA MOVIMENTAÇÃO</label>
+                <select name="tipoM" class="tipoM">
+                    <option value=">Entrada">Entrada</option>
+                    <option value="Saida">Saida</option>
+                </select>
+
+                <div class="btnS">
+                    <button type="submit" class="btn">CADASTRAR
+                    </button>
+                </div>
+            </form>
+        </div>
     </main>
-  </body>
+
+    <script>
+        function updateItemDetails() {
+            const selectElement = document.getElementById('itemSelect');
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+
+            // Atualiza os campos de ID e Tipo
+            document.getElementById('id').value = selectedOption.value; // ID do item
+            document.getElementById('tipoI').value = selectedOption.getAttribute('data-tipo'); // Tipo do item
+
+            const quantidadeInput = document.getElementById('quantidade');
+            quantidadeInput.value = selectedOption.getAttribute('data-quantidade'); // Quantidade disponível
+        }
+    </script>
+    </body>
 {% endblock %}

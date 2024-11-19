@@ -146,7 +146,7 @@ def TelaCItem():
     if request.method == 'POST':
         nome = request.form['nome']
         tipo = request.form['tipo']
-        quantidade = int(request.form['quantidade'])
+        quantidade = int(0)
 
         # Verificar se o item já existe no banco de dados
         item = ITEM.query.filter_by(nome=nome, tipo=tipo).first()
@@ -211,7 +211,6 @@ def TelaEItem(id):
         if request.method == 'POST':
             item.nome = request.form['nome']
             item.tipo = request.form['tipo']
-            item.quantidade = request.form['quantidade']
             db_session.commit()
             flash('Item editado com sucesso!')
             return redirect(url_for('telaitens'))
@@ -257,10 +256,11 @@ def telaitens():
     return render_template("TelaAItens.html", itens=itens, total=total)
 
 
-@app.route('/TelaMv')
+@app.route('/TelaMv', methods=['GET', 'POST'])
 def tela_movimentacao():
-
-    return render_template("TelaMovimentacao.html")
+    itens = ITEM.query.all()
+    func = Funcionario.query.all()
+    return render_template("TelaMovimentacao.html", itens=itens, func=func)
 
 # ___________________________FUNCIONARIO____________________________
 
@@ -529,120 +529,40 @@ def cunsultar_item(id):
 
 # ___________________________Movimentação____________________________
 
-@app.route('/add_movimentacao', methods=['POST'])
+@app.route('/ad', methods=['POST'])
 def ad():
-    '''Esta rota é responsável por adicionar um esprestimo no database
-    #Adicionando os ids do funcionario e do item no database, assim como o tempo_de_entrega,
-    é possivel cadastrar o entrega no banco'''
-    try:
-        movimentacao = MOVIMENTACAO(funcionario_id=int(request.form['funcionario_id']),
-                                    item_id=int(request.form['item_id']),
-                                    estoque_quantidade=request.form['estoque_quantidade'],
-                                    movimentacao_item=request.form['movimentacao_item'],
-                                    data_estoque=request.form['data_estoque'],
-                                    tipo_movimentacao=request.form['tipo_movimentacao'])
-        db_session.add(movimentacao)
-        movimentacao.save()
-        final = {
-            'status': 'ok',
-            'funcionario_id': movimentacao.funcionario_id,
-            'item_id': movimentacao.item_id,
-            'estoque_quantidade': movimentacao.estoque_quantidade,
-            'data_estoque': movimentacao.data_estoque,
-            'movimentacao_item': movimentacao.movimentacao_item,
-            'tipo_movimentacao': movimentacao.tipo_movimentacao
-        }
-        return app.response_class(response=json.dumps(final),
-                                  status=201,
-                                  mimetype='application/json')
-    except ValueError:
-        final = {
-            'status': 'erro',
-            'mensagem': 'não foi possivel adicionar uma entrega no database'
-        }
-    except sqlalchemy.exc.IntegrityError:
-        final = {
-            'status': 'erro',
-            'mensagem': 'entrega já cadastrada na base de dados'
-        }
+    # Get form data
+    item_id = request.form['id']
+    funcionario_id = request.form['funcionario']
+    data_movimentacao = request.form['data']
+    quantidade = int(request.form['quantidade_final'])
+    tipo_movimentacao = request.form['tipoM']  # "Entrada" or "Saida"
 
+    # Retrieve the item
+    item = db_session.query(ITEM).filter_by(id=item_id).first()
+    funcionario = db_session.query(Funcionario).filter_by(id=funcionario_id).first()
+    item.quantidade = quantidade
+    if not item:
+        flash('Item não encontrado!', 'error')
+        return redirect(url_for('ad'))  # Adjust accordingly
 
-@app.route('/update_movimentacao/<int:id>', methods=['PUT'])
-def update_movimentacao(id):
-    '''Esta rota é responsável por modificar informações de um esprestimo no database
-    #É possivel alterar os ids do funcionario e do item, assim como do tempo de emprestimo
-    #Utilizando o try podemos notificar o usuario caso aja algum dado inválido'''
-    try:
-        movimentacao = select(MOVIMENTACAO).where(MOVIMENTACAO.id == id)
-        movimentacao = db_session.execute(movimentacao).scalar()
-        movimentacao.funcionario_id = request.form['funcionario_id']
-        movimentacao.item_id = request.form['item_id']
-        movimentacao.estoque_quantidade = request.form['estoque_quantidade']
-        movimentacao.movimentacao_item = request.form['movimentacao_item']
-        movimentacao.data_estoque = request.form['data_Estoque']
-        db_session.commit()
-        final = {
-            'status': 'ok',
-            'funcionario_id': movimentacao.funcionario_id,
-            'item_id': movimentacao.item_id,
-            'estoque_quantidade': movimentacao.estoque_quantidade,
-            'movimentacao_item': movimentacao.movimentacao_item,
-            'data_estoque': movimentacao.data_estoque
-        }
+    # Save the item changes
+    #db_session.commit()
+    item.save()
 
-        return app.response_class(response=json.dumps(final), status=201, mimetype='application/json')
-
-
-    except ValueError:
-
-        final = {
-
-            'status': 'erro',
-
-            'mensagem': 'não foi possivel atualizar verifique se os campos são diferentes'
-
-        }
-
-        return app.response_class(response=json.dumps(final), status=201, mimetype='application/json')
-
-    except AttributeError:
-
-        final = {
-
-            'status': 'erro',
-
-            'mensagem': 'Emprestiomo não cadastrado na base de dados'
-
-        }
-
-        return app.response_class(response=json.dumps(final), status=201, mimetype='application/json')
-
-
-@app.route('/delete_movimentacao/<int:id>', methods=['DELETE'])
-def delete_movimentacao(id):
-    '''Esta rota é responsável por deletar um esprestimo no database
-    #Ao indicar um id, é possivel remover um esprestimo no banco'''
-    try:
-        movimentacao = select(MOVIMENTACAO).where(MOVIMENTACAO.id == id)
-        movimentacao = db_session.execute(movimentacao).scalar()
-        print(movimentacao)
-        final = {
-            'status': 'removido',
-            'funcionario_id': movimentacao.funcionario_id,
-            'item_id': movimentacao.item_id,
-            'data_estoque': movimentacao.data_estoque,
-            'movimetacao_item': movimentacao.movimentacao_item,
-            'estoque_quantidade': movimentacao.estoque_quantidade}
-        db_session.delete(movimentacao)
-        db_session.commit()
-        return Response(response=json.dumps(final),
-                        status=201,
-                        mimetype='application/json')
-    except AttributeError:
-        final = {
-            'status': 'erro',
-            'mensagem': 'não foi possivel atualizar, verifique se o id é compatível no database'
-        }
+    # Create a new MOVIMENTACAO entry
+    movimentacao = MOVIMENTACAO(
+        item_id=item.id,
+        funcionario_id=funcionario_id,
+        nome_item=item.nome,
+        nome_funcionario=funcionario.nome,  # You might want to fetch the name based on ID
+        data_movimentacao=data_movimentacao,
+        tipo_movimentacao=tipo_movimentacao,
+        quantidade_final=item.quantidade
+    )
+    movimentacao.save()
+    flash('Movimentação registrada com sucesso!', 'success')
+    return redirect(url_for('telaitens'))  # Adjust accordingly
 
 
 @app.route('/get_movimentacao', methods=['GET'])

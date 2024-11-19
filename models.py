@@ -92,17 +92,34 @@ class ITEM(Base):
 class MOVIMENTACAO(Base):
     __tablename__ = 'movimentacao'
     id = Column(Integer, primary_key=True, unique=True, nullable=False, index=True)
+
+    # ID do item e relacionamento com a tabela ITEM
     item_id = Column(Integer, ForeignKey('item.id'), nullable=False)
     item = relationship('ITEM', backref='movimentacoes')
+
+    # ID do funcionário e relacionamento com a tabela Funcionario
     funcionario_id = Column(Integer, ForeignKey('funcionario.id'), nullable=False)
     funcionario = relationship('Funcionario', backref='movimentacoes')
-    movimentacao_item = Column(Integer, nullable=False)
+
+    # Armazena o nome do item diretamente na movimentação (opcional)
+    nome_item = Column(String(255), nullable=False)
+
+    # Armazena o nome do funcionário diretamente na movimentação (opcional)
+    nome_funcionario = Column(String(255), nullable=False)
+
+    # Data da movimentação
     data_movimentacao = Column(String(255), nullable=False, index=True)
+
+    # Tipo de movimentação: 0 para Entrada, 1 para Saída
     tipo_movimentacao = Column(Integer, nullable=False, index=True)
+
+    # Quantidade total de itens após a movimentação
+    quantidade_final = Column(Integer, nullable=False)
+
 
 
     def __repr__(self):
-        return '<Entrega: {}>'.format(self.item_id, self.funcionario_id, self.movimentacao_item, self.data_movimentacao, self.tipo_movimentacao)
+        return '<Entrega: {}>'.format(self.item_id, self.nome_item, self.quantidade_final, self.data_movimentacao, self.tipo_movimentacao, self.nome_funcionario, self.funcionario_id)
 
     def save(self):
         db_session.add(self)
@@ -116,8 +133,11 @@ class MOVIMENTACAO(Base):
         dados_entrega = {
             'movimentacao_id': self.id,
             'item_id': self.item_id,
+            'item_nome': self.nome_item,
+            'tipo_movimentacao': self.tipo_movimentacao,
+            'quantidade': self.quantidade_final,
             'funcionario_id': self.funcionario_id,
-            'movimentacao_item': self.movimentacao_item,
+            'funcionario_nome': self.nome_funcionario,
             'data_movimentacao': self.data_movimentacao,
             'tipo_movimetacao': self.tipo_movimentacao
         }
