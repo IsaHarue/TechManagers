@@ -15,7 +15,7 @@
                 {% endif %}
             {% endwith %}
 
-            <h2>Movimentação</h2>
+            <h2>Movimentacao</h2>
             <form method="post" action="{{ url_for('ad') }}">
                 <label for="item"><i class="fas fa-user"></i> NOME DO ITEM</label>
                 <select name="nome_item" class="item" id="itemSelect" onchange="updateItemDetails()" required>
@@ -23,39 +23,46 @@
                     {% for item in itens %}
                         <option value="{{ item.id }}" data-nome="{{ item.nome }}"
                                 data-tipo="{{ item.tipo }}"
-                                data-quantidade="{{ item.quantidade }}">{{ item.nome }}</option>
+                                data-quantidade="{{ item.quantidade }}"
+                                {% if form_data and form_data.get('id') == item.id|string %}selected{% endif %}>{{ item.nome }}</option>
                     {% endfor %}
                 </select>
 
                 <label for="tipoI"><i class="fas fa-user"></i> TIPO DO ITEM</label>
-                <input type="text" id="tipoI" name="tipoI" required readonly>
+                <input type="text" id="tipoI" name="tipoI" required readonly value="{{ form_data.get('tipoI', '') }}">
 
                 <label for="id"><i class="fas fa-user"></i> ID ITEM</label>
-                <input type="text" id="id" name="id" required readonly>
+                <input type="text" id="id" name="id" required readonly value="{{ form_data.get('id', '') }}">
 
                 <label for="nome"><i class="fas fa-user"></i> NOME DO FUNCIONARIO</label>
                 <select name="funcionario" class="funcionario" required>
-                    <option value="" >Selecione um item</option>
+                    <option value="">Selecione um funcionário</option>
                     {% for func in func %}
-                        <option value="{{ func.id }}">{{ func.nome }}</option>
+                        <option value="{{ func.id }}"
+                                {% if form_data and form_data.get('funcionario') == func.id|string %}selected{% endif %}
+                                >{{ func.nome }}</option>
                     {% endfor %}
                 </select>
 
-                <label for="data"><i class="fas fa-user"></i> DATA</label>
-                <input type="date" id="data" name="data" required>
+                <label for="data">DATA</label>
+                <input type="date" id="data" name="data" required value="{{ form_data.get('data', '') }}">
 
-                <label for="quantidade">QUANTIDADE</label>
-                <div id="quantidades">
-                    <input type="number" id="quantidade" name="quantidade" readonly>
-                    <img src="../static/imagens/flecha.png" height="30" width="30" id="iFlecha">
-                    <input type="number" id="quantidade_final" name="quantidade_final" required>
-                </div>
-
-                <label for="movimentacao"><i class="fas fa-user"></i> TIPO DA MOVIMENTAÇÃO</label>
-                <select name="tipoM" class="tipoM">
-                    <option value=">Entrada">Entrada</option>
-                    <option value="Saida">Saida</option>
+                <label for="movimentacao"><i class="fas fa-user"></i> TIPO DA MOVIMENTACAO</label>
+                <select name="tipoM" class="tipoM" id="tipoMovimentacao" onchange="toggleQuantidadeField()">
+                    <option value="">Selecione o tipo de movimentação</option>
+                    <option value="Entrada" {% if form_data.get('tipoM') == 'Entrada' %}selected{% endif %}>Entrada</option>
+                    <option value="Saida" {% if form_data.get('tipoM') == 'Saida' %}selected{% endif %}>Saida</option>
                 </select>
+
+                <div id="quantidadeContainer" style="display: none;">
+                    <label for="quantidade">QUANTIDADE</label>
+                    <div id="quantidades">
+                        <input type="number" id="quantidade" name="quantidade" readonly value="{{ form_data.get('quantidade', '') }}">
+                        <p id="imais" style="display: none">+</p>
+                        <p id="imenos" style="display: none">-</p>
+                        <input type="number" id="quantidade_final" name="quantidade_final" required value="{{ form_data.get('quantidade_final', '') }}">
+                    </div>
+                </div>
 
                 <div class="btnS">
                     <button type="submit" class="btn">CADASTRAR
@@ -77,6 +84,31 @@
             const quantidadeInput = document.getElementById('quantidade');
             quantidadeInput.value = selectedOption.getAttribute('data-quantidade'); // Quantidade disponível
         }
+
+        function toggleQuantidadeField() {
+            const tipoMovimentacao = document.getElementById('tipoMovimentacao').value;
+            const quantidadeContainer = document.getElementById('quantidadeContainer');
+            const iconemais = document.getElementById('imais');
+            const iconemenos = document.getElementById('imenos');
+
+            // Exibe o campo se um tipo for selecionado, esconde caso contrário
+            if (tipoMovimentacao === "Entrada" || tipoMovimentacao === "Saida") {
+                quantidadeContainer.style.display = "block";
+                if (tipoMovimentacao === "Entrada") {
+                    iconemais.style.display = "block"
+                    iconemenos.style.display = "none"
+                } else {
+                    iconemenos.style.display = "block"
+                    iconemais.style.display = "none"
+                }
+            } else {
+                quantidadeContainer.style.display = "none";
+            }
+        }
+
+        window.onload = function() {
+        toggleQuantidadeField();
+    };
     </script>
     </body>
 {% endblock %}

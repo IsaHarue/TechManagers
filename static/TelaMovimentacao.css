@@ -1,11 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Koulen&display=swap');
 
-
-.koulen-regular {
-    font-family: "Koulen", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-}
 
 .container {
     display: flex;
@@ -14,16 +7,18 @@
     width: 300px;
     margin-top: 70px;
     align-items: center;
+    justify-content: center;
     padding-left: 500px;
     margin-bottom: 40px;
 }
 
 h2 {
     justify-content: center;
+    justify-self: center;
+    align-self: center;
     width: 1000px;
     height: auto;
     background-color: white;
-    margin-right: 90px;
     text-align: center;
     margin-bottom: 20px;
     font-size: 40px;
@@ -60,7 +55,6 @@ label {
 }
 
 .item {
-    font-family: "Koulen", sans-serif;
     width: 920px;
     padding: 10px;
     border: 1px solid #ccc;
@@ -68,7 +62,6 @@ label {
 }
 
 .funcionario {
-    font-family: "Koulen", sans-serif;
     width: 920px;
     padding: 10px;
     border: 1px solid #ccc;
@@ -76,7 +69,6 @@ label {
 }
 
 .tipoM {
-    font-family: "Koulen", sans-serif;
     width: 920px;
     padding: 10px;
     border: 1px solid #ccc;
@@ -84,13 +76,13 @@ label {
 }
 
 input {
-    font-family: "Koulen", sans-serif;
     width: 900px;
     height: 20px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
 
 .btnS {
     display: flex;
@@ -142,11 +134,59 @@ input {
 }
 
 .alert.success {
-    color: green;
+    background-color: #087e0a;
+    border: 1px solid #087e0a;
 }
 
 .alert.error {
-    color: red;
+    background-color: #8f0015;
+    border: 1px solid #8f0015;
+}
+
+.alert {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    text-align: center;
+    align-items: center;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 40px;
+    width: auto;
+    font-size: 20px;
+    color: #fff;
+    top: 90px;
+    left: 50%;
+    animation: slideIn 0.5s ease-in-out;
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateY(-100%); /* Começa fora da tela à esquerda */
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0); /* Chega à posição final */
+        opacity: 1;
+    }
+}
+
+.hide{
+    animation: slideOut 0.5s ease-out; /* Efeito de transição suave para sair */
+    animation-fill-mode: forwards; /* Mantém o estado final da animação */
+}
+
+@keyframes slideOut {
+    0% {
+        transform: translateY(0); /* Começa fora da tela à esquerda */
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100%); /* Chega à posição final */
+        opacity: 0;
+    }
 }
 
 #quantidades{
@@ -161,4 +201,8 @@ input {
 
 #iFlecha{
     margin-top:5px;
+}
+
+#imais, #imenos{
+    font-size: 33px;
 }
