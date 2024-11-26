@@ -260,7 +260,8 @@ def telaitens():
 def tela_movimentacao():
     itens = ITEM.query.all()
     func = Funcionario.query.all()
-    return render_template("TelaMovimentacao.html", itens=itens, func=func)
+    form_data = {}
+    return render_template("TelaMovimentacao.html", itens=itens, func=func, form_data=form_data)
 
 # ___________________________FUNCIONARIO____________________________
 
@@ -469,19 +470,25 @@ def update(id):
 @app.route('/delete_item/<int:id>', methods=['GET', 'DELETE'])
 def delete(id):
     '''Esta rota é responsável por deletar um ITEM do database
-    #Para deletar um ITEM voce deve informar o id do ITEM que deseja excluir'''
+    Para deletar um ITEM você deve informar o id do ITEM que deseja excluir'''
     try:
-        item = select(ITEM).where(ITEM.id == id)
-        item = db_session.execute(item).scalar()
-        db_session.delete(item)
-        db_session.commit()
-        return redirect(url_for('telaitens'))
-    except AttributeError:
-        final = {
-            'status': 'erro',
-            'mensagem': 'não foi possivel deletar, verifique se o id é compatível no database'
-        }
+        # Excluir todas as movimentações relacionadas ao item
+        db_session.query(MOVIMENTACAO).filter(MOVIMENTACAO.item_id == id).delete()
 
+        # Agora, excluir o item
+        item = db_session.query(ITEM).filter_by(id=id).first()
+        if item:
+            db_session.delete(item)
+            db_session.commit()
+            flash('Item deletado com sucesso!', 'success')
+        else:
+            flash('Item não encontrado!', 'error')
+
+        return redirect(url_for('telaitens'))
+    except Exception as e:
+        db_session.rollback()  # Rollback em caso de erro
+        flash(f'Não foi possível deletar, erro: {str(e)}', 'error')
+        return redirect(url_for('telaitens'))
 
 @app.route('/get_itens', methods=['GET'])
 def cunsultar_itens():
@@ -532,6 +539,7 @@ def cunsultar_item(id):
 @app.route('/ad', methods=['POST'])
 def ad():
     # Get form data
+    form_data = request.form
     item_id = request.form['id']
     funcionario_id = request.form['funcionario']
     data_movimentacao = request.form['data']
@@ -541,10 +549,17 @@ def ad():
     # Retrieve the item
     item = db_session.query(ITEM).filter_by(id=item_id).first()
     funcionario = db_session.query(Funcionario).filter_by(id=funcionario_id).first()
-    item.quantidade = quantidade
+    if tipo_movimentacao == "Entrada":
+        item.quantidade = item.quantidade + quantidade
+    else:
+        if quantidade <= item.quantidade:
+            item.quantidade = item.quantidade - quantidade
+        else:
+            flash('Estoque insuficiente!', 'error')
+            return render_template('TelaMovimentacao.html', itens=ITEM.query.all(), func=Funcionario.query.all(), form_data=form_data)
     if not item:
         flash('Item não encontrado!', 'error')
-        return redirect(url_for('ad'))  # Adjust accordingly
+        return render_template('TelaMovimentacao.html', itens=ITEM.query.all(), func=Funcionario.query.all(), form_data=form_data)
 
     # Save the item changes
     #db_session.commit()
