@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad, unpad
@@ -88,7 +90,59 @@ def base():
 
 @app.route('/TelaGraficos')
 def TelaGraficos():
-    return render_template("TeladeGraficos.html")
+    total_itens = db_session.query(func.sum(ITEM.quantidade)).scalar() or 0
+    total_entrada = db_session.query(func.sum(MOVIMENTACAO.quantidade_final)).filter(MOVIMENTACAO.tipo_movimentacao == "Entrada").scalar() or 0
+    total_saida = db_session.query(func.sum(MOVIMENTACAO.quantidade_final)).filter(MOVIMENTACAO.tipo_movimentacao == "Saida").scalar() or 0
+
+    meses = ['Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro']
+    total_por_mes = []
+    for i in range(7, 12):  # Agora é de Julho a Novembro
+        total_mes = db_session.query(func.sum(MOVIMENTACAO.quantidade_final)).filter(
+            MOVIMENTACAO.data_movimentacao.like(f'2024-{i:02d}%')).scalar() or 0
+        total_por_mes.append(total_mes)
+
+    # Calcular os dias da semana (Segunda a Sexta)
+    hoje = datetime.now()
+    inicio_semana = hoje - timedelta(days=hoje.weekday())  # Obter a segunda-feira da semana atual
+    dias_da_semana = [(inicio_semana + timedelta(days=i)).strftime('%Y-%m-%d') for i in range(5)]  # Segunda a Sexta
+
+    # Consultar entradas e saídas para cada dia
+    entradas_diarias = []
+    saidas_diarias = []
+    for dia in dias_da_semana:
+        entrada_dia = db_session.query(func.sum(MOVIMENTACAO.quantidade_final)).filter(
+            MOVIMENTACAO.tipo_movimentacao == "Entrada",
+            MOVIMENTACAO.data_movimentacao.like(f'{dia}%')
+        ).scalar() or 0
+        saida_dia = db_session.query(func.sum(MOVIMENTACAO.quantidade_final)).filter(
+            MOVIMENTACAO.tipo_movimentacao == "Saida",
+            MOVIMENTACAO.data_movimentacao.like(f'{dia}%')
+        ).scalar() or 0
+        entradas_diarias.append(entrada_dia)
+        saidas_diarias.append(saida_dia)
+
+        categorias = ['Matéria Prima', 'Roupas', 'Ferramentas']
+        total_Materia = db_session.query(func.sum(ITEM.quantidade)).filter(ITEM.tipo == "Materia").scalar() or 0
+        total_Roupa = db_session.query(func.sum(ITEM.quantidade)).filter(ITEM.tipo == "Roupa").scalar() or 0
+        total_Ferramenta = db_session.query(func.sum(ITEM.quantidade)).filter(ITEM.tipo == "Ferramenta").scalar() or 0
+
+    # Passar os dados ao template
+    return render_template(
+        "Teladegraficos.html",
+        total_itens=total_itens,
+        total_entrada=total_entrada,
+        total_saida=total_saida,
+        total_por_mes=total_por_mes,
+        meses=meses,
+        entradas_diarias=entradas_diarias,
+        saidas_diarias=saidas_diarias,
+        dias_da_semana=['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta'],
+        categorias=categorias,
+        total_Materia=total_Materia,
+        total_Roupa=total_Roupa,
+        total_Ferramenta=total_Ferramenta
+    )
+
 
 @app.route('/TelaRelatorio', methods=['GET'])
 def TelaRelatorio():

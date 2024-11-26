@@ -1,184 +1,242 @@
 {% extends "base.html" %}
 
 {% block conteudo %}
-<link rel="stylesheet" href="../static/Teladegraficos.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="../static/Teladegraficos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-<div class="container">
-    <h1>Dashboard de Vendas</h1>
+    <div class="container">
+        <h1>Dashboard de Vendas</h1>
 
-    <div class="quadros-fofos">
-        <div class="card">
-            <i class="fas fa-dollar-sign"></i>
-            <h3>Total de Vendas</h3>
-            <p>R$ 25.000</p>
+        <div class="quadros-fofos">
+            <div class="card">
+                <i class="fas fa-arrow-down"></i>
+                <h3>Entrada de Produtos</h3>
+                <p>{{ total_entrada }}</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-arrow-up"></i>
+                <h3>Saída de Produtos</h3>
+                <p>{{ total_saida }}</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-box"></i>
+                <h3>Total de Produtos</h3>
+                <p>{{ total_itens }}</p>
+            </div>
         </div>
-        <div class="card">
-            <i class="fas fa-users"></i>
-            <h3>Funcionários</h3>
-            <p>6</p>
-        </div>
-        <div class="card">
-            <i class="fas fa-chart-line"></i>
-            <h3>Crescimento</h3>
-            <p>15%</p>
-        </div>
-        <div class="card">
-            <i class="fas fa-coins"></i>
-            <h3>Lucro</h3>
-            <p>R$ 5.000</p>
+
+        <div class="charts-containers">
+            <div class="chart-wrapper">
+                <canvas id="salesBarChart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="salesLineChart"></canvas>
+            </div>
+            <!-- Novo gráfico de barras para Matéria Prima, Roupas e Ferramentas -->
+            <div class="chart-wrapper">
+                <canvas id="categoryBarChart"></canvas>
+            </div>
         </div>
     </div>
 
-    <div class="charts-containers">
-        <div class="chart-wrapper">
-            <canvas id="salesBarChart"></canvas>
-        </div>
-    </div>
-</div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        main {
+            margin-left: 100px;
+        }
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
-    main {
-        margin-left: 100px;
-    }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 20px;
+            background-color: #f3f3f3;
+            border-radius: 20px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+        }
 
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        text-align: center;
-        padding: 20px;
-        background-color: #f3f3f3;
-        border-radius: 15px;
-        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
-    }
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 25px;
+            color: #333;
+        }
 
-    h1 {
-        font-size: 2.8em;
-        margin-bottom: 25px;
-        color: #333;
-    }
-
-    .quadros-fofos {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 25px;
-        gap: 15px;
-    }
-
-    .card {
-        background-color: #fff;
-        border-radius: 15px;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        width: 22%;
-        text-align: center;
-        transition: transform 0.3s ease;
-    }
-
-    .card:hover {
-        transform: translateY(-5px);
-    }
-
-    .card i {
-        font-size: 2.5em;
-        margin-bottom: 15px;
-        color: #4CAF50;
-    }
-
-    .card h3 {
-        font-size: 1.6em;
-        margin-bottom: 10px;
-        color: #444;
-    }
-
-    .card p {
-        font-size: 1.3em;
-        color: #777;
-    }
-
-    .charts-containers {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-    }
-
-    .chart-wrapper {
-        flex: 1;
-        max-width: 700px;
-    }
-
-    canvas {
-        background-color: white;
-        padding: 15px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        border-radius: 15px;
-        max-width: 100%;
-        height: 400px;
-    }
-
-    @media (max-width: 768px) {
         .quadros-fofos {
-            flex-direction: column;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
             gap: 15px;
         }
 
         .card {
-            width: 100%;
-            margin-bottom: 20px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 22%;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card i {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            color: #4CAF50;
+        }
+
+        .card h3 {
+            font-size: 1.6em;
+            margin-bottom: 10px;
+            color: #444;
+        }
+
+        .card p {
+            font-size: 1.3em;
+            color: #777;
         }
 
         .charts-containers {
-            flex-direction: column;
-            align-items: center;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 15px;
         }
 
         .chart-wrapper {
-            width: 100%;
+            flex: 1;
+            max-width: 700px;
         }
 
         canvas {
-            height: 300px;
+            background-color: white;
+            padding: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            max-width: 100%;
+            height: 400px;
         }
-    }
-</style>
 
-<script>
-    const ctxBar = document.getElementById('salesBarChart').getContext('2d');
-    const salesBarChart = new Chart(ctxBar, {
-        type: 'bar',
-        data: {
-            labels: ['Produto A', 'Produto B', 'Produto C', 'Produto D', 'Produto E'],
-            datasets: [{
-                label: 'Vendas (R$)',
-                data: [1200, 1900, 3000, 2500, 3200],
-                backgroundColor: [
-                    'rgba(255,137,0,0.2)',
-                    'rgba(255,243,0,0.2)',
-                    'rgba(48,255,0,0.2)',
-                    'rgba(0,57,255,0.2)',
-                    'rgba(153, 102, 255, 0.2)'
-                ],
-                borderColor: [
-                    'rgb(255,92,0)',
-                    'rgb(255,214,0)',
-                    'rgb(86,255,0)',
-                    'rgb(0,89,255)',
-                    'rgba(153, 102, 255, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            },
-            responsive: true,
-            maintainAspectRatio: false,
+        @media (max-width: 768px) {
+            .quadros-fofos {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .card {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .charts-containers {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .chart-wrapper {
+                width: 100%;
+            }
+
+            canvas {
+                height: 300px;
+            }
         }
-    });
-</script>
+    </style>
+
+    <script>
+        // Gráfico de barras - Entrada e Saída de Produtos
+        const ctxBar = document.getElementById('salesBarChart').getContext('2d');
+        const salesBarChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta'], // Rótulos (labels)
+                datasets: [
+                    {
+                        label: 'Entrada de Produtos (Itens)',
+                        data: {{ entradas_diarias|tojson }}, // Lista com dados de entrada por dia
+                        backgroundColor: 'rgba(0,255,137,0.2)',
+                        borderColor: 'rgb(0,255,137)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Saída de Produtos (Itens)',
+                        data: {{ saidas_diarias|tojson }}, // Lista com dados de saída por dia
+                        backgroundColor: 'rgba(255,0,0,0.2)',
+                        borderColor: 'rgb(255,0,0)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+            }
+        });
+
+
+        // Gráfico de linhas - Total de Produtos
+        const ctxLine = document.getElementById('salesLineChart').getContext('2d');
+        const salesLineChart = new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: {{ meses|tojson }},  // Passa os meses para o gráfico
+                datasets: [
+                    {
+                        label: 'Total de Produtos (Itens)',
+                        data: {{ total_por_mes|tojson }}, // Passa os dados de total_por_mes para o gráfico
+                        backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                        borderColor: 'rgb(0, 123, 255)',
+                        borderWidth: 2,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+        const ctxCategoryBar = document.getElementById('categoryBarChart').getContext('2d');
+        const categoryBarChart = new Chart(ctxCategoryBar, {
+            type: 'bar',
+            data: {
+                labels: {{ categorias|tojson }}, // ['Matéria Prima', 'Roupas', 'Ferramentas']
+                datasets: [
+                    {
+                        label: 'Quantidade (Itens)',
+                        data: [{{ total_Materia }}, {{ total_Roupa }}, {{ total_Ferramenta }}], // Dados calculados dinamicamente
+                        backgroundColor: 'rgba(123, 563, 155, 0.2)',
+                        borderColor: 'rgb(0, 342, 425)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+            }
+        });
+
+    </script>
 
 {% endblock %}
