@@ -15,7 +15,7 @@
                 {% endif %}
             {% endwith %}
 
-            <h2>Movimentação</h2>
+            <h2>Movimentacao</h2>
             <form method="post" action="{{ url_for('ad') }}">
                 <label for="item"><i class="fas fa-user"></i> NOME DO ITEM</label>
                 <select name="nome_item" class="item" id="itemSelect" onchange="updateItemDetails()" required>
