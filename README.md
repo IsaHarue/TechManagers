@@ -96,7 +96,9 @@ http://127.0.0.1:5000
 ```
 ---
 #Login Admin
+
 LOGIN: admin@gmail.com
+
 SENHA: 123*
 ---
 
@@ -130,8 +132,6 @@ SENHA: 123*
 - Gráficos
 <img width="900" height="auto" alt="image" src="https://github.com/user-attachments/assets/f8d5858f-a11c-48a7-aba2-b0c9efe7a9d8" />
 
-
-> *Em breve serão adicionadas imagens demonstrando o funcionamento da aplicação.*
 
 ---
 
