@@ -94,20 +94,42 @@ python app.py
 ```
 http://127.0.0.1:5000
 ```
-
+---
+#Login Admin
+LOGIN: admin@gmail.com
+SENHA: 123*
 ---
 
 ## 🖥️ Telas do sistema
 
 - Login
-- Dashboard
+<img width="900" height="auto" alt="image" src="https://github.com/user-attachments/assets/a38b394d-7ef5-486c-ba27-239190d44964" />
+
+- Tela do funcionário
+<img width="900" height="auto" alt="image" src="https://github.com/user-attachments/assets/9acbdaf4-a24f-4159-84e5-91afed5d27f5" />
+
+- Tela Admin
+<img width="900" height="auto" alt="image" src="https://github.com/user-attachments/assets/cc1281c8-718b-4e7b-a33b-0e2cd163a59c" />
+
+- Tela de cadastro de movimentação
+<img width="900" height="auto" alt="image" src="https://github.com/user-attachments/assets/fea1c55a-fdc5-43d5-88e7-1384a5849258" />
+<img width="900" height="auto" alt="image" src="https://github.com/user-attachments/assets/53387c94-698f-4feb-9404-840501d12c3e" />
+
 - Cadastro de Produtos
+<img width="900" height="auto" alt="image" src="https://github.com/user-attachments/assets/291e9412-9ed2-42f9-9fb0-06ca8488f686" />
+
 - Cadastro de Funcionários
-- Listagem de Roupas
-- Listagem de Ferramentas
-- Listagem de Matéria-Prima
+<img width="900" height="auto" alt="image" src="https://github.com/user-attachments/assets/558f381c-e14b-4b29-8862-bbbbe4273a5e" />
+
+- Listagem de Funcionários
+<img width="900" height="auto" alt="image" src="https://github.com/user-attachments/assets/7cbc8c74-3f35-4dd3-8706-862ea9566644" />
+
 - Relatórios
+<img width="900" height="auto" alt="image" src="https://github.com/user-attachments/assets/d271740b-9791-4a41-b31f-22a636a4dd4b" />
+
 - Gráficos
+<img width="900" height="auto" alt="image" src="https://github.com/user-attachments/assets/f8d5858f-a11c-48a7-aba2-b0c9efe7a9d8" />
+
 
 > *Em breve serão adicionadas imagens demonstrando o funcionamento da aplicação.*
 
@@ -121,4 +143,4 @@ Este projeto foi desenvolvido com fins acadêmicos para praticar o desenvolvimen
 
 ## 👩‍💻 Desenvolvido por
 
-**Isabelle Harue Tsutsumi Lopes** como desenvolvedora fullstack e líder da equipe juntamente com os demais do grupo
+**Isabelle Harue Tsutsumi Lopes** como desenvolvedora fullstack juntamente com os demais do grupo.
