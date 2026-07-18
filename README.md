@@ -28,6 +28,8 @@ A aplicação permite cadastrar, editar, visualizar e excluir informações de f
 ### 🔐 Autenticação
 
 - Login de usuários.
+- Criptografia de senhas utilizando AES (Advanced Encryption Standard).
+- Gerenciamento de sessão com Flask Session.
 
 ### 📦 Gestão de Produtos
 
@@ -58,21 +60,6 @@ Cada categoria possui sua própria tela para facilitar o gerenciamento.
 
 - Relatórios do sistema;
 - Dashboard com gráficos para acompanhamento das informações cadastradas.
-
----
-
-## 📂 Estrutura do projeto
-
-```text
-TechManagers
-│
-├── static/
-├── templates/
-├── app.py
-├── models.py
-├── TechManagers.db
-└── requeriments.txt
-```
 
 ---
 
@@ -134,4 +121,4 @@ Este projeto foi desenvolvido com fins acadêmicos para praticar o desenvolvimen
 
 ## 👩‍💻 Desenvolvido por
 
-**Isabelle Harue Tsutsumi Lopes**
+**Isabelle Harue Tsutsumi Lopes** como desenvolvedora fullstack e líder da equipe juntamente com os demais do grupo
